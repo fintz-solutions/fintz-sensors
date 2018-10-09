@@ -7,6 +7,14 @@
         <title>
             <%= title %>
         </title>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            var socket = io();
+            socket.on("event", function(data){
+                console.log("received an event:");
+                console.log(data);
+            });
+        </script>
     </head>
     <body>
         <div id="app" class="app">

@@ -1,12 +1,14 @@
 const ejs = require("ejs");
-const express = require("express");
 const bodyParser = require("body-parser");
+
+const app = require("express")();
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
+
 
 const HOST = process.env.HOST ? process.env.HOST : "0.0.0.0";
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 const TITLE = process.env.TITLE ? process.env.TITLE : "Fintz Sensors";
-
-const app = express();
 
 app.engine("html", ejs.renderFile);
 app.set("view engine", "html");
@@ -23,9 +25,14 @@ app.post('/sensors/ping', function(req, res) {
         message: "Pong: received payload",
         data: sensorPayload
     };
+    io.emit('event', sensorPayload);
     res.send(response);
 });
 
-app.listen(PORT, HOST, function onStart(err) {
+io.on("connection", function(socket){
+    console.log("a user connected");
+});
+
+http.listen(PORT, HOST, function onStart(err) {
     err ? console.log(err) : console.info("Listening on port " + PORT);
 });
