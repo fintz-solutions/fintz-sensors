@@ -2,9 +2,8 @@ const ejs = require("ejs");
 const bodyParser = require("body-parser");
 
 const app = require("express")();
-const http = require("http").Server(app);
-const io = require("socket.io")(http);
-
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
 
 const HOST = process.env.HOST ? process.env.HOST : "0.0.0.0";
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
@@ -25,14 +24,14 @@ app.post('/sensors/ping', function(req, res) {
         message: "Pong: received payload",
         data: sensorPayload
     };
-    io.emit('event', sensorPayload);
+    io.emit('sensor_event', sensorPayload);
     res.send(response);
 });
 
 io.on("connection", function(socket){
-    console.log("a user connected");
+    console.log("new connection detected on socket ", socket.id);
 });
 
-http.listen(PORT, HOST, function onStart(err) {
+server.listen(PORT, HOST, function onStart(err) {
     err ? console.log(err) : console.info("Listening on port " + PORT);
 });
