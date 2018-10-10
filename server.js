@@ -30,6 +30,7 @@ app.post('/sensors/ping', function(req, res) {
 
 io.on("connection", function(socket){
     console.log("new connection detected on socket ", socket.id);
+    io.emit('ping_event', {"msg":"connection established"});
 });
 
 server.listen(PORT, HOST, function onStart(err) {

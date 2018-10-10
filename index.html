@@ -8,17 +8,30 @@
             <%= title %>
         </title>
         <script src="/socket.io/socket.io.js"></script>
-        <script>
-            var socket = io();
-            socket.on("event", function(data){
-                console.log("received an event:");
-                console.log(data);
-            });
-        </script>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
     </head>
     <body>
         <div id="app" class="app">
             <h1>Fintz Solutions</h1>
+            <p>data: {{ msg }}</p>
         </div>
+        <script>
+            var socket = io.connect();
+            socket.on('sensor_event', function(data){
+                app.msg = data.msg;
+            });
+            
+            socket.on('ping_event', function(data){
+                app.msg = data.msg;
+            });
+
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    msg: ""
+                },
+                methods: {}
+            })
+        </script>
     </body>
 </html>
