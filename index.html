@@ -20,12 +20,20 @@
             var socket = io.connect();
             socket.on('startTimer', function(data){
                 app.msg = data;
-                timer();
+
+                if(state == 0){
+                    timer();
+                    state = 1;
+                }
             });
             
             socket.on('stopTimer', function(data){
                 app.msg = data;
-                clearTimeout(t);
+
+                if(state == 1){
+                    clearTimeout(t);
+                    state = 0;
+                }
             });
 
             var app = new Vue({
@@ -39,7 +47,8 @@
             // timer
             var h1 = document.getElementsByTagName('time')[0],
             seconds = 0, minutes = 0, hours = 0,
-            t;
+            t,
+            state = 0;
 
             function add() {
                 seconds++;
