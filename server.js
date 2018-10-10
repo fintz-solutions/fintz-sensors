@@ -17,16 +17,28 @@ app.get("/", function(req, res) {
     res.render(__dirname + "/index", { title: TITLE });
 });
 
-app.post('/sensors/ping', function(req, res) {
+app.post('/timer/start', function(req, res) {
     let sensorPayload= req.body;
     let response = {
         status: 200,
         message: "Pong: received payload",
         data: sensorPayload
     };
-    io.emit('sensor_event', sensorPayload);
+    io.emit('startTimer', sensorPayload);
     res.send(response);
 });
+
+app.post('/timer/stop', function(req, res) {
+    let sensorPayload= req.body;
+    let response = {
+        status: 200,
+        message: "Pong: received payload",
+        data: sensorPayload
+    };
+    io.emit('stopTimer', sensorPayload);
+    res.send(response);
+});
+
 
 io.on("connection", function(socket){
     console.log("new connection detected on socket ", socket.id);
