@@ -30,10 +30,20 @@
             padding: 5px 5px 5px 5px;
             background-color: #f4f6f9;
         }
+
         .body .header {
             border: 2px solid black;
             background-color: #3584b5;
             height: 15%;
+        }
+
+        .body .header .logo .image {
+            height: 50px;
+            width: auto;
+            text-align: right;
+            right: 10%;
+            position: absolute;
+            top: 8%;
         }
         
         .body .header .session-timer {
@@ -87,7 +97,11 @@
         <div id="app" class="app">
             <div class="header">
                 <div class="session-timer"><time>00:00:00</time></div>
-                <div class="logo"></div>
+                <div class="logo">
+                    <a href="https://jmaceurope.com/">
+                        <img class="image image-logo" src="https://beestatic.azureedge.net/jmaceurope-com/2018/06/logo-bianco.svg" alt="JMAC Europe" id="logo" data-height-percentage="66" data-actual-width="300" data-actual-height="101">
+                    </a>
+                </div>
             </div>
             <div class="stations">
                 <div class="station station-1">
