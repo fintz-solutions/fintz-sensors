@@ -9,12 +9,130 @@
         </title>
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     </head>
-    <body>
+    <style>
+        html {
+            height: 100%;
+        }
+        .body {
+            background-color: #ffffff;
+            font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 20px;
+            margin: 0px 0px 0px 0px;
+            display: block;
+            height: 100%;
+        }
+        .app{
+            width: 100%;
+            height: 100%;
+            margin: 0px auto 0px auto;
+            padding: 5px 5px 5px 5px;
+            background-color: #f4f6f9;
+        }
+        .body .header {
+            border: 2px solid black;
+            background-color: #3584b5;
+            height: 15%;
+        }
+        
+        .body .header .session-timer {
+            font-size: 50px;
+            color: #ffffff;
+            text-align: center;
+            margin: auto;
+            position: relative;
+            height: 50px;
+            margin-top: 0px auto;
+            line-height: 50px;
+            margin-top: 4%;
+        }
+
+        .body .stations .station {
+            border: 2px solid black;
+            display: block;
+            position: relative;
+            background-color: #ffffff;
+            border-top: 1px solid black;
+            padding-left: 5%;
+            padding-right: 5%;
+            height: 100px;
+        }
+
+        .body .stations .station.active {
+            background-color: green; 
+        }
+        
+        .body .stations .station.stop {
+            background-color: red; 
+        }
+
+        .body .stations .station .info p {
+            display: inline-block;
+            font-size: 25px;
+        }
+
+        .body .stations .station .info .name {
+            margin-top: 35px;
+            text-align: left;
+            width: 30%;
+        }
+
+        .body .stations .station .info .timer {
+            text-align: right;
+            width: 65%;
+        }
+    </style>
+    <body class="body">
         <div id="app" class="app">
-            <h1>Fintz Solutions</h1>
-            <p>data: {{ msg }}</p>
-            <time>00:00:00</time>
+            <div class="header">
+                <div class="session-timer"><time>00:00:00</time></div>
+                <div class="logo"></div>
+            </div>
+            <div class="stations">
+                <div class="station station-1">
+                    <div class="info">
+                        <p class="name">Station 1</p>
+                        <p class="timer">00:00:00</p>
+                    </div>
+                </div>
+                <div class="station station-2">
+                    <div class="info">
+                        <p class="name">Station 2</p>
+                        <p class="timer">00:00:00</p>
+                    </div>
+                </div>
+                <div class="station station-3">
+                    <div class="info">
+                        <p class="name">Station 3</p>
+                        <p class="timer">00:00:00</p>
+                    </div>
+                </div>
+                <div class="station station-4">
+                    <div class="info">
+                        <p class="name">Station 4</p>
+                        <p id="timer" class="timer"><time>00:00:00</time></p>
+                    </div>
+                </div>
+                <div class="station station-5">
+                    <div class="info">
+                        <p class="name">Station 5</p>
+                        <p class="timer">00:00:00</p>
+                    </div>
+                </div>
+                <div class="station station-6">
+                    <div class="info">
+                        <p class="name">Station 6</p>
+                        <p class="timer">00:00:00</p>
+                    </div>
+                </div>
+                <div class="station station-7">
+                    <div class="info">
+                        <p class="name">Station 7</p>
+                        <p class="timer">00:00:00</p>
+                    </div>
+                </div>
+            </div>
         </div>
         <script>
             var socket = io.connect();
@@ -23,6 +141,9 @@
 
                 if(state == 0){
                     timer();
+                    var station = jQuery(h1).parents(".station");
+                    station.addClass("active");
+                    station.removeClass("stop");
                     state = 1;
                 }
             });
@@ -33,6 +154,9 @@
                 if(state == 1){
                     clearTimeout(t);
                     state = 0;
+                    var station = jQuery(h1).parents(".station");
+                    station.removeClass("active");
+                    station.addClass("stop");
                 }
             });
 
@@ -44,8 +168,8 @@
                 methods: {}
             })
 
-            // timer
-            var h1 = document.getElementsByTagName('time')[0],
+            var h1 = document.getElementsByTagName('time')[1],
+            sessionTimer = document.getElementsByTagName('time')[0],
             seconds = 0, minutes = 0, hours = 0,
             t,
             state = 0;
@@ -62,10 +186,11 @@
                 }
                 
                 h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
+                sessionTimer.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
 
                 timer();
             }
-            function timer() {
+            function timer(element) {
                 t = setTimeout(add, 1000);
             }
         </script>
