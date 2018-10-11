@@ -17,28 +17,29 @@ app.get("/", function(req, res) {
     res.render(__dirname + "/index", { title: TITLE });
 });
 
-app.post('/timer/start', function(req, res) {
+var timerActive = false;
+
+app.post('/timer/event', function(req, res) {
     let sensorPayload= req.body;
     let response = {
         status: 200,
         message: "Pong: received payload",
         data: sensorPayload
     };
-    io.emit('startTimer', sensorPayload);
+
+    if(timerActive == false)
+    {
+        io.emit('startTimer', sensorPayload);
+        timerActive = true;
+    }
+    else
+    {
+        io.emit('stopTimer', sensorPayload);
+        timerActive = false;
+    }
+
     res.send(response);
 });
-
-app.post('/timer/stop', function(req, res) {
-    let sensorPayload= req.body;
-    let response = {
-        status: 200,
-        message: "Pong: received payload",
-        data: sensorPayload
-    };
-    io.emit('stopTimer', sensorPayload);
-    res.send(response);
-});
-
 
 io.on("connection", function(socket){
     console.log("new connection detected on socket ", socket.id);
