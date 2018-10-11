@@ -170,8 +170,8 @@
                 app.msg = data;
 
                 if(state == 1){
-                    clearTimeout(t);
                     state = 0;
+                    clearTimeout(t);
                     var station = jQuery(h1).parents(".station");
                     station.removeClass("active");
                     station.addClass("stop");
@@ -209,7 +209,7 @@
                 timer0();
             }
             function timer0() {
-                t = setTimeout(add0, 1000);
+                t0 = setTimeout(add0, 1000);
             }
 
             function add() {
