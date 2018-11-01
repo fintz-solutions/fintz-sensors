@@ -11,18 +11,20 @@ const TITLE = process.env.TITLE ? process.env.TITLE : "Fintz Sensors";
 
 app.engine("html", ejs.renderFile);
 app.set("view engine", "html");
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 app.get("/", function(req, res) {
     res.render(__dirname + "/index", { title: TITLE });
 });
 
-app.post('/sensors/ping', function(req, res) {
+app.post('/timer/event', function(req, res) {
     let sensorPayload= req.body;
+    console.log("sensor "+sensorPayload.number+" - "+sensorPayload.time+" - "+new Date().toJSON());
     let response = {
         status: 200,
-        message: "Pong: received payload",
-        data: sensorPayload
+        message: "Pong: received payload"
     };
     io.emit('sensor_event', sensorPayload);
     res.send(response);
@@ -35,4 +37,5 @@ io.on("connection", function(socket){
 
 server.listen(PORT, HOST, function onStart(err) {
     err ? console.log(err) : console.info("Listening on port " + PORT);
+    console.log("StartServer: "+new Date().toJSON());
 });
