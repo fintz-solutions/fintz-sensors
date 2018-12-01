@@ -1,6 +1,11 @@
+const path = require("path");
+const controllersFolder = path.resolve(global.projectRootFolder + "/controllers");
+const projectController = require(controllersFolder + "/Project");
+
 module.exports = function (app, io) {
 
-    app.get("v1/", function (req, res) {
+    /*
+    app.get(/"v1/", function (req, res) {
         res.render(__dirname + "/index", { title: TITLE });
     });
 
@@ -22,5 +27,54 @@ module.exports = function (app, io) {
         }
 
         res.send(response);
+    });
+    */
+    app.get("/", function (req, res) {
+        res.render(global.projectRootFolder + "/index", {title: global.appTitle});
+    });
+
+
+    var timerActive = false;
+    app.post("/event/timer", function(req, res) {
+        let sensorPayload= req.body;
+        let response = {
+            status: 200,
+            message: "Pong: received payload",
+            data: sensorPayload
+        };
+
+        //TODO NELSON sensorPayload must have stationID so that we can send the event to the correct station
+        //TODO NELSON save sensorPayload to db then send start or stop timer
+        //TODO NELSON the client should now for a specific station if it is to stop or start the timer
+        //TODO NELSON this timerActive var should disappear
+        //TODO NELSON this route should emit a specific event (changeTimerStatus) as the frontEnd should now if it is to be active or stopped(for a specific station)
+        if(timerActive === false) {
+            io.emit('startTimer', sensorPayload);
+            timerActive = true;
+        } else {
+            io.emit('stopTimer', sensorPayload);
+            timerActive = false;
+        }
+
+        res.send(response);
+    });
+
+    app.post("/event/security", function (req, res) {
+        //req.body.type
+    });
+
+    app.post("/event/quality", function (req, res) {
+        //req.body.type
+    });
+
+    app.post("/project", function (req, res) {
+        projectController.create(req, res).then(function (data) {
+            res.status(200).send(data);
+        }).catch(function (error) {
+            let errorMessage = error && error.message ? error.message : "Could not create a new Project";
+            let statusCode = error && error.statusCode ? error.statusCode : 500;
+            console.error(errorMessage, error);
+            res.status(statusCode).send({message: errorMessage});
+        });
     });
 };
