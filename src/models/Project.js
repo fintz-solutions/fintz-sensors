@@ -21,7 +21,7 @@ Project.statics.createNew = function(projectData) {
 
 module.exports.Project = mongoose.model("Project", Project);
 
-//TODO NELSON create instance and static methods
+//TODO NELSON create instance & static methods
 /*number:  Number,
     createdAt: Date,
     numStations:   String,
