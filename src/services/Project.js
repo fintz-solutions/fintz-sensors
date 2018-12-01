@@ -4,11 +4,11 @@ const projectModel = require(modelsFolder + "/Project").Project;
 
 module.exports.createProject = async function (projectData) {
     if(!projectData) {
-        let errorObj = new Error("Project Data cannot be null");
+        let errorObj = new Error("Project data cannot be null");
         errorObj.statusCode = 400;
         throw errorObj;
     } else if (!projectData.projectName) {
-        let errorObj = new Error("Project Name cannot be null");
+        let errorObj = new Error("Project projectName cannot be null");
         errorObj.statusCode = 400;
         throw errorObj;
     } else if (!projectData.number) {

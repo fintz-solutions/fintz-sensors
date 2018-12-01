@@ -1,6 +1,7 @@
 const path = require("path");
 const controllersFolder = path.resolve(global.projectRootFolder + "/controllers");
 const projectController = require(controllersFolder + "/Project");
+const runController = require(controllersFolder + "/Run");
 
 module.exports = function (app, io) {
 
@@ -69,9 +70,20 @@ module.exports = function (app, io) {
 
     app.post("/project", function (req, res) {
         projectController.create(req, res).then(function (data) {
-            res.status(200).send(data);
+            res.status(201).send(data);
         }).catch(function (error) {
             let errorMessage = error && error.message ? error.message : "Could not create a new Project";
+            let statusCode = error && error.statusCode ? error.statusCode : 500;
+            console.error(errorMessage, error);
+            res.status(statusCode).send({message: errorMessage});
+        });
+    });
+
+    app.post("/run", function (req, res) {
+        runController.create(req, res).then(function (data) {
+            res.status(201).send(data);
+        }).catch(function (error) {
+            let errorMessage = error && error.message ? error.message : "Could not create a new Run";
             let statusCode = error && error.statusCode ? error.statusCode : 500;
             console.error(errorMessage, error);
             res.status(statusCode).send({message: errorMessage});

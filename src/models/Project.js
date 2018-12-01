@@ -14,27 +14,24 @@ let Project = new Schema({
 
 
 Project.statics.createNew = function(projectData) {
-    return this.create(projectData).then(function (data) {
-        return data._doc;
+    return this.create(projectData).then(function (newProject) {
+        return newProject._doc;
+    });
+};
+
+Project.statics.findByProjectId = function(projectId) {
+    return this.findById(projectId).then(function (project) {
+        return project && project._doc ? project._doc : null;
+    }).catch(function (error) {
+        console.error(error);
+        let errorObject = new Error("Invalid Project");
+        errorObject.statusCode = 404;
+        throw errorObject;
     });
 };
 
 module.exports.Project = mongoose.model("Project", Project);
 
 //TODO NELSON create instance & static methods
-/*number:  Number,
-    createdAt: Date,
-    numStations:   String,
-    comments: [{ body: String, date: Date }],
-    date: { type: Date, default: Date.now },
-    hidden: Boolean,
-    meta: {
-        votes: Number,
-        favs:  Number
-    }*/
-
-
-
 //static createNewProject
-
 //instance method updateProject

@@ -20,18 +20,14 @@ global.appTitle = TITLE;
 app.engine("html", ejs.renderFile);
 app.set("view engine", "html");
 app.use(bodyParser.json());
-/*app.use(bodyParser.urlencoded({
-    extended: true
-}));
-*/
 
 
 const initMongoConnection = function(){
     try {
-        mongoose.connect('mongodb://localhost:27017/fintz');
+        mongoose.connect("mongodb://localhost:27017/fintz");
     }
     catch (error) {
-        console.error("Could not connect to mongo", error)
+        console.error("Could not connect to mongo", error);
         process.exit(1);
     }
 };
