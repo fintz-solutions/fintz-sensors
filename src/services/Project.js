@@ -42,15 +42,25 @@ module.exports.createProject = async function (projectData) {
     } else {
         return projectModel.createNew(projectData);
     }
-    /*
-        projectName: String,
-        number:  Number,
-        createdAt: Date,//TODO NELSON test this, mongo already add this on creation
-        numStations:   Number,
-        numRuns: Number,
-        timePerRun: Number,
-        productionTarget: Number,//target number of karts per run
-        status: Number //status of the project // TODO NELSON see enums for accepted types (1,2,3)
-    */
+};
+
+module.exports.getProject = async function(projectId) {
+    return projectModel.findByProjectId(projectId).then(function (project) {
+        if(!project) {
+            let error = new Error(`Could not find the project specified by id: ${projectId}`);
+            error.statusCode = 404;
+            throw error;
+        } else {
+            return project;
+        }
+    });
+};
+
+module.exports.deleteProject = async function(projectId) {
+    return projectModel.deleteProjectById(projectId);
+};
+
+module.exports.getProjects = async function() {
+    return projectModel.find({});//TODO NELSON maybe change to get active projects and filter by ones with an active status???
 };
 

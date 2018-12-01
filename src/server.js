@@ -33,17 +33,13 @@ const initMongoConnection = function(){
 };
 
 
-//TODO NELSON set mongo db with mongoose
 //TODO NELSON config file to set hostName port, user, pass etc
-//TODO NELSON build models and schemas with mongoose
-
 fs.readdir(routesFolder, function (err, files) {
     if (err) {
         console.error("Could not list the directory.", err);
         process.exit(1);
     }
 
-    //TODO NELSON para cada ficheiro na pasta route fazer o require e passar a app e o io
     files.forEach(function (file, index) {
         require(routesFolder + "/" + file)(app, io);
     });

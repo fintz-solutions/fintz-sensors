@@ -30,11 +30,15 @@ module.exports = function (app, io) {
         res.send(response);
     });
     */
+
+    // ----- Index html endpoint ----
     app.get("/", function (req, res) {
         res.render(global.projectRootFolder + "/index", {title: global.appTitle});
     });
 
 
+
+    // ----- Events endpoints -------
     var timerActive = false;
     app.post("/event/timer", function(req, res) {
         let sensorPayload= req.body;
@@ -68,6 +72,8 @@ module.exports = function (app, io) {
         //req.body.type
     });
 
+
+    //------- Project endpoints --------
     app.post("/project", function (req, res) {
         projectController.create(req, res).then(function (data) {
             res.status(201).send(data);
@@ -79,6 +85,41 @@ module.exports = function (app, io) {
         });
     });
 
+    app.get("/project", function (req, res) {
+        projectController.list(req, res).then(function (data) {
+            res.status(200).send(data);
+        }).catch(function (error) {
+            let errorMessage = error && error.message ? error.message : "Could not retrieve Projects";
+            let statusCode = error && error.statusCode ? error.statusCode : 500;
+            console.error(errorMessage, error);
+            res.status(statusCode).send({message: errorMessage});
+        });
+    });
+
+    app.get("/project/:id", function (req, res) {
+        projectController.get(req, res).then(function (data) {
+            res.status(200).send(data);
+        }).catch(function (error) {
+            let errorMessage = error && error.message ? error.message : "Could not retrieve Project information";
+            let statusCode = error && error.statusCode ? error.statusCode : 500;
+            console.error(errorMessage, error);
+            res.status(statusCode).send({message: errorMessage});
+        });
+    });
+
+    app.delete("/project/:id", function (req, res) {
+        projectController.delete(req, res).then(function (data) {
+            res.status(200).send(data);
+        }).catch(function (error) {
+            let errorMessage = error && error.message ? error.message : "Could not delete Project";
+            let statusCode = error && error.statusCode ? error.statusCode : 500;
+            console.error(errorMessage, error);
+            res.status(statusCode).send({message: errorMessage});
+        });
+    });
+
+
+    //Run routes
     app.post("/run", function (req, res) {
         runController.create(req, res).then(function (data) {
             res.status(201).send(data);
