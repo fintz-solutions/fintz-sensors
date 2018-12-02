@@ -7,7 +7,11 @@ let Run = new Schema({
     number:  Number,
     startTimeStamp: Date,//TODO NELSON ver timestamps
     totalTime:   Number,// in minutes
-    status: Number,//TODO NELSON see the enums
+    status: {
+        type: String,
+        enum : ['CREATED','RUNNING', 'FINISHED'],
+        default: 'CREATED'
+    },
     project: { type: mongoose.Schema.Types.ObjectId, ref: 'Project' },
     currentIteration: Number
 });
