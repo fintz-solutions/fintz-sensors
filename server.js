@@ -11,32 +11,23 @@ const TITLE = process.env.TITLE ? process.env.TITLE : "Fintz Sensors";
 
 app.engine("html", ejs.renderFile);
 app.set("view engine", "html");
+
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json());
 
 app.get("/", function(req, res) {
     res.render(__dirname + "/index", { title: TITLE });
 });
 
-var timerActive = false;
-
 app.post('/timer/event', function(req, res) {
     let sensorPayload= req.body;
     let response = {
         status: 200,
-        message: "Pong: received payload",
+        message: "Timer Event: received payload",
         data: sensorPayload
     };
 
-    if(timerActive == false)
-    {
-        io.emit('startTimer', sensorPayload);
-        timerActive = true;
-    }
-    else
-    {
-        io.emit('stopTimer', sensorPayload);
-        timerActive = false;
-    }
+    io.emit('toggleTimer', sensorPayload);
 
     res.send(response);
 });
