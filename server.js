@@ -5,6 +5,8 @@ const app = require("express")();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
+const easytimer = require("easytimer.js");
+
 const HOST = process.env.HOST ? process.env.HOST : "0.0.0.0";
 const PORT = process.env.PORT ? parseInt(process.env.PORT, 10) : 3001;
 const TITLE = process.env.TITLE ? process.env.TITLE : "Fintz Sensors";
@@ -19,6 +21,10 @@ app.get("/", function(req, res) {
     res.render(__dirname + "/index", { title: TITLE });
 });
 
+app.get('/scripts/easytimer.js', function(req, res) {
+    res.sendFile(__dirname + '/easytimer.min.js');
+});
+
 app.post('/timer/event', function(req, res) {
     let sensorPayload= req.body;
     let response = {
@@ -27,7 +33,10 @@ app.post('/timer/event', function(req, res) {
         data: sensorPayload
     };
 
-    io.emit('toggleTimer', sensorPayload);
+    if(sensorPayload.sensor > 0 && sensorPayload.sensor <= 7) {
+        console.log("timer event - sensor: " + sensorPayload.sensor);
+        io.emit('toggleTimer', sensorPayload);
+    }
 
     res.send(response);
 });
