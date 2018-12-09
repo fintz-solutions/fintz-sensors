@@ -2,6 +2,7 @@ const path = require("path");
 const controllersFolder = global.controllersFolder;
 const projectController = require(path.resolve(controllersFolder, "project"));
 const runController = require(path.resolve(controllersFolder, "run"));
+const eventController = require(path.resolve(controllersFolder, "event"));
 
 module.exports = function (app, io) {
 
@@ -31,14 +32,15 @@ module.exports = function (app, io) {
     });
     */
 
-    // ----- Index html endpoint ----
+    // ----- Index ejs endpoint ----
     app.get("/", function (req, res) {
-        res.render(path.resolve(global.projectRootFolder, "index"), {title: global.appTitle});
+        res.render("index", {title: global.appTitle});//is now using the index.ejs instead of the HTML one
     });
 
 
 
     // ----- Events endpoints -------
+    //TODO NELSON let's think a better name for this route
     var timerActive = false;
     app.post("/event/timer", function(req, res) {
         let sensorPayload= req.body;
@@ -64,13 +66,8 @@ module.exports = function (app, io) {
         res.send(response);
     });
 
-    app.post("/event/security", function (req, res) {
-        //req.body.type
-    });
-
-    app.post("/event/quality", function (req, res) {
-        //req.body.type
-    });
+    /* EVENTS(SECURITY and QUALITY)  endpoints */
+    app.post("/event", eventController.create);
 
 
     //------- Project endpoints --------
@@ -80,9 +77,6 @@ module.exports = function (app, io) {
 
 
 
-
-    //TODO NELSON should generate projet runs depending of the field runNumbers present in the request body
-    //TODO NELSON build util to send responses(passing status code, message, data)
     app.post("/project", projectController.create);
 
 
@@ -95,6 +89,6 @@ module.exports = function (app, io) {
     app.delete("/project/:id", projectController.delete);
 
     
-    //Run routes -> TODO NELSON -> I don't think this endpoint will be needed
+    //Run routes -> TODO NELSON -> I don't think this endpoint will be needed(we already create the runs when creating a new project)
     app.post("/run", runController.create);
 };

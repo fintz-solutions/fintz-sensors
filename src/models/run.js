@@ -54,4 +54,13 @@ Run.statics.deleteRunById = function(runId) {
     });
 };
 
+Run.statics.findByRunId = function(runId) {
+    return this.findById(runId).then(function (run) {
+        return run && run._doc ? run._doc : null;
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Invalid Run", 404);
+    });
+};
+
 module.exports.Run = mongoose.model("Run", Run);

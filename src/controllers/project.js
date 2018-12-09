@@ -5,8 +5,6 @@ const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 
 module.exports = {
     create: function (req, res) {
-        //TODO NELSON also create the runs accordingly to the number of runs specified in the body
-        //TODO NELSON also create the runs already here
         projectService.createProject(req.body).then(function (data) {
             responseUtil.sendSuccessResponse("Project created successfully", 201, data, res);
         }).catch(function (error) {
@@ -24,7 +22,12 @@ module.exports = {
     
     list: function (req, res) {
         projectService.getProjects().then(function (data) {
-            responseUtil.sendSuccessResponse("Projects retrieved successfully", 200, data, res);
+            if(req.get("Content-Type") === "application/json") {
+                responseUtil.sendSuccessResponse("Projects retrieved successfully", 200, data, res);
+            } else {
+                //render the ejs
+                res.render("projects", {title: "List Projects", projects: data});
+            }
         }).catch(function (error) {
             responseUtil.sendErrorResponse(error, "Could not retrieve Projects", null, res);
         });

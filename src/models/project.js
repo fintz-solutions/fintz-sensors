@@ -8,7 +8,7 @@ const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 let Project = new Schema({
     projectName: String,
     number:  Number,
-    createdAt: Date,//TODO NELSON test this, mongo already adds this on creation? -> nope
+    createdAt: Date,
     numStations:   Number,
     numRuns: Number,
     timePerRun: Number,
@@ -25,7 +25,23 @@ let Project = new Schema({
 
 Project.statics.createNew = function(projectData) {
     return this.create(projectData).then(function (newProject) {
-        return newProject._doc;
+        //return newProject._doc;
+        let promises = [];
+        //TODO NELSON this code must be revised
+        for(let runNumber = 1; runNumber <= newProject._doc.numRuns; runNumber++) {
+            let runData = {
+                number:  runNumber,
+                startTimeStamp: newProject._doc.createdAt,
+                totalTime:   newProject._doc.timePerRun,
+                status: "CREATED",
+                project: newProject._doc._id,
+                currentIteration: 1//Because these are created when creating a new project
+            };
+            promises.push(runModel.createNew(runData));
+        }
+        return Promise.all(promises).then(function (results) {
+            return newProject._doc;
+        });
     });
 };
 

@@ -21,11 +21,12 @@ global.controllersFolder = path.resolve(global.projectRootFolder, "controllers")
 global.modelsFolder = path.resolve(global.projectRootFolder, "models");
 global.servicesFolder = path.resolve(global.projectRootFolder, "services");
 global.utilsFolder = path.resolve(global.projectRootFolder, "utils");
+global.viewsFolder = path.resolve(global.projectRootFolder, "views");
 global.appTitle = TITLE;
 
 
-app.engine("html", ejs.renderFile);
-app.set("view engine", "html");
+app.set('view engine', 'ejs');
+app.set('views', global.viewsFolder);
 app.use(bodyParser.json());
 
 const initMongoConnection = function(){
