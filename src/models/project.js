@@ -1,8 +1,9 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 const path = require("path");
-const modelsFolder = path.resolve(global.projectRootFolder + "/models");
-const runModel = require(modelsFolder + "/Run").Run;
+const modelsFolder = global.modelsFolder;
+const runModel = require(path.resolve(modelsFolder, "run")).Run;
+const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 let Project = new Schema({
     projectName: String,
@@ -29,9 +30,7 @@ Project.statics.findByProjectId = function(projectId) {
         return project && project._doc ? project._doc : null;
     }).catch(function (error) {
         console.error(error);
-        let errorObject = new Error("Invalid Project");
-        errorObject.statusCode = 404;
-        throw errorObject;
+        errorUtil.createAndThrowGenericError("Invalid Project", 404);
     });
 };
 
@@ -46,15 +45,11 @@ Project.statics.deleteProjectById = function(projectId) {
                 }
             });
         } else {
-            let errorObject = new Error("Invalid Project");
-            errorObject.statusCode = 404;
-            throw errorObject;
+            errorUtil.createAndThrowGenericError("Invalid Project", 404);
         }
     }).catch(function (error) {
         console.error(error);
-        let errorObject = new Error("Invalid Project");
-        errorObject.statusCode = 404;
-        throw errorObject;
+        errorUtil.createAndThrowGenericError("Invalid Project", 404);
     });
 };
 

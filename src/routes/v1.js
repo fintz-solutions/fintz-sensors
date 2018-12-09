@@ -1,7 +1,7 @@
 const path = require("path");
-const controllersFolder = path.resolve(global.projectRootFolder + "/controllers");
-const projectController = require(controllersFolder + "/Project");
-const runController = require(controllersFolder + "/Run");
+const controllersFolder = global.controllersFolder;
+const projectController = require(path.resolve(controllersFolder, "project"));
+const runController = require(path.resolve(controllersFolder, "run"));
 
 module.exports = function (app, io) {
 
@@ -33,7 +33,7 @@ module.exports = function (app, io) {
 
     // ----- Index html endpoint ----
     app.get("/", function (req, res) {
-        res.render(global.projectRootFolder + "/index", {title: global.appTitle});
+        res.render(path.resolve(global.projectRootFolder, "index"), {title: global.appTitle});
     });
 
 
@@ -74,60 +74,27 @@ module.exports = function (app, io) {
 
 
     //------- Project endpoints --------
-    app.post("/project", function (req, res) {
-        projectController.create(req, res).then(function (data) {
-            res.status(201).send(data);
-        }).catch(function (error) {
-            let errorMessage = error && error.message ? error.message : "Could not create a new Project";
-            let statusCode = error && error.statusCode ? error.statusCode : 500;
-            console.error(errorMessage, error);
-            res.status(statusCode).send({message: errorMessage});
-        });
-    });
-
-    app.get("/project", function (req, res) {
-        projectController.list(req, res).then(function (data) {
-            res.status(200).send(data);
-        }).catch(function (error) {
-            let errorMessage = error && error.message ? error.message : "Could not retrieve Projects";
-            let statusCode = error && error.statusCode ? error.statusCode : 500;
-            console.error(errorMessage, error);
-            res.status(statusCode).send({message: errorMessage});
-        });
-    });
-
-    app.get("/project/:id", function (req, res) {
-        projectController.get(req, res).then(function (data) {
-            res.status(200).send(data);
-        }).catch(function (error) {
-            let errorMessage = error && error.message ? error.message : "Could not retrieve Project information";
-            let statusCode = error && error.statusCode ? error.statusCode : 500;
-            console.error(errorMessage, error);
-            res.status(statusCode).send({message: errorMessage});
-        });
-    });
-
-    app.delete("/project/:id", function (req, res) {
-        projectController.delete(req, res).then(function (data) {
-            res.status(200).send(data);
-        }).catch(function (error) {
-            let errorMessage = error && error.message ? error.message : "Could not delete Project";
-            let statusCode = error && error.statusCode ? error.statusCode : 500;
-            console.error(errorMessage, error);
-            res.status(statusCode).send({message: errorMessage});
-        });
-    });
+    //TODO NELSON request to GET new project HTML page
+    //TODO NELSON request to move kart ???? -> generates new iteration
+    //TODO NELSON request to get the graphs
 
 
-    //Run routes
-    app.post("/run", function (req, res) {
-        runController.create(req, res).then(function (data) {
-            res.status(201).send(data);
-        }).catch(function (error) {
-            let errorMessage = error && error.message ? error.message : "Could not create a new Run";
-            let statusCode = error && error.statusCode ? error.statusCode : 500;
-            console.error(errorMessage, error);
-            res.status(statusCode).send({message: errorMessage});
-        });
-    });
+
+
+    //TODO NELSON should generate projet runs depending of the field runNumbers present in the request body
+    //TODO NELSON build util to send responses(passing status code, message, data)
+    app.post("/project", projectController.create);
+
+
+    //TODO NELSON request to GET in HTML or JSON depending on the request header
+    app.get("/projects", projectController.list);
+
+    //TODO NELSON request to GET in HTML or JSON depending on the request header
+    app.get("/project/:id", projectController.get);
+
+    app.delete("/project/:id", projectController.delete);
+
+    
+    //Run routes -> TODO NELSON -> I don't think this endpoint will be needed
+    app.post("/run", runController.create);
 };

@@ -1,7 +1,8 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 const path = require("path");
-const modelsFolder = path.resolve(global.projectRootFolder + "/models");
+const modelsFolder = global.modelsFolder;
+const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 let Run = new Schema({
     number:  Number,
@@ -14,12 +15,10 @@ let Run = new Schema({
 
 Run.statics.createNew = function(runData) {
     let run = this;
-    const projectModel = require(modelsFolder + "/Project").Project;//NELSON: Needed to add this require here because if not circular dependency problems would occur
+    const projectModel = require(path.resolve(modelsFolder, "project")).Project;//NELSON: Needed to add this require here because if not circular dependency problems would occur
     return projectModel.findByProjectId(runData.project).then(function (project) {
         if(!project) {
-            let errorObj = new Error("Invalid Project");
-            errorObj.statusCode = 400;
-            throw errorObj;
+            errorUtil.createAndThrowGenericError("Invalid Project", 400);
         } else {
             return run.create(runData).then(function (newRun) {
                 return newRun._doc;
@@ -43,15 +42,11 @@ Run.statics.deleteRunById = function(runId) {
                 }
             });
         } else {
-            let errorObject = new Error("Invalid Run");
-            errorObject.statusCode = 404;
-            throw errorObject;
+            errorUtil.createAndThrowGenericError("Invalid Run", 404);
         }
     }).catch(function (error) {
         console.error(error);
-        let errorObject = new Error("Invalid Run");
-        errorObject.statusCode = 404;
-        throw errorObject;
+        errorUtil.createAndThrowGenericError("Invalid Run", 404);
     });
 };
 
