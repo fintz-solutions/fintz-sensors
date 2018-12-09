@@ -13,7 +13,11 @@ let Project = new Schema({
     numRuns: Number,
     timePerRun: Number,
     productionTarget: Number,//target number of karts per run
-    status: Number //status of the project // TODO NELSON see enums for accepted types (1,2,3)
+    status: {
+        type: String,
+        enum : ['CREATED','RUNNING', 'FINISHED'],
+        default: 'CREATED'
+    }
  });
 
 
