@@ -37,33 +37,36 @@ module.exports = function (app, io) {
         res.render("index", {title: global.appTitle});//is now using the index.ejs instead of the HTML one
     });
 
-
-
     // ----- Events endpoints -------
     //TODO NELSON let's think a better name for this route
-    var timerActive = false;
-    app.post("/event/timer", function(req, res) {
+    app.post('/timer/event', function(req, res) {
         let sensorPayload= req.body;
-        let response = {
-            status: 200,
-            message: "Pong: received payload",
-            data: sensorPayload
-        };
-
-        //TODO NELSON sensorPayload must have stationID so that we can send the event to the correct station
+        let sensorNumber = sensorPayload.sensor;
+        let response = null;
         //TODO NELSON save sensorPayload to db then send start or stop timer
-        //TODO NELSON the client should now for a specific station if it is to stop or start the timer
-        //TODO NELSON this timerActive var should disappear
-        //TODO NELSON this route should emit a specific event (changeTimerStatus) as the frontEnd should now if it is to be active or stopped(for a specific station)
-        if(timerActive === false) {
-            io.emit('startTimer', sensorPayload);
-            timerActive = true;
-        } else {
-            io.emit('stopTimer', sensorPayload);
-            timerActive = false;
-        }
 
-        res.send(response);
+        if(sensorNumber > 0 && sensorNumber <= 8) {
+            console.log("timer event - sensor: " + sensorNumber);
+            io.emit('toggleTimer', sensorPayload);
+
+            response = {
+                message: "Timer Event: received sensor",
+                data: sensorPayload
+            };
+
+            res.send(response);
+        }
+        else
+        {
+            console.error("ERROR - timer event - sensor: " + sensorNumber);
+
+            response = {
+                message: "Timer Event: invalid sensor",
+                data: sensorPayload
+            };
+
+            res.status(400).send(response);
+        }
     });
 
     /* EVENTS(SECURITY and QUALITY)  endpoints */

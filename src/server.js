@@ -98,6 +98,10 @@ fs.readdir(routesFolder, function (err, files) {
     });
 });
 
+// TODO ver como carregar directamente no html
+app.get('/scripts/easytimer.js', function(req, res) {
+    res.sendFile(__dirname + '/static/js//easytimer.min.js');
+});
 
 /*
 app.get("/", function(req, res) {

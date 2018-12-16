@@ -10,6 +10,7 @@
         <script src="/socket.io/socket.io.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="/scripts/easytimer.js"></script>
     </head>
     <style>
         html {
@@ -95,7 +96,7 @@
     <body class="body">
         <div id="app" class="app">
             <div class="header">
-                <div class="session-timer"><time>00:00:00</time></div>
+                <div class="session-timer" id="globalTimer">00:30:00</div>
                 <div class="logo">
                     <a href="https://jmaceurope.com/">
                         <img class="image image-logo" src="https://beestatic.azureedge.net/jmaceurope-com/2018/06/logo-bianco.svg" alt="JMAC Europe" id="logo" data-height-percentage="66" data-actual-width="300" data-actual-height="101">
@@ -106,129 +107,89 @@
                 <div class="station station-1">
                     <div class="info">
                         <p class="name">Station 1</p>
-                        <p class="timer">00:00:00</p>
+                        <p class="timer" id="timerStation1">00:00:00</p>
                     </div>
                 </div>
                 <div class="station station-2">
                     <div class="info">
                         <p class="name">Station 2</p>
-                        <p class="timer">00:00:00</p>
+                        <p class="timer" id="timerStation2">00:00:00</p>
                     </div>
                 </div>
                 <div class="station station-3">
                     <div class="info">
                         <p class="name">Station 3</p>
-                        <p class="timer">00:00:00</p>
+                        <p class="timer" id="timerStation3">00:00:00</p>
                     </div>
                 </div>
                 <div class="station station-4">
                     <div class="info">
                         <p class="name">Station 4</p>
-                        <p id="timer" class="timer"><time>00:00:00</time></p>
+                        <p class="timer" id="timerStation4">00:00:00</p>
                     </div>
                 </div>
                 <div class="station station-5">
                     <div class="info">
                         <p class="name">Station 5</p>
-                        <p class="timer">00:00:00</p>
+                        <p class="timer" id="timerStation5">00:00:00</p>
                     </div>
                 </div>
                 <div class="station station-6">
                     <div class="info">
                         <p class="name">Station 6</p>
-                        <p class="timer">00:00:00</p>
+                        <p class="timer" id="timerStation6">00:00:00</p>
                     </div>
                 </div>
                 <div class="station station-7">
                     <div class="info">
                         <p class="name">Station 7</p>
-                        <p class="timer">00:00:00</p>
+                        <p class="timer" id="timerStation7">00:00:00</p>
                     </div>
                 </div>
             </div>
         </div>
         <script>
+            let timers = [
+                new Timer(),
+                new Timer(),
+                new Timer(),
+                new Timer(),
+                new Timer(),
+                new Timer(),
+                new Timer()
+            ];
+            let globalTimer = new Timer();
+            globalTimer.addEventListener('secondsUpdated', function (e) {
+                $('#globalTimer').html(globalTimer.getTimeValues().toString());
+            });
             $( document ).ready(function() {
-                timer0();
+                globalTimer.start({countdown: true, startValues: {minutes: 30}});
             });
-
+            for (let i = 0; i < timers.length; i++){
+                let timerNr = i+1;
+                timers[i].addEventListener('secondsUpdated', function (e) {
+                    $('#timerStation'+timerNr).html(timers[i].getTimeValues().toString());
+                });
+            }
             var socket = io.connect();
-            socket.on('startTimer', function(data){
-                app.msg = data;
-
-                if(state == 0){
-                    timer();
-                    var station = jQuery(h1).parents(".station");
-                    station.addClass("active");
-                    station.removeClass("stop");
-                    state = 1;
-                }
-            });
-            
-            socket.on('stopTimer', function(data){
-                app.msg = data;
-
-                if(state == 1){
-                    state = 0;
-                    clearTimeout(t);
-                    var station = jQuery(h1).parents(".station");
+            socket.on('toggleTimer', function(data){
+                let stationToToggle = data.sensor;
+                let timerToUpdate = timers[stationToToggle-1];
+                if(timerToUpdate.isRunning())
+                {
+                    timerToUpdate.pause();
+                    var station = $('#timerStation'+stationToToggle).parents(".station");
                     station.removeClass("active");
                     station.addClass("stop");
                 }
+                else
+                {
+                    timerToUpdate.start();
+                    var station = $('#timerStation'+stationToToggle).parents(".station");
+                    station.addClass("active");
+                    station.removeClass("stop");
+                }
             });
-
-            var app = new Vue({
-                el: "#app",
-                data: {
-                    msg: ""
-                },
-                methods: {}
-            })
-
-            var h1 = document.getElementsByTagName('time')[1],
-            sessionTimer = document.getElementsByTagName('time')[0],
-            seconds = 0, minutes = 0, hours = 0,
-            seconds0 = 0, minutes0 = 0, hours0 = 0,
-            t, t0,
-            state = 0;
-
-            function add0() {
-                seconds0++;
-                if (seconds0 >= 60) {
-                    seconds0 = 0;
-                    minutes0++;
-                    if (minutes0 >= 60) {
-                        minutes0 = 0;
-                        hours0++;
-                    }
-                }
-                
-                sessionTimer.textContent = (hours0 ? (hours0 > 9 ? hours0 : "0" + hours0) : "00") + ":" + (minutes0 ? (minutes0 > 9 ? minutes0 : "0" + minutes0) : "00") + ":" + (seconds0 > 9 ? seconds0 : "0" + seconds0);
-
-                timer0();
-            }
-            function timer0() {
-                t0 = setTimeout(add0, 1000);
-            }
-
-            function add() {
-                seconds++;
-                if (seconds >= 60) {
-                    seconds = 0;
-                    minutes++;
-                    if (minutes >= 60) {
-                        minutes = 0;
-                        hours++;
-                    }
-                }
-                
-                h1.textContent = (hours ? (hours > 9 ? hours : "0" + hours) : "00") + ":" + (minutes ? (minutes > 9 ? minutes : "0" + minutes) : "00") + ":" + (seconds > 9 ? seconds : "0" + seconds);
-
-                timer();
-            }
-            function timer(element) {
-                t = setTimeout(add, 1000);
-            }
         </script>
     </body>
 </html>
