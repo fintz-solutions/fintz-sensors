@@ -22,9 +22,10 @@ global.modelsFolder = path.resolve(global.projectRootFolder, "models");
 global.servicesFolder = path.resolve(global.projectRootFolder, "services");
 global.utilsFolder = path.resolve(global.projectRootFolder, "utils");
 global.viewsFolder = path.resolve(global.projectRootFolder, "views");
+global.staticFolder = path.resolve(global.projectRootFolder, "static");
 global.appTitle = TITLE;
 
-app.use(express.static(__dirname + '/static'));
+app.use(express.static(staticFolder));
 app.set('view engine', 'ejs');
 app.set('views', global.viewsFolder);
 app.use(bodyParser.json());
