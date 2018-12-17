@@ -15,7 +15,6 @@ const path = require("path");
 const mongoose = require('mongoose');
 const projectRootFolder = path.resolve(__dirname);
 
-
 global.projectRootFolder = projectRootFolder;
 global.routesFolder = path.resolve(projectRootFolder, "routes");
 global.controllersFolder = path.resolve(global.projectRootFolder, "controllers");
