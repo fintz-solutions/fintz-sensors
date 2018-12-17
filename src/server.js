@@ -1,7 +1,8 @@
 const ejs = require("ejs");
+const express = require("express");
 const bodyParser = require("body-parser");
 
-const app = require("express")();
+const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
@@ -24,7 +25,7 @@ global.utilsFolder = path.resolve(global.projectRootFolder, "utils");
 global.viewsFolder = path.resolve(global.projectRootFolder, "views");
 global.appTitle = TITLE;
 
-
+app.use(express.static(__dirname + '/static'));
 app.set('view engine', 'ejs');
 app.set('views', global.viewsFolder);
 app.use(bodyParser.json());
