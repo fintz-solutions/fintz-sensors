@@ -20,21 +20,24 @@ const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 let Event = new Schema({
     type: {
         type: String,
-        enum : ['SECURITY','QUALITY'],
+        enum: ['SECURITY', 'QUALITY'],
         default: 'QUALITY'
     },
     clickedAt: Date,
-    run: { type: mongoose.Schema.Types.ObjectId, ref: 'Run' }
+    run: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Run'
+    }
 });
 
 Event.statics.createNew = function(eventData) {
     let event = this;
-    const runModel = require(path.resolve(modelsFolder, "run")).Run;//NELSON: Needed to add this require here because if not circular dependency problems would occur
-    return runModel.findByRunId(eventData.run).then(function (run) {
-        if(!run) {
+    const runModel = require(path.resolve(modelsFolder, "run")).Run; //NELSON: Needed to add this require here because if not circular dependency problems would occur
+    return runModel.findByRunId(eventData.run).then(function(run) {
+        if (!run) {
             errorUtil.createAndThrowGenericError("Invalid Run", 400);
         } else {
-            return event.create(eventData).then(function (newEvent) {
+            return event.create(eventData).then(function(newEvent) {
                 return newEvent._doc;
             });
         }
