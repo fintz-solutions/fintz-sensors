@@ -1,19 +1,19 @@
 {
-  "name": "fintz-sensors",
-  "version": "1.0.0",
-  "description": "",
-  "main": "server.js",
-  "scripts": {
-    "start": "node server.js"
-  },
-  "author": "",
-  "license": "ISC",
-  "dependencies": {
-    "body-parser": "^1.18.3",
-    "easytimer.js": "^3.0.0",
-    "ejs": "^2.6.1",
-    "express": "^4.16.3",
-    "mongoose": "^5.3.14",
-    "socket.io": "^2.1.1"
-  }
+    "name": "fintz-sensors",
+    "version": "1.0.0",
+    "description": "",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "body-parser": "^1.18.3",
+        "easytimer.js": "^3.0.0",
+        "ejs": "^2.6.1",
+        "express": "^4.16.3",
+        "mongoose": "^5.3.14",
+        "socket.io": "^2.1.1"
+    }
 }

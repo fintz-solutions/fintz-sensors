@@ -3,63 +3,63 @@ html {
 }
 .body {
     background-color: #ffffff;
+    display: block;
     font-family: "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 20px;
-    margin: 0px 0px 0px 0px;
-    display: block;
     height: 100%;
+    margin: 0px 0px 0px 0px;
 }
 .app{
-    width: 100%;
+    background-color: #f4f6f9;
     height: 100%;
     margin: 0px auto 0px auto;
     padding: 5px 5px 5px 5px;
-    background-color: #f4f6f9;
+    width: 100%;
 }
 
 .body .header {
-    border: 2px solid black;
     background-color: #3584b5;
+    border: 2px solid black;
     height: 15%;
 }
 
 .body .header .logo .image {
     height: 50px;
-    width: auto;
-    text-align: right;
-    right: 3%;
     position: absolute;
+    right: 3%;
+    text-align: right;
     top: 4%;
+    width: auto;
 }
 
 .body .header .session-timer {
-    font-size: 60px;
     color: #ffffff;
-    text-align: center;
-    margin: auto;
-    position: relative;
+    font-size: 60px;
     height: 50px;
     line-height: 50px;
+    margin: auto auto auto auto;
     margin-top: 3%;
+    position: relative;
+    text-align: center;
 }
 
 .body .stations .station {
-    border: 2px solid black;
-    display: block;
-    position: relative;
     background-color: #ffffff;
+    border: 2px solid black;
     border-top: 1px solid black;
+    display: block;
+    height: 100px;
     padding-left: 15%;
     padding-right: 15%;
-    height: 100px;
+    position: relative;
 }
 
 .body .stations .station.active {
-    background-color: green; 
+    background-color: green;
 }
 
 .body .stations .station.stop {
-    background-color: red; 
+    background-color: red;
 }
 
 .body .stations .station .info p {
