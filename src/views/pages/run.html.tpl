@@ -1,5 +1,8 @@
-<div id="content" class="content">
-    <div class="header">
+{% extends "partials/layout.html.tpl" %}
+{% block content %}
+{{ super() }}
+    debug: [ project_id: {{ project_id }} run number: {{ run }} ]
+    <div class="header-run">
         <div class="session-timer" id="globalTimer">00:30:00</div>
         <div class="logo">
             <a href="https://jmaceurope.com/">
@@ -51,47 +54,47 @@
             </div>
         </div>
     </div>
-</div>
-<script>
-    let timers = [
-        new Timer(),
-        new Timer(),
-        new Timer(),
-        new Timer(),
-        new Timer(),
-        new Timer(),
-        new Timer()
-    ];
-    let globalTimer = new Timer();
-    globalTimer.addEventListener('secondsUpdated', function (e) {
-        $('#globalTimer').html(globalTimer.getTimeValues().toString());
-    });
-    $( document ).ready(function() {
-        globalTimer.start({countdown: true, startValues: {minutes: 30}});
-    });
-    for (let i = 0; i < timers.length; i++){
-        let timerNr = i+1;
-        timers[i].addEventListener('secondsUpdated', function (e) {
-            $('#timerStation'+timerNr).html(timers[i].getTimeValues().toString());
+    <script>
+        let timers = [
+            new Timer(),
+            new Timer(),
+            new Timer(),
+            new Timer(),
+            new Timer(),
+            new Timer(),
+            new Timer()
+        ];
+        let globalTimer = new Timer();
+        globalTimer.addEventListener('secondsUpdated', function (e) {
+            $('#globalTimer').html(globalTimer.getTimeValues().toString());
         });
-    }
-    var socket = io.connect();
-    socket.on('toggleTimer', function(data){
-        let stationToToggle = data.sensor;
-        let timerToUpdate = timers[stationToToggle-1];
-        if(timerToUpdate.isRunning())
-        {
-            timerToUpdate.pause();
-            var station = $('#timerStation'+stationToToggle).parents(".station");
-            station.removeClass("active");
-            station.addClass("stop");
+        $( document ).ready(function() {
+            globalTimer.start({countdown: true, startValues: {minutes: 30}});
+        });
+        for (let i = 0; i < timers.length; i++){
+            let timerNr = i+1;
+            timers[i].addEventListener('secondsUpdated', function (e) {
+                $('#timerStation'+timerNr).html(timers[i].getTimeValues().toString());
+            });
         }
-        else
-        {
-            timerToUpdate.start();
-            var station = $('#timerStation'+stationToToggle).parents(".station");
-            station.addClass("active");
-            station.removeClass("stop");
-        }
-    });
-</script>
+        var socket = io.connect();
+        socket.on('toggleTimer', function(data){
+            let stationToToggle = data.sensor;
+            let timerToUpdate = timers[stationToToggle-1];
+            if(timerToUpdate.isRunning())
+            {
+                timerToUpdate.pause();
+                var station = $('#timerStation'+stationToToggle).parents(".station");
+                station.removeClass("active");
+                station.addClass("stop");
+            }
+            else
+            {
+                timerToUpdate.start();
+                var station = $('#timerStation'+stationToToggle).parents(".station");
+                station.addClass("active");
+                station.removeClass("stop");
+            }
+        });
+    </script>
+{% endblock %}

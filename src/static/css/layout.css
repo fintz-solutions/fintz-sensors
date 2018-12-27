@@ -17,13 +17,13 @@ html {
     background-color: #f4f6f9;
 }
 
-.body .header {
+.body .header-run {
     border: 2px solid black;
     background-color: #3584b5;
     height: 15%;
 }
 
-.body .header .logo .image {
+.body .header-run .logo .image {
     height: 50px;
     width: auto;
     text-align: right;
@@ -32,7 +32,7 @@ html {
     top: 4%;
 }
 
-.body .header .session-timer {
+.body .header-run .session-timer {
     font-size: 60px;
     color: #ffffff;
     text-align: center;

@@ -26,7 +26,7 @@ module.exports = {
                 responseUtil.sendSuccessResponse("Projects retrieved successfully", 200, data, res);
             } else {
                 //render the ejs
-                res.render("projects", {
+                res.render("projects.html.tpl", {
                     title: "List Projects",
                     projects: data
                 });

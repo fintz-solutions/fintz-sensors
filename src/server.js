@@ -1,4 +1,4 @@
-const ejs = require("ejs");
+const nunjucks = require("nunjucks");
 const express = require("express");
 const bodyParser = require("body-parser");
 
@@ -26,8 +26,13 @@ global.staticFolder = path.resolve(global.projectRootFolder, "static");
 global.appTitle = TITLE;
 
 app.use(express.static(staticFolder));
-app.set('view engine', 'ejs');
 app.set('views', global.viewsFolder);
+
+nunjucks.configure(global.viewsFolder, {
+    autoescape: true,
+    express: app
+});
+
 app.use(bodyParser.json());
 
 const initMongoConnection = function() {

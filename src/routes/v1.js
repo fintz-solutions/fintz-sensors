@@ -34,9 +34,9 @@ module.exports = function(app, io) {
 
     // ----- Index ejs endpoint ----
     app.get("/", function(req, res) {
-        res.render("index", {
+        res.render("landing.html.tpl", {
             title: global.appTitle
-        }); //is now using the index.ejs instead of the HTML one
+        });
     });
 
     // ----- Events endpoints -------
@@ -91,7 +91,12 @@ module.exports = function(app, io) {
 
     app.delete("/project/:id", projectController.delete);
 
-
-    //Run routes -> TODO NELSON -> I don't think this endpoint will be needed(we already create the runs when creating a new project)
-    app.post("/run", runController.create);
+    app.get("/projects/:id/runs/:run", function(req, res) {
+        //TODO: just for testing purposes
+        //TODO: needs validations and params names may change
+        res.render("pages/run.html.tpl", {
+            project_id: req.params["id"],
+            run: req.params["run"],
+        });
+    });
 };
