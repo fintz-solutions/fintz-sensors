@@ -38,11 +38,19 @@
 {{ super() }}
     <p>Test links:</p>
     <a href="/projects/1/runs/1">Create Run [demo]</a>
-    <h2>Add new project:</h2> <span>[ ____ < insert name > ][ __ < num of stations > ][ __ < num of runs > ]</span>
+    <h3>Add new project</h3> <span>[ ____ < insert name > ][ __ < num of stations > ][ __ < num of runs > ]</span>
     <button>create</button>
+    <h3>Projects</h3>
     <div class="projects">
         {% for project in projects %}
-            <div class="project" data-id="{{ project.id }}" data-number="{{ project.number }}">{{ project.name }}</div>
+            <div class="project" data-id="{{ project.id }}" data-number="{{ project.number }}">
+                <p class="name">{{ project.name }}</p>
+                <p class="date">{{ project.createdAt }}</p>
+                <div class="button-actions">
+                    <a href="/projects/{{ project.number }}">open</a>
+                </div>
+            </div>
+            <hr/>
         {% endfor %}
     </div>
 {% endblock %}
