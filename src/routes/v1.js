@@ -35,7 +35,8 @@ module.exports = function(app, io) {
     // ----- Index ejs endpoint ----
     app.get("/", function(req, res) {
         res.render("landing.html.tpl", {
-            title: global.appTitle
+            title: global.appTitle,
+            projects: []
         });
     });
 

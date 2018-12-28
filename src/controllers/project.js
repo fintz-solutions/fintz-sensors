@@ -25,8 +25,7 @@ module.exports = {
             if (req.get("Content-Type") === "application/json") {
                 responseUtil.sendSuccessResponse("Projects retrieved successfully", 200, data, res);
             } else {
-                //render the ejs
-                res.render("projects.html.tpl", {
+                res.render("pages/projects.html.tpl", {
                     title: "List Projects",
                     projects: data
                 });

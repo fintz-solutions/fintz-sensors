@@ -30,7 +30,8 @@ app.set('views', global.viewsFolder);
 
 nunjucks.configure(global.viewsFolder, {
     autoescape: true,
-    express: app
+    express: app,
+    watch: true
 });
 
 app.use(bodyParser.json());

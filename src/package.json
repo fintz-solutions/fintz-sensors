@@ -4,6 +4,7 @@
     "description": "",
     "main": "server.js",
     "scripts": {
+        "dev": "nodemon server.js",
         "start": "node server.js"
     },
     "author": "",
@@ -15,5 +16,12 @@
         "mongoose": "^5.3.14",
         "nunjucks": "^3.1.6",
         "socket.io": "^2.1.1"
+    },
+    "devDependencies": {
+        "chokidar": "^2.0.4",
+        "nodemon": "^1.18.9"
+    },
+    "nodemonConfig": {
+        "ext": "js css html.tpl"
     }
 }

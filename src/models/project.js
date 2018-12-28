@@ -6,7 +6,7 @@ const runModel = require(path.resolve(modelsFolder, "run")).Run;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 let Project = new Schema({
-    projectName: String,
+    name: String,
     number: Number,
     createdAt: Date,
     numStations: Number,
