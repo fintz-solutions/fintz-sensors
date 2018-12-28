@@ -38,10 +38,38 @@
 {{ super() }}
     <p>Test links:</p>
     <a href="/projects/1/runs/1">Create Run [demo]</a>
-    <h3>Add new project</h3> <span>[ ____ < insert name > ][ __ < num of stations > ][ __ < num of runs > ]</span>
-    <button>create</button>
+    <h3>Add new project</h3>
+    <div class="project-creation">
+        <form action="">
+            <label for="project_name">Name:</label>
+            <input type="text" id="project-name-field" name="project_name" placeholder="Project name..">
+            <div class="stations-num">
+                <label for="stations_num">Stations:</label>
+                <select name="stations_num">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8" selected="selected">8</option>
+                </select>
+            </div>
+            <div class="runs-num">
+                <label for="runs_num">Runs:</label>
+                <select name="runs_num">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4" selected="selected">4</option>
+                </select>
+            </div>
+            <input type="submit" value="Create">
+        </form>
+    </div>
     <h3>Projects</h3>
-    <div class="projects">
+    <div class="projects projects-list">
         {% for project in projects %}
             <div class="project" data-id="{{ project.id }}" data-number="{{ project.number }}">
                 <p class="name">{{ project.name }}</p>
