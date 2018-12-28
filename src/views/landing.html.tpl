@@ -1,5 +1,5 @@
-{% set projects = 
-    [ { 
+{% set projects =
+    [ {
         status: "CREATED",
         id: "5c25fa703aeea70a2b8b59d4",
         name: "Project 1",
@@ -10,7 +10,7 @@
         timePerRun: 20,
         productionTarget: 20
     },
-    { 
+    {
         status: "CREATED",
         id: "5c25fd2f3aeea70a2b8b59dc",
         name: 'Project 2',
@@ -21,7 +21,7 @@
         timePerRun: 20,
         productionTarget: 20
     },
-    { 
+    {
         status: "CREATED",
         id: "5c260d2f3aeea70a2b8b59e3",
         name: 'Project 3',
@@ -43,6 +43,6 @@
     <div class="projects">
         {% for project in projects %}
             <div class="project" data-id="{{ project.id }}" data-number="{{ project.number }}">{{ project.name }}</div>
-        {% endfor %}    
+        {% endfor %}
     </div>
 {% endblock %}
