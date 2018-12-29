@@ -34,15 +34,6 @@ module.exports = function(app, io) {
     */
 
     // ----- Landing page endpoint ----
-
-    /*
-    app.get("/", function(req, res) {
-        res.render("landing.html.tpl", {
-            title: global.appTitle,
-            projects: []
-        });
-    });
-    */
     app.get("/", landingPageController.show);
 
     // ----- Events endpoints -------

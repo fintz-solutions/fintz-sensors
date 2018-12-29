@@ -11,11 +11,11 @@ let Project = new Schema({
         required: true,
         unique: true
     },
-    number: {//TODO NELSON autoincrement -> done
+    number: {//autoincrement -> done
         type: Number,
         unique: true
     },
-    createdAt: {
+    createdAt: {//TIMESTAMP
         type: Number,
         required: true
     },
@@ -31,7 +31,7 @@ let Project = new Schema({
         min: 1,
         max: 8
     },
-    timePerRun: {
+    timePerRun: {//minutes??
         type: Number,
         required: true
     },

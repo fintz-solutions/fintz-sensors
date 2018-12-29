@@ -9,7 +9,7 @@ let Run = new Schema({
         type: Number,
         required: true
     },
-    startTimeStamp: {
+    startTimeStamp: {//TIMESTAMP
         type: Number,
         required: true
     },

@@ -23,7 +23,7 @@ let Event = new Schema({
         enum: ['SECURITY', 'QUALITY'],
         default: 'QUALITY',
     },
-    clickedAt: {
+    clickedAt: {//TIMESTAMP
         type: Number,
         required: true
     },

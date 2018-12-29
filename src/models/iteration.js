@@ -5,14 +5,13 @@ let Schema = mongoose.Schema;
 let Iteration = new Schema({
     number: {
         type: Number,
-        required: true,
-        unique: true
+        required: true
     },
-    startTime: {
+    startTime: {//TIMESTAMP
         type: Number,
         required: true
     },
-    stopTime: {
+    stopTime: {//TIMESTAMP
         type: Number,
         required: true
     },
