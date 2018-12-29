@@ -1,5 +1,5 @@
 module.exports = {
-    createAndThrowGenericError : function(errorMessage, statusCode) {
+    createAndThrowGenericError: function(errorMessage, statusCode) {
         errorMessage = errorMessage ? errorMessage : "Generic error";
         statusCode = statusCode ? statusCode : 500;
         let errorObject = new Error(errorMessage);

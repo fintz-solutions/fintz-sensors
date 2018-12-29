@@ -4,7 +4,7 @@ const projectController = require(path.resolve(controllersFolder, "project"));
 const runController = require(path.resolve(controllersFolder, "run"));
 const eventController = require(path.resolve(controllersFolder, "event"));
 
-module.exports = function (app, io) {
+module.exports = function(app, io) {
 
     /*
     app.get(/"v1/", function (req, res) {
@@ -33,19 +33,22 @@ module.exports = function (app, io) {
     */
 
     // ----- Index ejs endpoint ----
-    app.get("/", function (req, res) {
-        res.render("index", {title: global.appTitle});//is now using the index.ejs instead of the HTML one
+    app.get("/", function(req, res) {
+        res.render("landing.html.tpl", {
+            title: global.appTitle,
+            projects: []
+        });
     });
 
     // ----- Events endpoints -------
     //TODO NELSON let's think a better name for this route
     app.post('/timer/event', function(req, res) {
-        let sensorPayload= req.body;
+        let sensorPayload = req.body;
         let sensorNumber = sensorPayload.sensor;
         let response = null;
         //TODO NELSON save sensorPayload to db then send start or stop timer
 
-        if(sensorNumber > 0 && sensorNumber <= 8) {
+        if (sensorNumber > 0 && sensorNumber <= 8) {
             console.log("timer event - sensor: " + sensorNumber);
             io.emit('toggleTimer', sensorPayload);
 
@@ -55,9 +58,7 @@ module.exports = function (app, io) {
             };
 
             res.send(response);
-        }
-        else
-        {
+        } else {
             console.error("ERROR - timer event - sensor: " + sensorNumber);
 
             response = {
@@ -91,7 +92,12 @@ module.exports = function (app, io) {
 
     app.delete("/project/:id", projectController.delete);
 
-    
-    //Run routes -> TODO NELSON -> I don't think this endpoint will be needed(we already create the runs when creating a new project)
-    app.post("/run", runController.create);
+    app.get("/projects/:id/runs/:run", function(req, res) {
+        //TODO: just for testing purposes
+        //TODO: needs validations and params names may change
+        res.render("pages/run.html.tpl", {
+            project_id: req.params["id"],
+            run: req.params["run"],
+        });
+    });
 };

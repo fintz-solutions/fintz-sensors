@@ -1,7 +1,8 @@
-const ejs = require("ejs");
+const nunjucks = require("nunjucks");
+const express = require("express");
 const bodyParser = require("body-parser");
 
-const app = require("express")();
+const app = express();
 const server = require("http").Server(app);
 const io = require("socket.io")(server);
 
@@ -14,7 +15,6 @@ const path = require("path");
 const mongoose = require('mongoose');
 const projectRootFolder = path.resolve(__dirname);
 
-
 global.projectRootFolder = projectRootFolder;
 global.routesFolder = path.resolve(projectRootFolder, "routes");
 global.controllersFolder = path.resolve(global.projectRootFolder, "controllers");
@@ -22,14 +22,21 @@ global.modelsFolder = path.resolve(global.projectRootFolder, "models");
 global.servicesFolder = path.resolve(global.projectRootFolder, "services");
 global.utilsFolder = path.resolve(global.projectRootFolder, "utils");
 global.viewsFolder = path.resolve(global.projectRootFolder, "views");
+global.staticFolder = path.resolve(global.projectRootFolder, "static");
 global.appTitle = TITLE;
 
-
-app.set('view engine', 'ejs');
+app.use(express.static(staticFolder));
 app.set('views', global.viewsFolder);
+
+nunjucks.configure(global.viewsFolder, {
+    autoescape: true,
+    express: app,
+    watch: true
+});
+
 app.use(bodyParser.json());
 
-const initMongoConnection = function(){
+const initMongoConnection = function() {
     try {
         const config = require(path.resolve(global.projectRootFolder, "config", "config"));
         const mongoConfig = config.mongo;
@@ -54,36 +61,37 @@ const initMongoConnection = function(){
         const authOptions = {
             useNewUrlParser: true
         };
-        return mongoose.connect(uri, authOptions).then(function (data) {
+        return mongoose.connect(uri, authOptions).then(function(data) {
             console.log("MONGO CONNECTED");
             return null;
-        }).catch(function (error) {
+        }).catch(function(error) {
             console.error("ERROR: COULD NOT CONNECT TO MONGO: ", error);
             process.exit(1);
         });
-    }
-    catch (error) {
+    } catch (error) {
         console.error("ERROR: COULD NOT CONNECT TO MONGO: ", error);
         process.exit(1);
     }
 };
 
 
-fs.readdir(routesFolder, function (err, files) {
+fs.readdir(routesFolder, function(err, files) {
     if (err) {
         console.error("Could not list the directory.", err);
         process.exit(1);
     }
 
-    files.forEach(function (file, index) {
+    files.forEach(function(file, index) {
         require(path.resolve(global.routesFolder, file))(app, io);
     });
 
-    io.on("connection", function (socket) {
+    io.on("connection", function(socket) {
         console.log("new connection detected on socket ", socket.id);
-        io.emit('ping_event', { "msg": "connection established" });
-        socket.emit("identify");//TODO NELSON client(browser) should identify itself to the server
-        socket.on("identified", function (data) {
+        io.emit('ping_event', {
+            "msg": "connection established"
+        });
+        socket.emit("identify"); //TODO NELSON client(browser) should identify itself to the server
+        socket.on("identified", function(data) {
             //TODO NELSON save the socket id or socket
             //TODO NELSON all events are now sent to this id
         });
@@ -91,7 +99,7 @@ fs.readdir(routesFolder, function (err, files) {
 
     let promises = [];
     promises.push(initMongoConnection());
-    Promise.all(promises).then(function (results) {
+    Promise.all(promises).then(function(results) {
         server.listen(PORT, HOST, function onStart(err) {
             err ? console.log(err) : console.info("Listening on port " + PORT);
         });
