@@ -61,6 +61,7 @@ const initMongoConnection = function() {
         const authOptions = {
             useNewUrlParser: true
         };
+        mongoose.set('useCreateIndex', true);
         return mongoose.connect(uri, authOptions).then(function(data) {
             console.log("MONGO CONNECTED");
             return null;

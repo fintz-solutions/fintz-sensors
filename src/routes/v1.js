@@ -3,6 +3,7 @@ const controllersFolder = global.controllersFolder;
 const projectController = require(path.resolve(controllersFolder, "project"));
 const runController = require(path.resolve(controllersFolder, "run"));
 const eventController = require(path.resolve(controllersFolder, "event"));
+const landingPageController = require(path.resolve(controllersFolder, "landingPage"));
 
 module.exports = function(app, io) {
 
@@ -32,13 +33,17 @@ module.exports = function(app, io) {
     });
     */
 
-    // ----- Index ejs endpoint ----
+    // ----- Landing page endpoint ----
+
+    /*
     app.get("/", function(req, res) {
         res.render("landing.html.tpl", {
             title: global.appTitle,
             projects: []
         });
     });
+    */
+    app.get("/", landingPageController.show);
 
     // ----- Events endpoints -------
     //TODO NELSON let's think a better name for this route

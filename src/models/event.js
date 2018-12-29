@@ -21,12 +21,16 @@ let Event = new Schema({
     type: {
         type: String,
         enum: ['SECURITY', 'QUALITY'],
-        default: 'QUALITY'
+        default: 'QUALITY',
     },
-    clickedAt: Date,
+    clickedAt: {
+        type: Number,
+        required: true
+    },
     run: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Run'
+        ref: 'Run',
+        required: true
     }
 });
 

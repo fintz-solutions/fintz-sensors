@@ -1,11 +1,26 @@
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 
+
 let Iteration = new Schema({
-    iterationNumber: Number, //TODO NELSON see autoincrement
-    startTime: Date,
-    stopTime: Date,
-    run: model
+    number: {
+        type: Number,
+        required: true,
+        unique: true
+    },
+    startTime: {
+        type: Number,
+        required: true
+    },
+    stopTime: {
+        type: Number,
+        required: true
+    },
+    run: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Run',
+        required: true
+    }
 });
 
-module.exports.Iteration = Iteration;
+module.exports.Iteration = mongoose.model("Iteration", Iteration);

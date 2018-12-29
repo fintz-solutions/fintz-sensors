@@ -6,20 +6,45 @@ const runModel = require(path.resolve(modelsFolder, "run")).Run;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 let Project = new Schema({
-    name: String,
-    number: Number,
-    createdAt: Date,
-    numStations: Number,
-    numRuns: Number,
-    timePerRun: Number,
-    productionTarget: Number, //target number of karts per run
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    number: {//TODO NELSON autoincrement -> done
+        type: Number,
+        unique: true
+    },
+    createdAt: {
+        type: Number,
+        required: true
+    },
+    numStations: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 8
+    },
+    numRuns: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 8
+    },
+    timePerRun: {
+        type: Number,
+        required: true
+    },
+    productionTarget: {//target number of karts per run
+        type: Number,
+        required: true
+    },
     status: {
         type: String,
         enum: ['CREATED', 'RUNNING', 'FINISHED'],
         default: 'CREATED'
     }
 });
-
 
 // -------- Static methods -------- //
 
@@ -97,4 +122,16 @@ Project.methods.deleteAssociatedRunsForProject = function() {
     });
 };
 
-module.exports.Project = mongoose.model("Project", Project);
+Project.pre("save", function(next) {
+    let documentToBeSaved = this;
+    projectModel.findOne().sort({ _id: -1 }).then(function (lastCreatedProject) {
+        let number = lastCreatedProject ? lastCreatedProject.number + 1 : 1;
+        documentToBeSaved.number = number;
+        next();
+    }).catch(function (error) {
+        next(error);
+    });
+});
+
+const projectModel = mongoose.model("Project", Project);
+module.exports.Project = projectModel;
