@@ -5,7 +5,7 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports.createProject = async function(projectData) {
-    let result = requestValidation.isValidBody(["name", "createdAt", "numStations", "numRuns",
+    let result = requestValidation.isValidBody(["name", "numStations", "numRuns",
         "timePerRun", "productionTarget", "status"
     ], projectData);
 

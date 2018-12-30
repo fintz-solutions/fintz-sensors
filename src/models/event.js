@@ -1,21 +1,9 @@
-/*
-let mongoose = require('mongoose');
-let Schema = mongoose.Schema;
-
-let Event = new Schema({
-    type:  Number, //TODO NELSON enum
-    clickedAt: Date, //TODO do not use backend time
-    run: model
-});
-
-module.exports.Event = Event;
-*/
-
 let mongoose = require('mongoose');
 let Schema = mongoose.Schema;
 const path = require("path");
 const modelsFolder = global.modelsFolder;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
 let Event = new Schema({
     type: {
@@ -35,6 +23,7 @@ let Event = new Schema({
 });
 
 Event.statics.createNew = function(eventData) {
+    eventData.clickedAt = dateUtil.getCurrentTimestamp();
     let event = this;
     const runModel = require(path.resolve(modelsFolder, "run")).Run; //NELSON: Needed to add this require here because if not circular dependency problems would occur
     return runModel.findByRunId(eventData.run).then(function(run) {

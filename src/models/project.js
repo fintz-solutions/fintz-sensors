@@ -4,6 +4,7 @@ const path = require("path");
 const modelsFolder = global.modelsFolder;
 const runModel = require(path.resolve(modelsFolder, "run")).Run;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
 let Project = new Schema({
     name: {
@@ -49,6 +50,7 @@ let Project = new Schema({
 // -------- Static methods -------- //
 
 Project.statics.createNew = function(projectData) {
+    projectData.createdAt = dateUtil.getCurrentTimestamp();
     return this.create(projectData).then(function(newProject) {
         //return newProject._doc;
         let promises = [];
