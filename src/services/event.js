@@ -5,7 +5,7 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports.createEvent = async function(eventData) {
-    let result = requestValidation.isValidBody(["type", "clickedAt", "run"], eventData);
+    let result = requestValidation.isValidBody(["type", "run"], eventData);
     if (result.status === true) {
         return eventModel.createNew(eventData);
     } else {

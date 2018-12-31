@@ -4,15 +4,42 @@ const path = require("path");
 const modelsFolder = global.modelsFolder;
 const runModel = require(path.resolve(modelsFolder, "run")).Run;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
 let Project = new Schema({
-    name: String,
-    number: Number,
-    createdAt: Date,
-    numStations: Number,
-    numRuns: Number,
-    timePerRun: Number,
-    productionTarget: Number, //target number of karts per run
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    number: {//autoincrement -> done
+        type: Number,
+        unique: true
+    },
+    createdAt: {//TIMESTAMP
+        type: Number,
+        required: true
+    },
+    numStations: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 8
+    },
+    numRuns: {
+        type: Number,
+        required: true,
+        min: 1,
+        max: 8
+    },
+    timePerRun: {//minutes??
+        type: Number,
+        required: true
+    },
+    productionTarget: {//target number of karts per run
+        type: Number,
+        required: true
+    },
     status: {
         type: String,
         enum: ['CREATED', 'RUNNING', 'FINISHED'],
@@ -20,10 +47,10 @@ let Project = new Schema({
     }
 });
 
-
 // -------- Static methods -------- //
 
 Project.statics.createNew = function(projectData) {
+    projectData.createdAt = dateUtil.getCurrentTimestamp();
     return this.create(projectData).then(function(newProject) {
         //return newProject._doc;
         let promises = [];
@@ -97,4 +124,16 @@ Project.methods.deleteAssociatedRunsForProject = function() {
     });
 };
 
-module.exports.Project = mongoose.model("Project", Project);
+Project.pre("save", function(next) {
+    let documentToBeSaved = this;
+    projectModel.findOne().sort({ _id: -1 }).then(function (lastCreatedProject) {
+        let number = lastCreatedProject ? lastCreatedProject.number + 1 : 1;
+        documentToBeSaved.number = number;
+        next();
+    }).catch(function (error) {
+        next(error);
+    });
+});
+
+const projectModel = mongoose.model("Project", Project);
+module.exports.Project = projectModel;

@@ -3,11 +3,21 @@ let Schema = mongoose.Schema;
 const path = require("path");
 const modelsFolder = global.modelsFolder;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
 let Run = new Schema({
-    number: Number,
-    startTimeStamp: Date, //TODO NELSON ver timestamps
-    totalTime: Number, // in minutes
+    number: {
+        type: Number,
+        required: true
+    },
+    startTimeStamp: {//TIMESTAMP
+        type: Number,
+        required: true
+    },
+    totalTime: {// in minutes
+        type: Number,
+        required: true
+    },
     status: {
         type: String,
         enum: ['CREATED', 'RUNNING', 'FINISHED'],
@@ -15,9 +25,13 @@ let Run = new Schema({
     },
     project: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project'
+        ref: 'Project',
+        required: true
     },
-    currentIteration: Number
+    currentIteration: {
+        type: Number,
+        required: true
+    }
 });
 
 Run.statics.createNew = function(runData) {
