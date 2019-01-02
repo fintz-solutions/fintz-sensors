@@ -30,13 +30,13 @@ let Project = new Schema({
         type: Number,
         required: true,
         min: 1,
-        max: 8
+        max: 10
     },
     timePerRun: {//minutes??
         type: Number,
         required: true
     },
-    productionTarget: {//target number of karts per run
+    productionTarget: {//target number of karts per run, target number of iterations(1 iteration completed -> 1 kart completed)
         type: Number,
         required: true
     },
@@ -61,8 +61,7 @@ Project.statics.createNew = function(projectData) {
                 startTimeStamp: newProject._doc.createdAt,
                 totalTime: newProject._doc.timePerRun,
                 status: "CREATED",
-                project: newProject._doc._id,
-                currentIteration: 1 //Because these are created when creating a new project
+                project: newProject._doc._id
             };
             promises.push(runModel.createNew(runData));
         }
@@ -78,6 +77,25 @@ Project.statics.findByProjectId = function(projectId) {
     }).catch(function(error) {
         console.error(error);
         errorUtil.createAndThrowGenericError("Invalid Project", 404);
+    });
+};
+
+Project.statics.findByProjectNumber = function(projectNumber) {
+    return this.findOne({number: projectNumber}).then(function(project) {
+        return project && project._doc ? project._doc : null;
+    }).catch(function(error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Invalid Project", 404);
+    });
+};
+
+
+Project.statics.findRunningProject = function() {
+    return this.findOne({status: 'RUNNING'}).sort({ _id: -1 }).then(function(project) {
+        return project && project._doc ? project._doc : null;
+    }).catch(function(error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Could not find a running project", 500);
     });
 };
 
@@ -102,7 +120,15 @@ Project.statics.deleteProjectById = function(projectId) {
 
 
 // -------- Instance methods -------- //
-
+Project.methods.findActiveRunForProject = function() {
+    let projectObj = this;
+    return runModel.findOne({project: projectObj._id, status: "RUNNING"}).sort({ _id: -1 }).then(function (activeRun) {
+        return activeRun && activeRun._doc ? activeRun._doc : null;
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not find an active run for project with number ${projectObj.number}`, 404);
+    });
+};
 
 Project.methods.findAllRunsForProject = function() {
     let projectObj = this;

@@ -4,6 +4,7 @@ const path = require("path");
 const modelsFolder = global.modelsFolder;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 const dateUtil = require(path.resolve(global.utilsFolder, "date"));
+const iterationModel = require(path.resolve(modelsFolder, "iteration")).Iteration;
 
 let Run = new Schema({
     number: {
@@ -26,10 +27,6 @@ let Run = new Schema({
     project: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Project',
-        required: true
-    },
-    currentIteration: {
-        type: Number,
         required: true
     }
 });
@@ -77,6 +74,17 @@ Run.statics.findByRunId = function(runId) {
     }).catch(function(error) {
         console.error(error);
         errorUtil.createAndThrowGenericError("Invalid Run", 404);
+    });
+};
+
+// -------- Instance methods -------- //
+Run.methods.findActiveIterationForRun = function() {
+    let runObj = this;
+    return iterationModel.findOne({run: runObj._id, startTime: { $ne: null }, stopTime: null}).sort({ _id: -1 }).then(function (activeIteration) {
+        return activeIteration && activeIteration._doc ? activeIteration._doc : null;//TODO NELSON might have to return the entire thing instead of just _.doc so that we are able to call the instance methods of the retrieved object
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for project with number ${runObj.project}`, 404);
     });
 };
 

@@ -10,7 +10,7 @@ module.exports = function(app, io) {
     app.get("/", landingPageController.show);
 
     // ----- Events endpoints -------
-    //TODO NELSON let's think a better name for this route
+    //TODO NELSON let's think a better name for this route -> timer/measuremts
     app.post('/timer/event', function(req, res) {
         let sensorPayload = req.body;
         let sensorNumber = sensorPayload.sensor;
@@ -56,12 +56,11 @@ module.exports = function(app, io) {
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects", projectController.list);
 
-    //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/project/:id", projectController.get);
-
     app.delete("/project/:id", projectController.delete);
 
-    app.get("/projects/:id/runs/:run", function(req, res) {
+
+    //app.get("/projects/:id/runs/:run", function(req, res) {
+    app.get("/projects/:run/runs/:run", function(req, res) {
         //TODO: just for testing purposes
         //TODO: needs validations and params names may change
         res.render("pages/run.html.tpl", {
@@ -69,4 +68,8 @@ module.exports = function(app, io) {
             run: req.params["run"],
         });
     });
+
+
+    //TODO NELSON request to GET in HTML or JSON depending on the request header
+    app.get("/project/:number", projectController.get);
 };
