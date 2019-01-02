@@ -3,9 +3,9 @@
 {{ super() }}
     <h3>Add new project</h3>
     <div class="create-container">
-        <form class="form add-project" action="/projects">
-            <label for="project_name">Name:</label>
-            <input type="text" id="project-name-field" name="project_name" placeholder="Project name..">
+        <form class="form add-project" action="/projects/" method="post">
+            <label for="project[name]">Name:</label>
+            <input type="text" id="project-name-field" name="project[name]" placeholder="Project name..">
             <div class="stations-num">
                 <label for="stations_num">Stations:</label>
                 <select name="stations_num">

@@ -5,6 +5,7 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports.createProject = async function(projectData) {
+    console.log("here:",projectData)
     let result = requestValidation.isValidBody(["name", "numStations", "numRuns",
         "timePerRun", "productionTarget", "status"
     ], projectData);
@@ -22,6 +23,8 @@ module.exports.getProject = async function(projectId) {
             errorUtil.createAndThrowGenericError(`Could not find the project specified by id: ${projectId}`,
                 404);
         } else {
+            //TODO: timestamp to date
+            //TODO: clean project fields
             return project;
         }
     });
