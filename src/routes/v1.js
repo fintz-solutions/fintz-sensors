@@ -40,7 +40,7 @@ module.exports = function(app, io) {
     });
 
     /* EVENTS(SECURITY and QUALITY)  endpoints */
-    app.post("/event", eventController.create);
+    app.post("/events", eventController.create);
 
 
     //------- Project endpoints --------
@@ -50,16 +50,16 @@ module.exports = function(app, io) {
 
 
 
-    app.post("/project", projectController.create);
+    app.post("/projects", projectController.create);
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects", projectController.list);
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/project/:id", projectController.get);
+    app.get("/projects/:id", projectController.get);
 
-    app.delete("/project/:id", projectController.delete);
+    app.delete("/projects/:id", projectController.delete);
 
     app.get("/projects/:id/runs/:run", function(req, res) {
         //TODO: just for testing purposes
