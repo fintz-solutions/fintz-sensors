@@ -3,7 +3,7 @@
 {{ super() }}
     <h3>Add new project</h3>
     <div class="create-container">
-        <form class="form add-project" action="/projects/" method="post">
+        <form class="form form-ajax add-project" action="/projects/" method="post">
             <label for="project[name]">Name:</label>
             <input type="text" id="project-name-field" name="project[name]" placeholder="Project name..">
             <div class="stations-num">
