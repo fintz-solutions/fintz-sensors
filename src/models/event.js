@@ -8,8 +8,11 @@ const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 let Event = new Schema({
     type: {
         type: String,
-        enum: ['SECURITY', 'QUALITY'],
-        default: 'QUALITY',
+        enum: ['SAFETY', 'QUALITY']
+    },
+    subtype: {
+        type: String,
+        enum: ['A', 'B', 'C', 'D']
     },
     clickedAt: {//TIMESTAMP
         type: Number,

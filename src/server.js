@@ -18,6 +18,7 @@ const projectRootFolder = path.resolve(__dirname);
 global.projectRootFolder = projectRootFolder;
 global.routesFolder = path.resolve(projectRootFolder, "routes");
 global.controllersFolder = path.resolve(global.projectRootFolder, "controllers");
+global.middlewareFolder = path.resolve(global.projectRootFolder, "middleware");
 global.modelsFolder = path.resolve(global.projectRootFolder, "models");
 global.servicesFolder = path.resolve(global.projectRootFolder, "services");
 global.utilsFolder = path.resolve(global.projectRootFolder, "utils");

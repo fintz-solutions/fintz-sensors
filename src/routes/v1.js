@@ -1,9 +1,12 @@
 const path = require("path");
 const controllersFolder = global.controllersFolder;
+const middlewareFolder = global.middlewareFolder;
 const projectController = require(path.resolve(controllersFolder, "project"));
 const runController = require(path.resolve(controllersFolder, "run"));
 const eventController = require(path.resolve(controllersFolder, "event"));
 const landingPageController = require(path.resolve(controllersFolder, "landingPage"));
+const projectMiddleware = require(path.resolve(middlewareFolder, "project"));
+const runMiddleware = require(path.resolve(middlewareFolder, "run"));
 
 module.exports = function(app, io) {
     // ----- Landing page endpoint ----
@@ -39,8 +42,8 @@ module.exports = function(app, io) {
         }
     });
 
-    /* EVENTS(SECURITY and QUALITY)  endpoints */
-    app.post("/event", eventController.create);
+    /* EVENTS(SAFETY and QUALITY)  endpoints */
+    app.post("/event", projectMiddleware.getActiveProject, runMiddleware.getActiveRun, eventController.create);
 
 
     //------- Project endpoints --------
