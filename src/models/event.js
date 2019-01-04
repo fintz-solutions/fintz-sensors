@@ -3,16 +3,15 @@ let Schema = mongoose.Schema;
 const path = require("path");
 const modelsFolder = global.modelsFolder;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
-const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
 let Event = new Schema({
     type: {
         type: String,
-        enum: ['SAFETY', 'QUALITY']
+        enum: ['QUALITY', 'SAFETY']
     },
     subtype: {
         type: String,
-        enum: ['A', 'B', 'C', 'D']
+        enum: ['ASSEMBLY_ERROR', 'MATERIAL_ERROR', 'MATERIAL_DROP', 'GENERAL_SAFETY']
     },
     clickedAt: {//TIMESTAMP
         type: Number,
@@ -26,17 +25,9 @@ let Event = new Schema({
 });
 
 Event.statics.createNew = function(eventData) {
-    eventData.clickedAt = dateUtil.getCurrentTimestamp();
     let event = this;
-    const runModel = require(path.resolve(modelsFolder, "run")).Run; //NELSON: Needed to add this require here because if not circular dependency problems would occur
-    return runModel.findByRunId(eventData.run).then(function(run) {
-        if (!run) {
-            errorUtil.createAndThrowGenericError("Invalid Run", 400);
-        } else {
-            return event.create(eventData).then(function(newEvent) {
-                return newEvent._doc;
-            });
-        }
+    return event.create(eventData).then(function(newEvent) {
+        return newEvent._doc;
     });
 };
 

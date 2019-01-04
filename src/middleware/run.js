@@ -3,6 +3,7 @@ const modelsFolder = global.modelsFolder;
 const projectModel = require(path.resolve(modelsFolder, "project")).Project;
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+
 module.exports = {
     getActiveRun : function (req, res, next) {
         req.project.findActiveRunForProject().then(function (activeRun) {
