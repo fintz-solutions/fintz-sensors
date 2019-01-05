@@ -23,11 +23,9 @@ global.servicesFolder = path.resolve(global.projectRootFolder, "services");
 global.utilsFolder = path.resolve(global.projectRootFolder, "utils");
 global.viewsFolder = path.resolve(global.projectRootFolder, "views");
 global.staticFolder = path.resolve(global.projectRootFolder, "static");
-global.distFolder = path.resolve(global.projectRootFolder + "/..", "dist");
 global.appTitle = TITLE;
 
 app.use(express.static(staticFolder));
-app.use(express.static(distFolder));
 app.set('views', global.viewsFolder);
 
 nunjucks.configure(global.viewsFolder, {
