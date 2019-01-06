@@ -8,7 +8,7 @@ module.exports.createProject = async function(projectData) {
     let result = requestValidation.isValidBody(["name", "numStations", "numRuns",
         "timePerRun", "productionTarget", "status"
     ], projectData);
-    
+
     if (result.status === true) {
         return projectModel.createNew(projectData);
     } else {

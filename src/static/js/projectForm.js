@@ -16,8 +16,8 @@ var projectForm = function(element) {
             if(!event || event.length === 0) {
                 return;
             }
-            
-            event.preventDefault(); 
+
+            event.preventDefault();
 
             var element = jQuery(this);
             element.triggerHandler("pre_submit");
@@ -27,7 +27,7 @@ var projectForm = function(element) {
             var numRuns = jQuery(".runs-num-field", element);
             var timePerRun = jQuery(".time-run-field", element);
             var productionTarget = jQuery(".production-target-field", element);
-            
+
             name = name && name.val() || "New project";
             numStations = numStations && parseInt(numStations.val()) || 8;
             numRuns = numRuns && parseInt(numRuns.val()) || 3;
@@ -67,7 +67,7 @@ var projectForm = function(element) {
             element.removeClass("loading");
             element.addClass("success");
         });
-        
+
         matchedObject.bind("error", function(event, message) {
             var element = jQuery(this);
             var errorMessage = jQuery(".error-message", element);

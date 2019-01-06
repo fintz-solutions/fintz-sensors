@@ -79,8 +79,8 @@ html {
 }
 
 .body form.form-ajax.error .error-message {
-    display: block;
     color: red;
+    display: block;
 }
 
 .body form.form-ajax .error-message {
@@ -88,8 +88,8 @@ html {
 }
 
 .body form.form-ajax.success .success-message {
-    display: block;
     color: green;
+    display: block;
 }
 
 .body form.form-ajax .success-message {
