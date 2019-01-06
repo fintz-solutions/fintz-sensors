@@ -5,11 +5,10 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports.createProject = async function(projectData) {
-    console.log("here:",projectData)
     let result = requestValidation.isValidBody(["name", "numStations", "numRuns",
         "timePerRun", "productionTarget", "status"
     ], projectData);
-
+    console.log("aqui:", projectData)
     if (result.status === true) {
         return projectModel.createNew(projectData);
     } else {
