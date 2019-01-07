@@ -92,7 +92,7 @@ Project.statics.findByProjectNumber = function(projectNumber) {
 
 Project.statics.findRunningProject = function() {
     return this.findOne({status: 'RUNNING'}).sort({ _id: -1 }).then(function(project) {
-        return project && project._doc ? project._doc : null;
+        return project;
     }).catch(function(error) {
         console.error(error);
         errorUtil.createAndThrowGenericError("Could not find a running project", 500);
@@ -123,7 +123,7 @@ Project.statics.deleteProjectById = function(projectId) {
 Project.methods.findActiveRunForProject = function() {
     let projectObj = this;
     return runModel.findOne({project: projectObj._id, status: "RUNNING"}).sort({ _id: -1 }).then(function (activeRun) {
-        return activeRun && activeRun._doc ? activeRun._doc : null;
+        return activeRun;
     }).catch(function (error) {
         console.error(error);
         errorUtil.createAndThrowGenericError(`Could not find an active run for project with number ${projectObj.number}`, 404);
