@@ -37,7 +37,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/project/:id",
+            "name": "http://localhost:3001/projects/:id",
             "protocolProfileBehavior": {
                 "disableBodyPruning": true
             },
@@ -56,7 +56,7 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/project/5c0c67a86b7a0e0c87248e5b",
+                    "raw": "http://localhost:3001/projects/5c0c67a86b7a0e0c87248e5b",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -101,7 +101,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/project/5c02a5a66121d00c8f0e8e2e",
+            "name": "http://localhost:3001/projects/5c02a5a66121d00c8f0e8e2e",
             "request": {
                 "method": "DELETE",
                 "header": [
@@ -117,7 +117,7 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/project/5c27eb4bc3ed07c360b40fa1",
+                    "raw": "http://localhost:3001/projects/5c27eb4bc3ed07c360b40fa1",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -192,7 +192,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/event",
+            "name": "http://localhost:3001/events",
             "request": {
                 "method": "POST",
                 "header": [
@@ -208,7 +208,7 @@
                     "raw": "{\n\t\"type\": \"QUALITY\",\n\t\"run\" : \"5c281134827fd8c72340c601\"\n}"
                 },
                 "url": {
-                    "raw": "http://localhost:3001/event",
+                    "raw": "http://localhost:3001/events",
                     "protocol": "http",
                     "host": [
                         "localhost"

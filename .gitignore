@@ -1,12 +1,9 @@
 fintz-sensors.iml
 
+node_modules/
+
 package-lock.json
 
+.vs
 .idea
 .DS_Store
-
-/node_modules
-
-.vs
-
-src/node_modules/*

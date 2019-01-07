@@ -1,16 +1,14 @@
 {% extends "partials/layout.html.tpl" %}
 {% block content %}
 {{ super() }}
-    <p>Test links:</p>
-    <a href="/projects/1/runs/1">Create Run [demo]</a>
     <h3>Add new project</h3>
-    <div class="project-creation">
-        <form action="">
+    <div class="create-container">
+        <form class="form form-ajax add-project" action="/projects" method="post">
             <label for="project_name">Name:</label>
-            <input type="text" id="project-name-field" name="project_name" placeholder="Project name..">
-            <div class="stations-num">
+            <input type="text" class="name-field" name="project_name" placeholder="project name">
+            <div class="field">
                 <label for="stations_num">Stations:</label>
-                <select name="stations_num">
+                <select class="stations-num-field" name="stations_num">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
@@ -21,29 +19,44 @@
                     <option value="8" selected="selected">8</option>
                 </select>
             </div>
-            <div class="runs-num">
+            <div class="field">
                 <label for="runs_num">Runs:</label>
-                <select name="runs_num">
+                <select class="runs-num-field" name="runs_num">
                     <option value="1">1</option>
                     <option value="2">2</option>
                     <option value="3">3</option>
-                    <option value="4" selected="selected">4</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8" selected="selected">8</option>
                 </select>
             </div>
+            <div class="field">
+                <label for="time_run">Time per run:</label>
+                <input type="text" class="time-run-field" name="time_run" pattern=".{1,3}" maxlength="3" placeholder="in minutes">
+            <div>
+            <div class="field">
+                <label for="production_target">Production target:</label>
+                <input type="text" class="production-target-field" name="production_target" pattern=".{1,3}" maxlength="3" placeholder="production target">
+            </div>
             <input type="submit" value="Create">
+            <p class="error-message"></p>
+            <p class="success-message">New project added!</p>
         </form>
     </div>
-    <h3>Projects</h3>
-    <div class="projects projects-list">
-        {% for project in projects %}
-            <div class="project" data-id="{{ project._id }}" data-number="{{ project.number }}">
-                <p class="name">{{ project.name }}</p>
-                <p class="date">{{ project.createdAt }}</p>
-                <div class="button-actions">
-                    <a href="/projects/{{ project.number }}">open</a>
-                </div>
-            </div>
-            <hr/>
-        {% endfor %}
+    <div class="list-container">
+        <h3>Projects</h3>
+        <ul class="list list-projects">
+            {% for project in projects %}
+                <li class="element element-project" data-id="{{ project._id }}" data-number="{{ project.number }}">
+                    <p class="name">{{ project.name }}</p>
+                    <p class="date">{{ project.createdAt }}</p>
+                    <div class="button-actions">
+                        <a href="/projects/{{ project.id }}">open</a>
+                    </div>
+                </li>
+            {% endfor %}
+        </ul>
     </div>
 {% endblock %}

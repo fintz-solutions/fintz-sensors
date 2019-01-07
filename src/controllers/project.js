@@ -13,12 +13,12 @@ module.exports = {
     },
 
     get: function(req, res) {
-        projectService.getProject(req.params.number).then(function(data) {
+        projectService.getProject(req.params.id).then(function(data) {
             if (req.get("Content-Type") === "application/json") {
                 responseUtil.sendSuccessResponse("Project details retrieved successfully", 200, data, res);
             } else {
                 res.render("pages/project.html.tpl", {
-                    title: "Project details",
+                    title: "Project Details",
                     project: data
                 });
             }

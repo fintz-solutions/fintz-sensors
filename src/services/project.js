@@ -22,6 +22,8 @@ module.exports.getProject = async function(projectNumber) {
             errorUtil.createAndThrowGenericError(`Could not find the project specified by number: ${projectNumber}`,
                 404);
         } else {
+            //TODO: timestamp to date
+            //TODO: clean project fields
             return project;
         }
     });

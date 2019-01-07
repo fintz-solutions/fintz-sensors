@@ -43,7 +43,7 @@ module.exports = function(app, io) {
     });
 
     /* EVENTS(SAFETY and QUALITY)  endpoints */
-    app.post("/event", projectMiddleware.getActiveProject, runMiddleware.getActiveRun, eventController.create);
+    app.post("/events", projectMiddleware.getActiveProject, runMiddleware.getActiveRun, eventController.create);
 
 
     //------- Project endpoints --------
@@ -53,17 +53,20 @@ module.exports = function(app, io) {
 
 
 
-    app.post("/project", projectController.create);
+    app.post("/projects", projectController.create);
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects", projectController.list);
 
-    app.delete("/project/:id", projectController.delete);
+    //TODO NELSON request to GET in HTML or JSON depending on the request header
+    app.get("/projects/:id", projectController.get);
+
+    app.delete("/projects/:id", projectController.delete);
 
 
     //app.get("/projects/:id/runs/:run", function(req, res) {
-    app.get("/projects/:run/runs/:run", function(req, res) {
+    app.get("/projects/:projNumber/runs/:runNumber", function(req, res) {
         //TODO: just for testing purposes
         //TODO: needs validations and params names may change
         res.render("pages/run.html.tpl", {
@@ -74,5 +77,5 @@ module.exports = function(app, io) {
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/project/:number", projectController.get);
+    app.get("/projects/:number", projectController.get);
 };
