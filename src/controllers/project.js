@@ -14,7 +14,14 @@ module.exports = {
 
     get: function(req, res) {
         projectService.getProject(req.params.id).then(function(data) {
-            responseUtil.sendSuccessResponse("Project details retrieved successfully", 200, data, res);
+            if (req.get("Content-Type") === "application/json") {
+                responseUtil.sendSuccessResponse("Project details retrieved successfully", 200, data, res);
+            } else {
+                res.render("pages/project.html.tpl", {
+                    title: "Project Details",
+                    project: data
+                });
+            }
         }).catch(function(error) {
             responseUtil.sendErrorResponse(error, "Could not retrieve Project details", null, res);
         });
