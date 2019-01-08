@@ -26,12 +26,14 @@ var deleteProject = function(element) {
 
         matchedObject.bind("success", function() {
             var element = jQuery(this);
-            element.addClass("success");
+            var projectElement = element.parents(".element-project");
+            projectElement.addClass("deleted");
         });
 
         matchedObject.bind("error", function(event, message) {
             var element = jQuery(this);
-            element.addClass("error");
+            var projectElement = element.parents(".element-project");
+            projectElement.addClass("error");
         });
     };
 
@@ -42,6 +44,7 @@ var deleteProject = function(element) {
         
         //prevents default click behaviour
         event.preventDefault();
+
         var url = element.attr("href");
         
         jQuery.ajax({
