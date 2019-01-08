@@ -43,7 +43,7 @@ module.exports = {
     },
 
     delete: function(req, res) {
-        projectService.deleteProject(req.params.id).then(function(data) {
+        projectService.deleteProject(req.params.number).then(function(data) {
             responseUtil.sendSuccessResponse("Project deleted successfully", 200, data, res);
         }).catch(function(error) {
             responseUtil.sendErrorResponse(error, "Could not delete Project", null, res);

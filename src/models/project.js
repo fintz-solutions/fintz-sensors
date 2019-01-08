@@ -82,7 +82,7 @@ Project.statics.findByProjectId = function(projectId) {
 
 Project.statics.findByProjectNumber = function(projectNumber) {
     return this.findOne({number: projectNumber}).then(function(project) {
-        return project && project._doc ? project._doc : null;
+        return project;
     }).catch(function(error) {
         console.error(error);
         errorUtil.createAndThrowGenericError("Invalid Project", 404);
@@ -101,6 +101,25 @@ Project.statics.findRunningProject = function() {
 
 Project.statics.deleteProjectById = function(projectId) {
     return this.findById(projectId).then(function(project) {
+        if (project && project._doc) {
+            return project.remove().then(function(deletedProject) {
+                if (deletedProject && deletedProject._doc) {
+                    return deletedProject.deleteAssociatedRunsForProject();
+                } else {
+                    return null;
+                }
+            });
+        } else {
+            errorUtil.createAndThrowGenericError("Invalid Project", 404);
+        }
+    }).catch(function(error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Invalid Project", 404);
+    });
+};
+
+Project.statics.deleteProjectByNumber = function(projectNumber) {
+    return this.findByProjectNumber(projectNumber).then(function(project) {
         if (project && project._doc) {
             return project.remove().then(function(deletedProject) {
                 if (deletedProject && deletedProject._doc) {

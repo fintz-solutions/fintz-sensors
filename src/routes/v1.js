@@ -59,7 +59,7 @@ module.exports = function(app, io) {
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects", projectController.list);
 
-    app.delete("/projects/:id", projectController.delete);
+    app.delete("/projects/:number", projectController.delete);
 
 
     //app.get("/projects/:id/runs/:run", function(req, res) {
