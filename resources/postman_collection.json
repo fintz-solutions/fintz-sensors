@@ -104,14 +104,7 @@
             "name": "http://localhost:3001/projects/:number",
             "request": {
                 "method": "DELETE",
-                "header": [
-                    {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "type": "text",
-                        "value": "application/x-www-form-urlencoded"
-                    }
-                ],
+                "header": [],
                 "body": {
                     "mode": "raw",
                     "raw": ""
