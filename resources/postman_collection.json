@@ -37,7 +37,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects/:id",
+            "name": "http://localhost:3001/projects/:projectNumber",
             "protocolProfileBehavior": {
                 "disableBodyPruning": true
             },
@@ -56,15 +56,15 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/5c0c67a86b7a0e0c87248e5b",
+                    "raw": "http://localhost:3001/projects/100",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "project",
-                        "5c0c67a86b7a0e0c87248e5b"
+                        "projects",
+                        "100"
                     ]
                 }
             },
@@ -101,38 +101,31 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects/5c02a5a66121d00c8f0e8e2e",
+            "name": "http://localhost:3001/projects/:projectNumber",
             "request": {
                 "method": "DELETE",
-                "header": [
-                    {
-                        "key": "Content-Type",
-                        "name": "Content-Type",
-                        "value": "application/x-www-form-urlencoded",
-                        "type": "text"
-                    }
-                ],
+                "header": [],
                 "body": {
                     "mode": "raw",
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/5c27eb4bc3ed07c360b40fa1",
+                    "raw": "http://localhost:3001/projects/1",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "project",
-                        "5c27eb4bc3ed07c360b40fa1"
+                        "projects",
+                        "1"
                     ]
                 }
             },
             "response": []
         },
         {
-            "name": "http://localhost:3001/project",
+            "name": "http://localhost:3001/projects",
             "request": {
                 "method": "POST",
                 "header": [
@@ -145,17 +138,17 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"name\": \"A test project 14\",\n\t\"numStations\":   8,\n\t\"numRuns\": 1,\n\t\"timePerRun\": 20,\n\t\"productionTarget\": 20,\n\t\"status\": \"CREATED\"\n}"
+                    "raw": "{\n\t\"name\": \"A test project 16\",\n\t\"numStations\":   8,\n\t\"numRuns\": 1,\n\t\"timePerRun\": 20,\n\t\"productionTarget\": 20\n}"
                 },
                 "url": {
-                    "raw": "http://localhost:3001/project",
+                    "raw": "http://localhost:3001/projects",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "project"
+                        "projects"
                     ]
                 }
             },
@@ -215,7 +208,7 @@
                     ],
                     "port": "3001",
                     "path": [
-                        "event"
+                        "events"
                     ]
                 }
             },
