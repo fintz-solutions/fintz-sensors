@@ -24,7 +24,10 @@ module.exports.getProject = async function(projectNumber) {
         } else {
             //TODO: timestamp to date
             //TODO: clean project fields
-            return project;
+            return project.findAllRunsForProject().then(function (runs) {
+                project._doc.runs = runs;
+                return project;
+            });
         }
     });
 };
