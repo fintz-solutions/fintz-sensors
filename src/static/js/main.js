@@ -1,13 +1,16 @@
 (function(jQuery) {
     jQuery.fn.fintzsensors = function() {
-        var projectFormPlugin = require("./projectForm");
+        var createProjectPlugin = require("./pages/landing/createProject");
+        var deleteProjectPlugin = require("./pages/landing/deleteProject");
 
         // retrieves the current context as the matched object, this
         // is considered to be the default/expected behaviour
         var matchedObject = this;
-        var addProjectForm = jQuery("form.add-project", matchedObject);
+        var addProjectForm = jQuery(".form.add-project", matchedObject);
+        var deleteProjectButton = jQuery(".button.delete-project", matchedObject);
 
-        projectFormPlugin(addProjectForm);
+        createProjectPlugin(addProjectForm);
+        deleteProjectPlugin(deleteProjectButton);
 
         // returns the current context to the caller function/method
         // so that proper chaining may be applied to the context

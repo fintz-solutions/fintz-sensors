@@ -1,4 +1,4 @@
-var projectForm = function(element) {
+var createProject = function(element) {
     var matchedObject = jQuery(element);
 
     var init = function() {
@@ -17,6 +17,7 @@ var projectForm = function(element) {
                 return;
             }
 
+            //prevents default form behaviour, on submit
             event.preventDefault();
 
             var element = jQuery(this);
@@ -83,4 +84,4 @@ var projectForm = function(element) {
     return matchedObject;
 };
 
-module.exports = projectForm;
+module.exports = createProject;
