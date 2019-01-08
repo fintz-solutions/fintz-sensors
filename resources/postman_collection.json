@@ -185,7 +185,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/event",
+            "name": "http://localhost:3001/events",
             "request": {
                 "method": "POST",
                 "header": [
