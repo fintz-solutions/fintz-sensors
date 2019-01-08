@@ -59,11 +59,11 @@ module.exports = function(app, io) {
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects", projectController.list);
 
-    app.delete("/projects/:id", projectController.delete);
+    app.delete("/projects/:projectNumber", projectController.delete);
 
 
     //app.get("/projects/:id/runs/:run", function(req, res) {
-    app.get("/projects/:projNumber/runs/:runNumber", function(req, res) {
+    app.get("/projects/:projectNumber/runs/:runNumber", function(req, res) {
         //TODO: just for testing purposes
         //TODO: needs validations and params names may change
         res.render("pages/run.html.tpl", {
@@ -74,7 +74,7 @@ module.exports = function(app, io) {
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/projects/:number", projectController.get);
+    app.get("/projects/:projectNumber", projectController.get);
 
 
 

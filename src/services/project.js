@@ -29,8 +29,8 @@ module.exports.getProject = async function(projectNumber) {
     });
 };
 
-module.exports.deleteProject = async function(projectId) {
-    return projectModel.deleteProjectById(projectId);
+module.exports.deleteProject = async function(projectNumber) {
+    return projectModel.deleteProjectByNumber(projectNumber);
 };
 
 module.exports.getProjects = async function() {
