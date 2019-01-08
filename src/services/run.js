@@ -5,8 +5,7 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports.createRun = async function(runData) {
-    let result = requestValidation.isValidBody(["number", "startTimeStamp", "totalTime", "status", "project",
-        "currentIteration"
+    let result = requestValidation.isValidBody(["number", "startTimeStamp", "totalTime", "status", "project"
     ], runData);
     if (result.status === true) {
         return runModel.createNew(runData);

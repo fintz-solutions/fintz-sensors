@@ -20,6 +20,7 @@ jQuery(document).ready(function() {
     var _body = jQuery("body");
     _body.fintzsensors();
 });
+
 },{"./projectForm":2}],2:[function(require,module,exports){
 var projectForm = function(element) {
     var matchedObject = jQuery(element);

@@ -13,7 +13,7 @@ module.exports = {
     },
 
     get: function(req, res) {
-        projectService.getProject(req.params.id).then(function(data) {
+        projectService.getProject(req.params.number).then(function(data) {
             if (req.get("Content-Type") === "application/json") {
                 responseUtil.sendSuccessResponse("Project details retrieved successfully", 200, data, res);
             } else {

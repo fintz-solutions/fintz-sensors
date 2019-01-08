@@ -6,7 +6,7 @@ const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports.createProject = async function(projectData) {
     let result = requestValidation.isValidBody(["name", "numStations", "numRuns",
-        "timePerRun", "productionTarget", "status"
+        "timePerRun", "productionTarget"
     ], projectData);
 
     if (result.status === true) {
@@ -16,10 +16,10 @@ module.exports.createProject = async function(projectData) {
     }
 };
 
-module.exports.getProject = async function(projectId) {
-    return projectModel.findByProjectId(projectId).then(function(project) {
+module.exports.getProject = async function(projectNumber) {
+    return projectModel.findByProjectNumber(projectNumber).then(function(project) {
         if (!project) {
-            errorUtil.createAndThrowGenericError(`Could not find the project specified by id: ${projectId}`,
+            errorUtil.createAndThrowGenericError(`Could not find the project specified by number: ${projectNumber}`,
                 404);
         } else {
             //TODO: timestamp to date
