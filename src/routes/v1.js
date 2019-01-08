@@ -59,9 +59,6 @@ module.exports = function(app, io) {
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects", projectController.list);
 
-    //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/projects/:id", projectController.get);
-
     app.delete("/projects/:id", projectController.delete);
 
 
@@ -78,4 +75,13 @@ module.exports = function(app, io) {
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects/:number", projectController.get);
+
+
+
+
+
+    //TODO NELSON NEW STUFF TO DO:
+    //TODO NELSON -> new action routes for start, move kart, continue working, and kill project -> see mocks file
+    //TODO NELSON send run details on project details route
+    //TODO NELSON redirect to project details template after a new project is created if request originated from HTML
 };
