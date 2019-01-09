@@ -58,7 +58,7 @@ Project.statics.createNew = function(projectData) {
         for (let runNumber = 1; runNumber <= newProject._doc.numRuns; runNumber++) {
             let runData = {
                 number: runNumber,
-                startTimeStamp: newProject._doc.createdAt,
+                startTimestamp: newProject._doc.createdAt,
                 totalTime: newProject._doc.timePerRun,
                 status: "CREATED",
                 project: newProject._doc._id
@@ -149,11 +149,9 @@ Project.methods.findActiveRunForProject = function() {
     });
 };
 
-Project.methods.findAllRunsForProject = function() {
+Project.methods.findAllRunsForProject = function(fetchIterations) {
     let projectObj = this;
-    return runModel.find({
-        project: projectObj._id
-    });
+    return runModel.findAllByProjectId(projectObj._id, fetchIterations);
 };
 
 Project.methods.deleteAssociatedRunsForProject = function() {
