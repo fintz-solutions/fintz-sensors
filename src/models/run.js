@@ -54,7 +54,7 @@ Run.statics.deleteRunById = function (runId) {
                     //TODO NELSON will have to be a promise.all here
                     let promises = [];
                     promises.push(deletedRun.deleteAssociatedIterationsForRun());
-                    //TODO DELETE ASSOCIATED Events here eventModel.deleteEventById();//non-blocking delete;
+                    //TODO NELSON DELETE ASSOCIATED Events here deletedRun.deleteAssociatedEventsForRun()
                     return Promise.all(promises, function (results) {
                         return deletedRun._doc;
                     });

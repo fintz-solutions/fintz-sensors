@@ -24,13 +24,19 @@ let Iteration = new Schema({
 
 // -------- Static methods -------- //
 Iteration.statics.deleteIterationById = function (iterationId) {
-    //TODO NELSON don't forget to also delete related measurements
     return this.findById(iterationId).then(function (iteration) {
         if (iteration && iteration._doc) {
             return iteration.remove().then(function (deletedIteration) {
                 if (deletedIteration && deletedIteration._doc) {
-                    //TODO NELSON delete associated measurements
                     return deletedIteration._doc;
+                    /*
+                    let promises = [];
+                    promises.push(deletedIteration.deleteAssociatedMeasurementsForIteration());
+                    //TODO NELSON delete associated measurements here deletedIteration.deleteAssociatedMeasurementsForIteration()
+                    return Promise.all(promises, function (results) {
+                        return deletedIteration._doc;
+                    });
+                     */
                 } else {
                     return null;
                 }
