@@ -84,7 +84,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"number\":  1,\n    \"startTimeStamp\": \"1-11-2018\",\n    \"totalTime\":   20,\n    \"status\": \"CREATED\",\n    \"project\": \"5c0c67a86b7a0e0c87248e5b\",\n    \"currentIteration\": 1\n}"
+                    "raw": "{\n\t\"number\":  1,\n    \"startTimestamp\": \"1-11-2018\",\n    \"totalTime\":   20,\n    \"status\": \"CREATED\",\n    \"project\": \"5c0c67a86b7a0e0c87248e5b\",\n    \"currentIteration\": 1\n}"
                 },
                 "url": {
                     "raw": "http://localhost:3001/run",
