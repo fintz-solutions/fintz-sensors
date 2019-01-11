@@ -76,12 +76,9 @@ module.exports = function(app, io) {
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects/:projectNumber", projectController.get);
 
-
-
-
-
     //TODO NELSON NEW STUFF TO DO:
     //TODO NELSON -> new action routes for start, move kart, continue working, and kill project -> see mocks file
+    app.post("/projects/:projectNumber/runs/:runNumber", projectMiddleware.getProject, runMiddleware.getRun, runController.update);
     //TODO NELSON send run details on project details route
-    //TODO NELSON redirect to project details template after a new project is created if request originated from HTML
+    //TODO NELSON redirect to project details template after a new project is created if request originated from HTML -> nope
 };

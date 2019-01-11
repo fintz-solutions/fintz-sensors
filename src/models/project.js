@@ -139,6 +139,16 @@ Project.statics.deleteProjectByNumber = function(projectNumber) {
 
 
 // -------- Instance methods -------- //
+Project.methods.findRunByNumberForProject = function(runNumber) {
+    let projectObj = this;
+    return runModel.findOne({project: projectObj._id, number: runNumber}).sort({ _id: -1 }).then(function (run) {
+        return run;
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not find a run with number ${runNumber} for project with number ${projectObj.number}`, 404);
+    });
+};
+
 Project.methods.findActiveRunForProject = function() {
     let projectObj = this;
     return runModel.findOne({project: projectObj._id, status: "RUNNING"}).sort({ _id: -1 }).then(function (activeRun) {

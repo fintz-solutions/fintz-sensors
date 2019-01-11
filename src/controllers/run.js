@@ -22,5 +22,13 @@ module.exports = {
 
     delete: function(req, res) {
 
+    },
+
+    update: function (req, res) {
+        runService.update(req.project, req.run, req.body).then(function(data) {
+            responseUtil.sendSuccessResponse("Run action parsed successfully", 201, data, res);
+        }).catch(function(error) {
+            responseUtil.sendErrorResponse(error, "Could not parse a Run action", null, res);
+        });
     }
 };
