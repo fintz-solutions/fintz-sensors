@@ -13,7 +13,7 @@ module.exports = {
     },
 
     get: function(req, res) {
-        
+
     },
 
     list: function(req, res) {

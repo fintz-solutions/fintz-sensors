@@ -127,7 +127,7 @@ var deleteProject = function(element) {
         if (!matchedObject || matchedObject.length === 0) {
             return;
         }
-        
+
         matchedObject.click(event, function () {
             var element = jQuery(this);
             var projectElement = element.parents(".element-project");
@@ -157,12 +157,12 @@ var deleteProject = function(element) {
         if(!event || event.length === 0) {
             return;
         }
-        
+
         //prevents default click behaviour
         event.preventDefault();
 
         var url = element.attr("href");
-        
+
         jQuery.ajax({
             url: url,
             type: 'DELETE',

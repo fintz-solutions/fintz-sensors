@@ -15,8 +15,13 @@ html {
 }
 
 .body .disabled {
-    pointer-events: none;
     opacity: 0.5;
+    -o-opacity: 0.5;
+    -ms-opacity: 0.5;
+    -moz-opacity: 0.5;
+    -khtml-opacity: 0.5;
+    -webkit-opacity: 0.5;
+    pointer-events: none;
     text-decoration: none;
 }
 
