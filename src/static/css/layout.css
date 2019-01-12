@@ -9,6 +9,17 @@ html {
     height: 100%;
     margin: 0px 0px 0px 0px;
 }
+
+.body .hidden {
+    display: none;
+}
+
+.body .disabled {
+    pointer-events: none;
+    opacity: 0.5;
+    text-decoration: none;
+}
+
 .content{
     background-color: #f4f6f9;
     height: 100%;

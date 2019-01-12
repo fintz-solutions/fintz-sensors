@@ -17,7 +17,8 @@ module.exports = {
             if (req.get("Content-Type") === "application/json") {
                 responseUtil.sendSuccessResponse("Project details retrieved successfully", 200, data, res);
             } else {
-                res.render("pages/project_details.html.tpl", {
+                data = JSON.parse(JSON.stringify(data));
+                res.render("pages/project_show.html.tpl", {
                     title: "Project Details",
                     project: data
                 });
