@@ -143,7 +143,7 @@ var deleteProject = function(element) {
         matchedObject.bind("success", function() {
             var element = jQuery(this);
             var projectElement = element.parents(".element-project");
-            projectElement.addClass("deleted");
+            projectElement.remove();
         });
 
         matchedObject.bind("error", function(event, message) {

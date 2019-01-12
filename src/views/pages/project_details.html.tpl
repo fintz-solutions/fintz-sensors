@@ -10,8 +10,9 @@
         <p class="time-run">time per run: {{ project.timePerRun }}</p>
         <p class="stations">stations: {{ project.numStations }}</p>
         <p class="production-target">production target: {{ project.productionTarget }}</p>
+        runs:{{ project.runs }}
     </div>
-    <div class="graphs">
+    <div class="charts">
         <h3 style="color:red">[[ +Charts ]]</h3>
     </div>
 {% endblock %}
