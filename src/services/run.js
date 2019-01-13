@@ -150,6 +150,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
             if (acceptedActionsTypes.CONTINUE_WORKING.canExecute(project, run, iteration, measurements)) {
                 let iterationStartTime = dateUtil.getCurrentTimestamp();
                 return iteration.updateOne({startTime: iterationStartTime}).then(function (updatedIteration) {
+                    iteration.startTime = iterationStartTime;
                     return {
                         project: project,
                         run: run,
