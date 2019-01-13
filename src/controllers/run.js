@@ -18,7 +18,7 @@ module.exports = {
 
     update: function (req, res) {
         runService.update(req.project, req.run, req.iteration, req.measurements, req.body).then(function(data) {
-            responseUtil.sendSuccessResponse("Run action parsed successfully", 201, data, res);
+            responseUtil.sendSuccessResponse("Run action parsed successfully", 200, data, res);
         }).catch(function(error) {
             responseUtil.sendErrorResponse(error, "Could not parse a Run action", null, res);
         });
