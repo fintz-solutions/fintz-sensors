@@ -21,15 +21,15 @@ module.exports = {
     getProject : function (req, res, next) {
         projectModel.findByProjectNumber(req.params.projectNumber).then(function (project) {
             if(project === null){
-                let error = errorUtil.createGenericError(`Could not find project specified by number ${req.params.number}`, 404);
-                responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.number}`, null, res);
+                let error = errorUtil.createGenericError(`Could not find project specified by number ${req.params.projectNumber}`, 404);
+                responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.projectNumber}`, null, res);
             } else {
                 req.project = project;
                 next();
             }
         }).catch(function(error) {
             console.error(error);
-            responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.number}`, null, res);
+            responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.projectNumber}`, null, res);
         });
     }
 };
