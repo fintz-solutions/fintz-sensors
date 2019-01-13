@@ -66,7 +66,7 @@ module.exports = function(app, io) {
     app.get("/projects/:projectNumber/runs/:runNumber", function(req, res) {
         //TODO: just for testing purposes
         //TODO: needs validations and params names may change
-        res.render("pages/run.html.tpl", {
+        res.render("pages/run_show.html.tpl", {
             project_id: req.params["id"],
             run: req.params["run"],
         });
@@ -75,10 +75,6 @@ module.exports = function(app, io) {
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects/:projectNumber", projectController.get);
-
-
-
-
 
     //TODO NELSON NEW STUFF TO DO:
     //TODO NELSON -> new action routes for start, move kart, continue working, and kill project -> see mocks file

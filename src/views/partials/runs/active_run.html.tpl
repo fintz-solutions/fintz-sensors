@@ -1,0 +1,54 @@
+ <div class="active-run-container">
+    <div class="header-run">
+        <div class="session-timer" id="globalTimer">00:30:00</div>
+        <div class="logo">
+            <a href="https://jmaceurope.com/">
+                <img class="image image-logo" src="https://beestatic.azureedge.net/jmaceurope-com/2018/06/logo-bianco.svg" alt="JMAC Europe" id="logo" data-height-percentage="66" data-actual-width="300" data-actual-height="101">
+            </a>
+        </div>
+    </div>
+    <div class="stations">
+        <div class="station station-1">
+            <div class="info">
+                <p class="name">Station 1</p>
+                <p class="timer" id="timerStation1">00:00:00</p>
+            </div>
+        </div>
+        <div class="station station-2">
+            <div class="info">
+                <p class="name">Station 2</p>
+                <p class="timer" id="timerStation2">00:00:00</p>
+            </div>
+        </div>
+        <div class="station station-3">
+            <div class="info">
+                <p class="name">Station 3</p>
+                <p class="timer" id="timerStation3">00:00:00</p>
+            </div>
+        </div>
+        <div class="station station-4">
+            <div class="info">
+                <p class="name">Station 4</p>
+                <p class="timer" id="timerStation4">00:00:00</p>
+            </div>
+        </div>
+        <div class="station station-5">
+            <div class="info">
+                <p class="name">Station 5</p>
+                <p class="timer" id="timerStation5">00:00:00</p>
+            </div>
+        </div>
+        <div class="station station-6">
+            <div class="info">
+                <p class="name">Station 6</p>
+                <p class="timer" id="timerStation6">00:00:00</p>
+            </div>
+        </div>
+        <div class="station station-7">
+            <div class="info">
+                <p class="name">Station 7</p>
+                <p class="timer" id="timerStation7">00:00:00</p>
+            </div>
+        </div>
+    </div>
+</div>
