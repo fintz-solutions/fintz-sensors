@@ -6,7 +6,7 @@ const ACTION_TYPES = {
     CONTINUE_RUN: "CONTINUE",
     KILL: "KILL"
   };
-  Object.freeze(ACTION_TYPES);
+Object.freeze(ACTION_TYPES);
 
 var activeRun = function(element) {
     var matchedObject = jQuery(element);
@@ -61,8 +61,9 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("start_action", function(event){
-            // TODO: start counter
-            // TODO: disable start button
+            startGlobalTimer();
+            startButton.addClass("disabled");
+            killButton.removeClass("disabled");
         });
 
         matchedObject.bind("pre_move", function(event) {
@@ -71,8 +72,9 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("move_action", function(event){
-            // TODO: enables continue button
-            // TODO: set all station timers to zero
+            moveButton.addClass("disabled");
+            continueButton.removeClass("disabled");
+            clearStationTimers();
         });
 
         matchedObject.bind("pre_continue", function(event) {
@@ -81,9 +83,7 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("continue_action", function(event){
-            // TODO: disables continue button
-            // TODO: disables move button
-            // TODO: enables move button
+            continueButton.addClass("disabled");
         });
 
         matchedObject.bind("pre_kill", function(event) {
@@ -92,6 +92,7 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("kill_action", function(event){
+            killButton.addClass("disabled");
             // TODO: redirects to?
         });
 
@@ -115,12 +116,19 @@ var activeRun = function(element) {
         globalTimer.addEventListener('secondsUpdated', function (e) {
             jQuery('.global-timer').html(globalTimer.getTimeValues().toString());
         });
+
         jQuery( document ).ready(function() {
             var globalTimerElement = jQuery('.global-timer')
             var minutes = globalTimerElement.attr("data-duration");
             minutes = parseInt(minutes);
-            globalTimer.start({countdown: true, startValues: { minutes: minutes }});
+            globalTimer.start({
+                countdown: true,
+                startValues: {
+                    minutes: minutes
+                }
+            });
         });
+
         for (let i = 0; i < timers.length; i++){
             let timerNr = i+1;
             timers[i].addEventListener('secondsUpdated', function (e) {
@@ -151,7 +159,7 @@ var activeRun = function(element) {
     var sendActionType = function(element, actionType) {
         var startButton = jQuery(".button-start", element);
         var url = startButton.attr("href");
-        
+
         jQuery.ajax({
             url: url,
             type: 'POST',
@@ -170,16 +178,12 @@ var activeRun = function(element) {
           });
     };
 
-    var moveIteration = function(element) {
-        
+    var clearStationTimers = function(element) {
+        //TODO: implement this
     };
     
-    var continueRun = function(element) {
-        
-    };
-    
-    var kill = function(element) {
-        
+    var startGlobalTimer = function(element) {
+        //TODO: implement this
     };
 
     init();
