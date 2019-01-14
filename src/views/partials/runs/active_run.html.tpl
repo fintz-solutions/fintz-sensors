@@ -1,6 +1,42 @@
- <div class="active-run-container">
+{% set active_run = {
+    "project": {
+        "status": "RUNNING",
+        "_id": "5c3b2b1041cb4e472e5648f9",
+        "name": "A test project 17",
+        "numStations": 4,
+        "numRuns": 8,
+        "timePerRun": 20,
+        "productionTarget": 20,
+        "createdAt": 1547381520,
+        "number": 1,
+        "__v": 0
+    },
+    "run": {
+        "status": "RUNNING",
+        "_id": "5c3b2b1041cb4e472e5648fa",
+        "number": 1,
+        "totalTime": "01",
+        "project": "5c3b2b1041cb4e472e5648f9",
+        "__v": 0,
+        "startTimestamp": 1547381528
+    },
+    "iteration": {
+        "_id": "5c3b2b1941cb4e472e564902",
+        "number": 1,
+        "startTime": 1547381529,
+        "run": "5c3b2b1041cb4e472e5648fa",
+        "__v": 0
+    },
+    "measurements": [],
+    "actionType": "START"
+}%}
+{% set stations = active_run.project.numStations %}
+{% set duration = active_run.run.totalTime %}
+{% set global_timer = "00:" + duration + ":00" %}
+
+<div class="active-run-container">
     <div class="header-run">
-        <div class="session-timer" id="globalTimer">00:30:00</div>
+        <div class="global-timer" id="global-timer" data-duration="{{ duration }}">{{ global_timer }}</div>
         <div class="logo">
             <a href="https://jmaceurope.com/">
                 <img class="image image-logo" src="https://beestatic.azureedge.net/jmaceurope-com/2018/06/logo-bianco.svg" alt="JMAC Europe" id="logo" data-height-percentage="66" data-actual-width="300" data-actual-height="101">
@@ -8,47 +44,20 @@
         </div>
     </div>
     <div class="stations">
-        <div class="station station-1">
-            <div class="info">
-                <p class="name">Station 1</p>
-                <p class="timer" id="timerStation1">00:00:00</p>
+        {% for station in range(0, stations) %}
+            {% set station_num = loop.index %}
+            <div class="station station-{{ station_num }}">
+                <div class="info">
+                    <p class="name">Station {{ station_num }}</p>
+                    <p class="timer timer-station-{{ station_num }}" id="timer-station-{{ station_num }}">00:00:00</p>
+                </div>
             </div>
-        </div>
-        <div class="station station-2">
-            <div class="info">
-                <p class="name">Station 2</p>
-                <p class="timer" id="timerStation2">00:00:00</p>
-            </div>
-        </div>
-        <div class="station station-3">
-            <div class="info">
-                <p class="name">Station 3</p>
-                <p class="timer" id="timerStation3">00:00:00</p>
-            </div>
-        </div>
-        <div class="station station-4">
-            <div class="info">
-                <p class="name">Station 4</p>
-                <p class="timer" id="timerStation4">00:00:00</p>
-            </div>
-        </div>
-        <div class="station station-5">
-            <div class="info">
-                <p class="name">Station 5</p>
-                <p class="timer" id="timerStation5">00:00:00</p>
-            </div>
-        </div>
-        <div class="station station-6">
-            <div class="info">
-                <p class="name">Station 6</p>
-                <p class="timer" id="timerStation6">00:00:00</p>
-            </div>
-        </div>
-        <div class="station station-7">
-            <div class="info">
-                <p class="name">Station 7</p>
-                <p class="timer" id="timerStation7">00:00:00</p>
-            </div>
-        </div>
+        {% endfor %}
+    </div>
+    <div class="buttons button-actions">
+        <a class="button button-start" href="/projects/{{ project.number }}/runs/{{ run.number }}">start</a>
+        <a class="button button-move disabled" href="/projects/{{ project.number }}/runs/{{ run.number }}">move</a>
+        <a class="button button-continue disabled" href="/projects/{{ project.number }}/runs/{{ run.number }}">continue</a>
+        <a class="button button-kill disabled" href="/projects/{{ project.number }}/runs/{{ run.number }}">kill</a>
     </div>
 </div>

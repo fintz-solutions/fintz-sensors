@@ -48,7 +48,7 @@ html {
     width: auto;
 }
 
-.body .header-run .session-timer {
+.body .header-run .global-timer {
     color: #ffffff;
     font-size: 60px;
     height: 50px;
