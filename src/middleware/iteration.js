@@ -4,7 +4,6 @@ const projectModel = require(path.resolve(modelsFolder, "project")).Project;
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 module.exports = {
-    //TODO NELSON do we really need this middleware ???
     getActiveIteration : function (req, res, next) {
         req.run.findActiveIterationForRun().then(function (activeIteration) {
             if(activeIteration === null){

@@ -15,9 +15,9 @@ const acceptedActionsTypes = {
     //TODO NELSON set status of the run to running, set status of the project to running
     //TODO NELSON unlock socket events for the project
     START: {
-        KEY: "START",
+        key: "START",
         canExecute: function (project, run, iteration, measurements) {
-            return (project.status === "CREATED" &&
+            return ((project.status === "CREATED" || project.status === "RUNNING") &&
                 run.status === "RUNNING" &&
                 iteration === null &&
                 Array.isArray(measurements) &&
@@ -29,7 +29,7 @@ const acceptedActionsTypes = {
     //TODO then mark iteration as done(add a stop time)
     //TODO NELSON block socket events for project(meaning it does not exist an iteration with a start time only)
     MOVE_KART: {
-        KEY: "MOVE_KART",
+        key: "MOVE_KART",
         canExecute: function (project, run, iteration, measurements) {
             let baseCheck = (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -38,11 +38,11 @@ const acceptedActionsTypes = {
                 !iteration.stopTime &&
                 Array.isArray(measurements) &&
                 measurements.length === project.numStations);
-            if(baseCheck) {
+            if (baseCheck) {
                 let result = true;
-                measurements.forEach(function(measurement) {
+                measurements.forEach(function (measurement) {
                     //each measurement must have a startTime and stopTime to be able to move kart
-                    if(!measurement.startTime || !measurement.stopTime) {
+                    if (!measurement.startTime || !measurement.stopTime) {
                         result = false;
                         return;
                     }
@@ -57,7 +57,7 @@ const acceptedActionsTypes = {
     //TODO NELSON unlocks socket events for project
     //TODO NELSON create a new iteration for the run in the DB(add only a start time to it)
     CONTINUE_WORKING: {
-        KEY: "CONTINUE_WORKING",
+        key: "CONTINUE_WORKING",
         canExecute: function (project, run, iteration, measurements) {
             return (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -71,14 +71,14 @@ const acceptedActionsTypes = {
     //TODO NELSON -> destroy the project and info associated to it(runs, iterations, measurements and events)
     //TODO NELSON -> maybe mark the project with a status of messy and redirect to the project page(then the user can delete the project there)
     KILL: {
-        KEY: "KILL",
+        key: "KILL",
         canExecute: function (project, run, iteration, measurements) {
             return true;//TODO NELSON think about this, but I think a project can be killed without any check at the moment
         }
     },
     //TODO NELSON -> Frontend needs to call this action when the run total time reached zero
     END_RUN: {
-        KEY: "END_RUN",
+        key: "END_RUN",
         canExecute: function (project, run, iteration, measurements) {
             return (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -91,7 +91,7 @@ const acceptedActionsTypes = {
 
 const executeRunAction = async function (project, run, iteration, measurements, actionType) {
     switch (actionType) {
-        case acceptedActionsTypes.START.KEY:
+        case acceptedActionsTypes.START.key:
             if (acceptedActionsTypes.START.canExecute(project, run, iteration, measurements)) {
                 //TODO NELSON implement transactions here
                 let runStartTime = dateUtil.getCurrentTimestamp();
@@ -120,7 +120,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 errorUtil.createAndThrowGenericError("Cannot start a new run", 400);
             }
             break;
-        case acceptedActionsTypes.MOVE_KART.KEY:
+        case acceptedActionsTypes.MOVE_KART.key:
             if (acceptedActionsTypes.MOVE_KART.canExecute(project, run, iteration, measurements)) {
                 //TODO NELSON implement transactions here
                 let iterationStopTime = dateUtil.getCurrentTimestamp();
@@ -146,7 +146,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 errorUtil.createAndThrowGenericError("Cannot move kart", 400);
             }
             break;
-        case acceptedActionsTypes.CONTINUE_WORKING.KEY:
+        case acceptedActionsTypes.CONTINUE_WORKING.key:
             if (acceptedActionsTypes.CONTINUE_WORKING.canExecute(project, run, iteration, measurements)) {
                 let iterationStartTime = dateUtil.getCurrentTimestamp();
                 return iteration.updateOne({startTime: iterationStartTime}).then(function (updatedIteration) {
@@ -154,7 +154,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                     return {
                         project: project,
                         run: run,
-                        iteration: updatedIteration,
+                        iteration: iteration,
                         measurements: [],
                         actionType: actionType
                     };
@@ -163,7 +163,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 errorUtil.createAndThrowGenericError("Cannot continue working", 400);
             }
             break;
-        case acceptedActionsTypes.KILL.KEY:
+        case acceptedActionsTypes.KILL.key:
             if (acceptedActionsTypes.KILL.canExecute(project, run, iteration, measurements)) {
                 return projectModel.deleteProjectByNumber(project.number).then(function (deletedProject) {
                     return {
@@ -178,7 +178,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 errorUtil.createAndThrowGenericError("Cannot Kill project", 400);
             }
             break;
-        case acceptedActionsTypes.END_RUN.KEY:
+        case acceptedActionsTypes.END_RUN.key:
             if (acceptedActionsTypes.END_RUN.canExecute(project, run, iteration, measurements)) {
                 let promises = [
                     run.updateOne({status: "FINISHED"})
@@ -186,6 +186,12 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 if (run.number === project.numRuns) {
                     project.status = "FINISHED";
                     promises.push(project.updateOne({status: "FINISHED"}));
+                } else {
+                    //TODO NELSON mark the following run as running
+                    promises.push(runModel.findOneAndUpdate({
+                        project: project._id,
+                        number: run.number + 1
+                    }, {$set: {status: "RUNNING"}}));
                 }
                 return Promise.all(promises).then(function (results) {
                     run.status = "FINISHED";
@@ -232,4 +238,17 @@ module.exports.update = async function (project, run, iteration, measurements, a
     } else {
         errorUtil.createAndThrowGenericError(result.message, 400);
     }
+};
+
+module.exports.get = async function (project, run, iteration, measurements) {
+    let result = {
+        project: project,
+        run: run,
+        iteration: iteration,
+        measurements: measurements
+    };
+
+    return new Promise(function (resolve, reject) {
+        resolve(result);
+    });
 };

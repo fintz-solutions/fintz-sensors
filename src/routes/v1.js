@@ -62,16 +62,13 @@ module.exports = function (app, io) {
 
     app.delete("/projects/:projectNumber", projectController.delete);
 
-
-    //app.get("/projects/:id/runs/:run", function(req, res) {
-    app.get("/projects/:projectNumber/runs/:runNumber", function (req, res) {
-        //TODO: just for testing purposes
-        //TODO: needs validations and params names may change
-        res.render("pages/run.html.tpl", {
-            project_id: req.params["id"],
-            run: req.params["run"],
-        });
-    });
+    
+    app.get("/projects/:projectNumber/runs/:runNumber",
+        projectMiddleware.getProject,
+        runMiddleware.getRun,
+        iterationMiddleware.getLatestIteration,
+        measurementMiddleware.getIterationMeasurements,
+        runController.get);
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
