@@ -21,4 +21,17 @@ let Measurement = new Schema({
     }
 });
 
+
+// -------- Static methods -------- //
+Measurement.statics.findAllByIterationId = function (iterationId) {
+    return this.find({
+        iteration: iterationId
+    });
+};
+
+// -------- Instance methods -------- //
+//TODO NELSON
+
+
+
 module.exports.Measurement = mongoose.model("Measurement", Measurement);

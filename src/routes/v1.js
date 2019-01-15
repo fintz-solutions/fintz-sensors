@@ -7,14 +7,16 @@ const eventController = require(path.resolve(controllersFolder, "event"));
 const landingPageController = require(path.resolve(controllersFolder, "landingPage"));
 const projectMiddleware = require(path.resolve(middlewareFolder, "project"));
 const runMiddleware = require(path.resolve(middlewareFolder, "run"));
+const iterationMiddleware = require(path.resolve(middlewareFolder, "iteration"));
+const measurementMiddleware = require(path.resolve(middlewareFolder, "measurement"));
 
-module.exports = function(app, io) {
+module.exports = function (app, io) {
     // ----- Landing page endpoint ----
     app.get("/", landingPageController.show);
 
     // ----- Events endpoints -------
     //TODO NELSON let's think a better name for this route -> timer/measuremts
-    app.post('/timer/event', function(req, res) {
+    app.post('/timer/event', function (req, res) {
         let sensorPayload = req.body;
         let sensorNumber = sensorPayload.sensor;
         let response = null;
@@ -52,7 +54,6 @@ module.exports = function(app, io) {
     //TODO NELSON request to get the graphs
 
 
-
     app.post("/projects", projectController.create);
 
 
@@ -61,27 +62,27 @@ module.exports = function(app, io) {
 
     app.delete("/projects/:projectNumber", projectController.delete);
 
-
-    //app.get("/projects/:id/runs/:run", function(req, res) {
-    app.get("/projects/:projectNumber/runs/:runNumber", function(req, res) {
-        //TODO: just for testing purposes
-        //TODO: needs validations and params names may change
-        res.render("pages/run.html.tpl", {
-            project_id: req.params["id"],
-            run: req.params["run"],
-        });
-    });
+    
+    app.get("/projects/:projectNumber/runs/:runNumber",
+        projectMiddleware.getProject,
+        runMiddleware.getRun,
+        iterationMiddleware.getLatestIteration,
+        measurementMiddleware.getIterationMeasurements,
+        runController.get);
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects/:projectNumber", projectController.get);
 
-
-
-
-
     //TODO NELSON NEW STUFF TO DO:
     //TODO NELSON -> new action routes for start, move kart, continue working, and kill project -> see mocks file
+    app.post("/projects/:projectNumber/runs/:runNumber",
+        projectMiddleware.getProject,
+        runMiddleware.getRun,
+        iterationMiddleware.getLatestIteration,
+        measurementMiddleware.getIterationMeasurements,
+        runController.update);
+
     //TODO NELSON send run details on project details route
-    //TODO NELSON redirect to project details template after a new project is created if request originated from HTML
+    //TODO NELSON redirect to project details template after a new project is created if request originated from HTML -> nope
 };
