@@ -62,7 +62,7 @@ module.exports = function (app, io) {
 
     app.delete("/projects/:projectNumber", projectController.delete);
 
-    
+
     app.get("/projects/:projectNumber/runs/:runNumber",
         projectMiddleware.getProject,
         runMiddleware.getRun,
