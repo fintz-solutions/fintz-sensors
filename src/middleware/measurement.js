@@ -2,6 +2,7 @@ const path = require("path");
 const modelsFolder = global.modelsFolder;
 const measurementModel = require(path.resolve(modelsFolder, "measurement")).Measurement;
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
+const iterationModel = require(path.resolve(modelsFolder, "iteration")).Project;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 module.exports = {
@@ -21,5 +22,19 @@ module.exports = {
             console.error(error);
             responseUtil.sendErrorResponse(error, "Could not find the respective measurement", null, res);
         });
+    },
+    getIterationMeasurements: function (req, res, next) {
+        if(req.iteration) {
+            req.iteration.findMeasurementsForIteration().then(function (measurements) {
+                req.measurements = measurements;
+                next();
+            }).catch(function(error) {
+                console.error(error);
+                responseUtil.sendErrorResponse(error, `Error when looking for measurements for iteration with id ${req.iteration._id}`, null, res);
+            });
+        } else {
+            req.measurements = [];
+            next();
+        }
     }
 };

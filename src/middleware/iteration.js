@@ -18,5 +18,14 @@ module.exports = {
             console.error(error);
             responseUtil.sendErrorResponse(error, "Could not find an active iteration", null, res);
         });
-    }
+    },
+    getLatestIteration: function (req, res, next) {
+        req.run.findLatestIterationForRun().then(function (latestIteration) {
+            req.iteration = latestIteration;
+            next();
+        }).catch(function(error) {
+            console.error(error);
+            responseUtil.sendErrorResponse(error, `Error when looking for the latest iteration for run with id: ${req.run._id}`, null, res);
+        });
+    } 
 };
