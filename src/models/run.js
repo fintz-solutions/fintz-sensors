@@ -109,7 +109,7 @@ Run.methods.findActiveIterationForRun = function () {
     let runObj = this;
     return iterationModel.findOne({
         run: runObj._id,
-        startTime: {$ne: null},
+        startTime: {$ne: null}, // TODO JORGE check this
         stopTime: null
     }).sort({_id: -1}).then(function (activeIteration) {
         return activeIteration;

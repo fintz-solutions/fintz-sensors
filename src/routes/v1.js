@@ -4,6 +4,7 @@ const middlewareFolder = global.middlewareFolder;
 const projectController = require(path.resolve(controllersFolder, "project"));
 const runController = require(path.resolve(controllersFolder, "run"));
 const eventController = require(path.resolve(controllersFolder, "event"));
+const timerController = require(path.resolve(controllersFolder, "timer"));
 const landingPageController = require(path.resolve(controllersFolder, "landingPage"));
 const projectMiddleware = require(path.resolve(middlewareFolder, "project"));
 const runMiddleware = require(path.resolve(middlewareFolder, "run"));
@@ -43,6 +44,15 @@ module.exports = function (app, io) {
             res.status(400).send(response);
         }
     });
+
+    app.post('/timer',
+        projectMiddleware.getActiveProject,
+        runMiddleware.getActiveRun,
+        iterationMiddleware.getActiveIteration,
+        measurementMiddleware.getActiveMeasureForStationIteration,
+        function(req, res){
+            timerController.processTimerEvent(io, req, res);
+        });
 
     /* EVENTS(SAFETY and QUALITY)  endpoints */
     app.post("/events", projectMiddleware.getActiveProject, runMiddleware.getActiveRun, eventController.create);

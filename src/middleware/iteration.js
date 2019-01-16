@@ -3,6 +3,7 @@ const modelsFolder = global.modelsFolder;
 const projectModel = require(path.resolve(modelsFolder, "project")).Project;
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+
 module.exports = {
     getActiveIteration : function (req, res, next) {
         req.run.findActiveIterationForRun().then(function (activeIteration) {

@@ -31,5 +31,4 @@ Event.statics.createNew = function(eventData) {
     });
 };
 
-
 module.exports.Event = mongoose.model("Event", Event);

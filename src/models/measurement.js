@@ -8,11 +8,11 @@ let Measurement = new Schema({
     },
     startTime: {//TIMESTAMP
         type: Number,
-        required: true
+        required: false // TODO JORGE check this
     },
     stopTime: {//TIMESTAMP
         type: Number,
-        required: true
+        required: false // TODO JORGE check this
     },
     iteration: {
         type: mongoose.Schema.Types.ObjectId,
@@ -21,7 +21,6 @@ let Measurement = new Schema({
     }
 });
 
-
 // -------- Static methods -------- //
 Measurement.statics.findAllByIterationId = function (iterationId) {
     return this.find({
@@ -29,9 +28,19 @@ Measurement.statics.findAllByIterationId = function (iterationId) {
     });
 };
 
+Measurement.statics.findByIterationIdAndStation = function (iterationId, stationNumber) {
+    return this.findOne({
+        iteration: iterationId,
+        stationNumber: stationNumber
+    }).then(function(measurement) {
+        return measurement;
+    }).catch(function(error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Invalid Measurement", 404);
+    });
+};
+
 // -------- Instance methods -------- //
 //TODO NELSON
-
-
 
 module.exports.Measurement = mongoose.model("Measurement", Measurement);
