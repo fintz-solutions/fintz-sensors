@@ -80,8 +80,8 @@ Run.statics.findByRunId = function(runId) {
 // -------- Instance methods -------- //
 Run.methods.findActiveIterationForRun = function() {
     let runObj = this;
-    return iterationModel.findOne({run: runObj._id, startTime: { $ne: null }, stopTime: null}).sort({ _id: -1 }).then(function (activeIteration) {
-        return activeIteration && activeIteration._doc ? activeIteration._doc : null;//TODO NELSON might have to return the entire thing instead of just _.doc so that we are able to call the instance methods of the retrieved object
+    return iterationModel.findOne({run: runObj._id, stopTime: null}).then(function (activeIteration) {
+        return activeIteration; // && activeIteration._doc ? activeIteration._doc : null;//TODO NELSON might have to return the entire thing instead of just _.doc so that we are able to call the instance methods of the retrieved object
     }).catch(function (error) {
         console.error(error);
         errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for project with number ${runObj.project}`, 404);

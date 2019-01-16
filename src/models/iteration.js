@@ -9,11 +9,11 @@ let Iteration = new Schema({
     },
     startTime: {//TIMESTAMP
         type: Number,
-        required: true
+        required: false
     },
     stopTime: {//TIMESTAMP
         type: Number,
-        required: true
+        required: false
     },
     run: {
         type: mongoose.Schema.Types.ObjectId,

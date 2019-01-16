@@ -77,23 +77,42 @@
                 $('#timerStation'+timerNr).html(timers[i].getTimeValues().toString());
             });
         }
+
         var socket = io.connect();
         socket.on('toggleTimer', function(data){
-            let stationToToggle = data.sensor;
+
+            console.log("toggleTimer event:");
+            console.log(data);
+
+            let stationToToggle = data.station;
+
+            // TODO validate if station is valid
+
             let timerToUpdate = timers[stationToToggle-1];
-            if(timerToUpdate.isRunning())
+
+            if(data.operation === "start") {
+
+                timerToUpdate.stop();
+
+                if(data.currentTime)
+                {
+                    timerToUpdate.start({startValues: {seconds: data.currentTime}});
+                }
+                else
+                {
+                    timerToUpdate.start({startValues: {seconds: 0}});
+                }
+
+                var station = $('#timerStation'+stationToToggle).parents(".station");
+                station.addClass("active");
+                station.removeClass("stop");
+            }
+            else if(data.operation === "stop")
             {
                 timerToUpdate.pause();
                 var station = $('#timerStation'+stationToToggle).parents(".station");
                 station.removeClass("active");
                 station.addClass("stop");
-            }
-            else
-            {
-                timerToUpdate.start();
-                var station = $('#timerStation'+stationToToggle).parents(".station");
-                station.addClass("active");
-                station.removeClass("stop");
             }
         });
     </script>
