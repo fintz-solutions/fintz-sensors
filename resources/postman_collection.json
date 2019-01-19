@@ -56,7 +56,7 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/100",
+                    "raw": "http://localhost:3001/projects/1",
                     "protocol": "http",
                     "host": [
                         "localhost"
@@ -64,7 +64,7 @@
                     "port": "3001",
                     "path": [
                         "projects",
-                        "100"
+                        "1"
                     ]
                 }
             },
@@ -84,7 +84,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"number\":  1,\n    \"startTimestamp\": \"1-11-2018\",\n    \"totalTime\":   20,\n    \"status\": \"CREATED\",\n    \"project\": \"5c0c67a86b7a0e0c87248e5b\",\n    \"currentIteration\": 1\n}"
+                    "raw": "{\n\t\"number\":  1,\n    \"startTimeStamp\": \"1-11-2018\",\n    \"totalTime\":   20,\n    \"status\": \"CREATED\",\n    \"project\": \"5c0c67a86b7a0e0c87248e5b\",\n    \"currentIteration\": 1\n}"
                 },
                 "url": {
                     "raw": "http://localhost:3001/run",
@@ -138,7 +138,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"name\": \"A test project 16\",\n\t\"numStations\":   8,\n\t\"numRuns\": 1,\n\t\"timePerRun\": 20,\n\t\"productionTarget\": 20\n}"
+                    "raw": "{\n\t\"name\": \"A test project\",\n\t\"numStations\":   2,\n\t\"numRuns\": 2,\n\t\"timePerRun\": 1,\n\t\"productionTarget\": 20\n}"
                 },
                 "url": {
                     "raw": "http://localhost:3001/projects",
@@ -209,6 +209,75 @@
                     "port": "3001",
                     "path": [
                         "events"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "http://localhost:3001/projects/1/runs/1",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n\t\"actionType\": \"END_RUN\"\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3001/projects/1/runs/2",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001",
+                    "path": [
+                        "projects",
+                        "1",
+                        "runs",
+                        "2"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "GET http://localhost:3001/projects/:projectNumber/runs/:runNumber",
+            "protocolProfileBehavior": {
+                "disableBodyPruning": true
+            },
+            "request": {
+                "method": "GET",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "name": "Content-Type",
+                        "value": "application/json",
+                        "type": "text"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": ""
+                },
+                "url": {
+                    "raw": "http://localhost:3001/projects/1/runs/2",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001",
+                    "path": [
+                        "projects",
+                        "1",
+                        "runs",
+                        "2"
                     ]
                 }
             },

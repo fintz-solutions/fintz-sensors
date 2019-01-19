@@ -12,8 +12,8 @@ let Run = new Schema({
         required: true
     },
     startTimestamp: {//TIMESTAMP
-        type: Number,
-        required: true
+        type: Number
+        //required: true TODO NELSON
     },
     totalTime: {// in minutes
         type: Number,
@@ -30,20 +30,6 @@ let Run = new Schema({
         required: true
     }
 });
-
-Run.statics.createNew = function (runData) {
-    let run = this;
-    const projectModel = require(path.resolve(modelsFolder, "project")).Project; //NELSON: Needed to add this require here because if not circular dependency problems would occur
-    return projectModel.findByProjectId(runData.project).then(function (project) {
-        if (!project) {
-            errorUtil.createAndThrowGenericError("Invalid Project", 400);
-        } else {
-            return run.create(runData).then(function (newRun) {
-                return newRun._doc;
-            });
-        }
-    });
-};
 
 Run.statics.deleteRunById = function (runId) {
     //TODO NELSON don't forget to also delete related iterations and events
@@ -107,11 +93,23 @@ Run.statics.findAllByProjectId = function (projectId, fetchIterations) {
 };
 
 // -------- Instance methods -------- //
+Run.methods.findLatestIterationForRun = function () {
+    let runObj = this;
+    return iterationModel.findOne({
+        run: runObj._id
+    }).sort({_id: -1}).then(function (activeIteration) {
+        return activeIteration;
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for project with id ${runObj.project}`, 404);
+    });
+};
+
 Run.methods.findActiveIterationForRun = function () {
     let runObj = this;
     return iterationModel.findOne({
         run: runObj._id,
-        startTime: {$ne: null},
+        startTime: {$ne: null}, // TODO JORGE check this
         stopTime: null
     }).sort({_id: -1}).then(function (activeIteration) {
         return activeIteration;
@@ -131,16 +129,27 @@ Run.methods.findAllIterationsForRun = function () {
     });
 };
 
-Run.methods.deleteAssociatedIterationsForRun = function() {
+Run.methods.deleteAssociatedIterationsForRun = function () {
     let deletedRun = this;
-    return deletedRun.findAllIterationsForRun().then(function(iterationsToDelete) {
+    return deletedRun.findAllIterationsForRun().then(function (iterationsToDelete) {
         let promises = [];
-        iterationsToDelete.forEach(function(iterationToDelete, index) {
+        iterationsToDelete.forEach(function (iterationToDelete, index) {
             promises.push(iterationModel.deleteIterationById(iterationToDelete.id));
         });
-        return Promise.all(promises).then(function(results) {
+        return Promise.all(promises).then(function (results) {
             return deletedRun._doc;
         });
+    });
+};
+
+Run.methods.createNewIterationForRun = function (previousIterationNumber, createWithStartTime) {
+    let runObj = this;
+    let iterationNumber = previousIterationNumber ? previousIterationNumber + 1 : 1;
+    let iterationStartTime = createWithStartTime ? dateUtil.getCurrentTimestamp() : null;
+    return iterationModel.create({
+        number: iterationNumber,
+        startTime: iterationStartTime,
+        run: runObj._doc._id
     });
 };
 

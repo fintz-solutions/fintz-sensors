@@ -52,20 +52,17 @@ let Project = new Schema({
 Project.statics.createNew = function(projectData) {
     projectData.createdAt = dateUtil.getCurrentTimestamp();
     return this.create(projectData).then(function(newProject) {
-        //return newProject._doc;
-        let promises = [];
-        //TODO NELSON this code must be revised
+        let runsData = [];
         for (let runNumber = 1; runNumber <= newProject._doc.numRuns; runNumber++) {
             let runData = {
                 number: runNumber,
-                startTimestamp: newProject._doc.createdAt,
                 totalTime: newProject._doc.timePerRun,
-                status: "CREATED",
+                status: runNumber === 1 ? "RUNNING" : "CREATED",
                 project: newProject._doc._id
             };
-            promises.push(runModel.createNew(runData));
+            runsData.push(runData);
         }
-        return Promise.all(promises).then(function(results) {
+        return runModel.insertMany(runsData).then(function (results) {
             return newProject._doc;
         });
     });
@@ -139,6 +136,16 @@ Project.statics.deleteProjectByNumber = function(projectNumber) {
 
 
 // -------- Instance methods -------- //
+Project.methods.findRunByNumberForProject = function(runNumber) {
+    let projectObj = this;
+    return runModel.findOne({project: projectObj._id, number: runNumber}).sort({ _id: -1 }).then(function (run) {
+        return run;
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not find a run with number ${runNumber} for project with number ${projectObj.number}`, 404);
+    });
+};
+
 Project.methods.findActiveRunForProject = function() {
     let projectObj = this;
     return runModel.findOne({project: projectObj._id, status: "RUNNING"}).sort({ _id: -1 }).then(function (activeRun) {
@@ -162,6 +169,7 @@ Project.methods.deleteAssociatedRunsForProject = function() {
             promises.push(runModel.deleteRunById(runToDelete.id));
         });
         return Promise.all(promises).then(function(results) {
+            deletedProject._doc.status = "DELETED";
             return deletedProject._doc;
         });
     });
