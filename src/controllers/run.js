@@ -9,7 +9,7 @@ module.exports = {
             if (req.get("Content-Type") === "application/json") {
                 responseUtil.sendSuccessResponse("Run details retrieved successfully", 200, data, res);
             } else {
-                res.render("pages/run.html.tpl", {
+                res.render("pages/run_show.html.tpl", {
                     title: "Run Details",
                     project: data.project,
                     run: data.run,

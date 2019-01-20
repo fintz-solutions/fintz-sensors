@@ -102,7 +102,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 return Promise.all(promises).then(function (results) {
                     let previousIterationNumber = null;
                     let createWithAStartTime = true;
-                    return run.createNewIterationForRun(previousIterationNumber, createWithAStartTime).then(function (createdIteration) {
+                    return run.createNewIterationForRun(previousIterationNumber, createWithAStartTime, project.numStations).then(function (createdIteration) {
                         project.status = "RUNNING";
                         run.startTimestamp = runStartTime;
                         return {

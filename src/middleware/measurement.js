@@ -4,9 +4,15 @@ const measurementModel = require(path.resolve(modelsFolder, "measurement")).Meas
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 const iterationModel = require(path.resolve(modelsFolder, "iteration")).Project;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+const requestValidation = require(path.resolve(global.utilsFolder, "requestValidation"));
 
 module.exports = {
     getActiveMeasureForStationIteration : function (req, res, next) {
+        let result = requestValidation.isValidBody(["stationNumber"], req.body);
+        if (result.status === false) {
+            errorUtil.createAndThrowGenericError(result.message, 400);
+        }
+
         let iterationId = req.iteration._doc._id;
         let station = req.body.stationNumber;
 

@@ -16,6 +16,8 @@ module.exports = function (app, io) {
     app.get("/", landingPageController.show);
 
     // ----- Events endpoints -------
+
+    /*
     //TODO NELSON let's think a better name for this route -> timer/measuremts
     app.post('/timer/event', function (req, res) {
         let sensorPayload = req.body;
@@ -44,8 +46,9 @@ module.exports = function (app, io) {
             res.status(400).send(response);
         }
     });
+    */
 
-    app.post('/timer',
+    app.post('/timers',
         projectMiddleware.getActiveProject,
         runMiddleware.getActiveRun,
         iterationMiddleware.getActiveIteration,
@@ -72,8 +75,7 @@ module.exports = function (app, io) {
 
     app.delete("/projects/:projectNumber", projectController.delete);
 
-
-    //app.get("/projects/:id/runs/:run", function(req, res) {
+    /*
     app.get("/projects/:projectNumber/runs/:runNumber", function(req, res) {
         //TODO: just for testing purposes
         //TODO: needs validations and params names may change
@@ -82,6 +84,7 @@ module.exports = function (app, io) {
             run: req.params["run"],
         });
     });
+    */
 
     app.get("/projects/:projectNumber/runs/:runNumber",
         projectMiddleware.getProject,
@@ -89,7 +92,6 @@ module.exports = function (app, io) {
         iterationMiddleware.getLatestIteration,
         measurementMiddleware.getIterationMeasurements,
         runController.get);
-
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/projects/:projectNumber", projectController.get);

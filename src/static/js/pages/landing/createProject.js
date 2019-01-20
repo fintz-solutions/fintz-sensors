@@ -48,6 +48,11 @@ var createProject = function(element) {
                 }),
                 success: function(data, status) {
                     element.triggerHandler("success", data);
+
+                    // TODO remove this
+                    setTimeout(function(){
+                        location.reload();
+                    },1000);
                 },
                 error: function(data) {
                     var message = data && data.responseJSON && data.responseJSON.message || "Form error";

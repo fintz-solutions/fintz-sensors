@@ -70,12 +70,33 @@ html {
     position: relative;
 }
 
+.body .button-actions-run .button {
+    float: left;
+    width: 12%;
+    background-color: whitesmoke;
+    border: 2px solid black;
+    border-top: 1px solid black;
+    text-align: center;
+    height: 30px;
+    position: center;
+    margin-top: 1%;
+}
+
 .body .stations .station.active {
     background-color: green;
 }
 
 .body .stations .station.stop {
     background-color: red;
+}
+
+.body .stations .station.off {
+    background-color: lightgrey;
+}
+
+.body .stations .stationsRow {
+    float: left;
+    width: 50%;
 }
 
 .body .stations .station .info p {

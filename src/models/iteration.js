@@ -52,6 +52,23 @@ Iteration.statics.deleteIterationById = function (iterationId) {
     });
 };
 
+Iteration.statics.createAndInitializeIteration = function(iteration, numStations){
+    return this.create(iteration).then(function(newIteration){
+        let measurementsArray = [];
+        for (let it = 1; it <= numStations; it++) {
+            let measurementData = {
+                stationNumber: it,
+                startTime: null,
+                stopTime: null,
+                iteration: newIteration._doc._id
+            };
+            measurementsArray.push(measurementData);
+        }
+        return measurementModel.insertMany(measurementsArray).then(function (_) {
+            return newIteration;
+        });
+    });
+};
 
 // -------- Instance methods -------- //
 Iteration.methods.findMeasurementsForIteration = function() {

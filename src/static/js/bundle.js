@@ -1188,6 +1188,9 @@ var createProject = function(element) {
                 }),
                 success: function(data, status) {
                     element.triggerHandler("success", data);
+                    setTimeout(function(){
+                        location.reload();
+                    },1000);
                 },
                 error: function(data) {
                     var message = data && data.responseJSON && data.responseJSON.message || "Form error";
@@ -1361,7 +1364,7 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("start_action", function(event){
-            startGlobalTimer();
+            startGlobalTimer(globalTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -1393,7 +1396,7 @@ var activeRun = function(element) {
 
         matchedObject.bind("kill_action", function(event){
             killButton.addClass("disabled");
-            // TODO: redirects to?
+            window.location.href = '/'; // TODO improve this redirect!
         });
 
         /*
@@ -1418,40 +1421,45 @@ var activeRun = function(element) {
         });
 
         jQuery( document ).ready(function() {
-            var globalTimerElement = jQuery('.global-timer')
-            var minutes = globalTimerElement.attr("data-duration");
-            minutes = parseInt(minutes);
-            globalTimer.start({
-                countdown: true,
-                startValues: {
-                    minutes: minutes
-                }
-            });
+
         });
 
         for (let i = 0; i < timers.length; i++){
             let timerNr = i+1;
             timers[i].addEventListener('secondsUpdated', function (e) {
-                jQuery('.timer-station'+timerNr).html(timers[i].getTimeValues().toString());
+                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
+            });
+            timers[i].addEventListener('started', function (e) {
+                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
             });
         }
         var socket = io.connect();
         socket.on('toggleTimer', function(data){
-            let stationToToggle = data.sensor;
+
+            let stationToToggle = data.station;
+            // TODO validate if station is valid
             let timerToUpdate = timers[stationToToggle-1];
-            if(timerToUpdate.isRunning())
-            {
-                timerToUpdate.pause();
-                var station = jQuery('.timer-station'+stationToToggle).parents(".station");
-                station.removeClass("active");
-                station.addClass("stop");
-            }
-            else
-            {
-                timerToUpdate.start();
-                var station = jQuery('.timer-station'+stationToToggle).parents(".station");
+
+            if(data.operation === "start") {
+                timerToUpdate.stop();
+                if(data.currentTime)
+                {
+                    timerToUpdate.start({startValues: {seconds: data.currentTime}});
+                }
+                else
+                {
+                    timerToUpdate.start({startValues: {seconds: 0}});
+                }
+                let station = $('#timer-station-'+stationToToggle).parents(".station");
                 station.addClass("active");
                 station.removeClass("stop");
+            }
+            else if(data.operation === "stop")
+            {
+                timerToUpdate.pause();
+                let station = $('#timer-station-'+stationToToggle).parents(".station");
+                station.removeClass("active");
+                station.addClass("stop");
             }
         });
     };
@@ -1481,9 +1489,17 @@ var activeRun = function(element) {
     var clearStationTimers = function(element) {
         //TODO: implement this
     };
-    
-    var startGlobalTimer = function(element) {
-        //TODO: implement this
+
+    var startGlobalTimer = function(globalTimer) {
+        var globalTimerElement = jQuery('.global-timer')
+        var minutes = globalTimerElement.attr("data-duration");
+        minutes = parseInt(minutes);
+        globalTimer.start({
+            countdown: true,
+            startValues: {
+                minutes: minutes
+            }
+        });
     };
 
     init();
