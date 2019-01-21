@@ -6,7 +6,7 @@
 <div class="active-run-container">
     <div class="header-run">
         <div class="takt-time" id="takt-time"> takt time: {{ takt_time }} min </div>
-        <div class="takt-time-desc" id="takt-time-desc" data-duration="{{takt_time}}">{{ takt_time }}:00 </div>
+        <div class="takt-time-desc" id="takt-time-desc" data-duration="{{takt_time}}">00:{{ takt_time }}:00 </div>
         <div class="global-timer" id="global-timer" data-duration="{{ duration }}">{{ global_timer }}</div>
         <div class="logo">
             <a href="https://jmaceurope.com/">
