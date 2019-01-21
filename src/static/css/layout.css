@@ -69,6 +69,15 @@ html {
     top: 4%;
     width: auto;
 }
+.body .header-run .takt-time-desc {
+    color: #ffffff;
+    font-size: 20px;
+    position: absolute;
+    left: 3%;
+    text-align: left;
+    top: 7%;
+    width: auto;
+}
 
 .body .stations .station {
     background-color: #ffffff;

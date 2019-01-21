@@ -62,6 +62,7 @@ var activeRun = function(element) {
 
         matchedObject.bind("start_action", function(event){
             startGlobalTimer(globalTimer);
+            startTaktTimer(taktTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -116,6 +117,10 @@ var activeRun = function(element) {
         let globalTimer = new Timer();
         globalTimer.addEventListener('secondsUpdated', function (e) {
             jQuery('.global-timer').html(globalTimer.getTimeValues().toString());
+        });
+        let taktTimer = new Timer();
+        taktTimer.addEventListener('secondsUpdated', function (e) {
+            jQuery('.takt-time-desc').html(taktTimer.getTimeValues().toString());
         });
 
         jQuery( document ).ready(function() {
@@ -193,6 +198,18 @@ var activeRun = function(element) {
         var minutes = globalTimerElement.attr("data-duration");
         minutes = parseInt(minutes);
         globalTimer.start({
+            countdown: true,
+            startValues: {
+                minutes: minutes
+            }
+        });
+    };
+
+    var startTaktTimer = function(timer){
+        var taktTimerElement = jQuery('.takt-time-desc')
+        var minutes = taktTimerElement.attr("duration");
+        minutes = parseInt(minutes);
+        timer.start({
             countdown: true,
             startValues: {
                 minutes: minutes
