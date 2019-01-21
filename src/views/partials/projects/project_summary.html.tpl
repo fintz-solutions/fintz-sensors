@@ -9,10 +9,7 @@
         <p class="total-runs">total runs: {{ project.numRuns }}</p>
         <p class="time-run">time per run: {{ project.timePerRun }}</p>
         <p class="header" style="font-weight:bold;">
-            <span>number |</span>
-            <span>status |</span>
-            <span>duration |</span>
-            <span>iterations |</span>
+            <span>Project Runs: </span>
         </p>
         <ul class="list list-runs" style="list-style-type:none">
             {% for run in project.runs | sort(False, False, "number") %}
