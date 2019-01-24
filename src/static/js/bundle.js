@@ -1398,6 +1398,8 @@ var activeRun = function(element) {
             // TODO: redirects to?
             window.location.href = '/'; //TODO: improve this redirect!
         });
+        
+        _initTimers();
     };
 
     var _sendActionType = function(element, actionType) {
@@ -1447,6 +1449,10 @@ var activeRun = function(element) {
         let taktTimer = new Timer();
         taktTimer.addEventListener('secondsUpdated', function (e) {
             jQuery('.takt-time-desc').html(taktTimer.getTimeValues().toString());
+        });
+
+        jQuery(document).ready(function(){
+            _startGlobalTimer(globalTimer);
         });
 
         for (let i = 0; i < timers.length; i++){
