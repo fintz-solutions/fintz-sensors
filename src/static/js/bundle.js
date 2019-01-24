@@ -1326,7 +1326,7 @@ var activeRun = function(element) {
         var moveButton = jQuery(".button-move", matchedObject);
         var continueButton = jQuery(".button-continue", matchedObject);
         var killButton = jQuery(".button-kill", matchedObject);
-
+        
         startButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
@@ -1357,29 +1357,29 @@ var activeRun = function(element) {
 
         matchedObject.bind("pre_start", function(event) {
             var element = jQuery(this);
-            sendActionType(element, ACTION_TYPES.START_RUN);
+            _sendActionType(element, ACTION_TYPES.START_RUN);
         });
 
         matchedObject.bind("start_action", function(event){
-            startGlobalTimer();
+            _startGlobalTimer();
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
 
         matchedObject.bind("pre_move", function(event) {
             var element = jQuery(this);
-            sendActionType(element, ACTION_TYPES.MOVE_ITER);
+            _sendActionType(element, ACTION_TYPES.MOVE_ITER);
         });
 
         matchedObject.bind("move_action", function(event){
             moveButton.addClass("disabled");
             continueButton.removeClass("disabled");
-            clearStationTimers();
+            _clearStationTimers();
         });
 
         matchedObject.bind("pre_continue", function(event) {
             var element = jQuery(this);
-            sendActionType(element, ACTION_TYPES.CONTINUE_RUN);
+            _sendActionType(element, ACTION_TYPES.CONTINUE_RUN);
         });
 
         matchedObject.bind("continue_action", function(event){
@@ -1388,22 +1388,55 @@ var activeRun = function(element) {
 
         matchedObject.bind("pre_kill", function(event) {
             var element = jQuery(this);
-            sendActionType(element, ACTION_TYPES.KILL);
+            _sendActionType(element, ACTION_TYPES.KILL);
         });
 
         matchedObject.bind("kill_action", function(event){
-            killButton.addClass("disabled");
+            var buttons = jQuery(".button" ,matchedObject);
+            buttons.addClass("disabled");
             // TODO: redirects to?
         });
+    };
 
-        /*
+    var _sendActionType = function(element, actionType) {
+        var startButton = jQuery(".button-start", element);
+        var url = startButton.attr("href");
+
+        jQuery.ajax({
+            url: url,
+            type: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({
+                "actionType": actionType,
+            }),
+            success: function(data, status) {
+                var event = actionType.toLowerCase() + "_action";
+                element.triggerHandler(event, data);
+            },
+            error: function(data) {
+                var message = data && data.responseJSON && data.responseJSON.message || "Error sending action";
+                matchedObject.triggerHandler("error", message);
+            }
+          });
+    };
+
+    var _clearStationTimers = function(element) {
+        //TODO: implement this
+    };
+    
+    var _startGlobalTimer = function(element) {
+        _initTimers();
+    };
+
+    var _initTimers = function(element) {
+         /*
          *      
          *      
          * TODO: this need a proper refactoring
          *
          *
         */
-        let timers = [
+        var timers = [
             new Timer(),
             new Timer(),
             new Timer(),
@@ -1454,36 +1487,6 @@ var activeRun = function(element) {
                 station.removeClass("stop");
             }
         });
-    };
-
-    var sendActionType = function(element, actionType) {
-        var startButton = jQuery(".button-start", element);
-        var url = startButton.attr("href");
-
-        jQuery.ajax({
-            url: url,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "actionType": actionType,
-            }),
-            success: function(data, status) {
-                var event = actionType.toLowerCase() + "_action";
-                element.triggerHandler(event, data);
-            },
-            error: function(data) {
-                var message = data && data.responseJSON && data.responseJSON.message || "Error sending action";
-                matchedObject.triggerHandler("error", message);
-            }
-          });
-    };
-
-    var clearStationTimers = function(element) {
-        //TODO: implement this
-    };
-    
-    var startGlobalTimer = function(element) {
-        //TODO: implement this
     };
 
     init();
