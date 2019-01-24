@@ -1,5 +1,7 @@
-let mongoose = require('mongoose');
+let mongoose = require("mongoose");
+let path = require("path");
 let Schema = mongoose.Schema;
+const measurementModel = require(path.resolve(modelsFolder, "measurement")).Measurement;
 
 
 let Iteration = new Schema({
@@ -8,12 +10,12 @@ let Iteration = new Schema({
         required: true
     },
     startTime: {//TIMESTAMP
-        type: Number,
-        required: true
+        type: Number
+        //required: true //TODO NELSON
     },
     stopTime: {//TIMESTAMP
-        type: Number,
-        required: true
+        type: Number
+        //required: true //TODO NELSON
     },
     run: {
         type: mongoose.Schema.Types.ObjectId,
@@ -48,6 +50,30 @@ Iteration.statics.deleteIterationById = function (iterationId) {
         console.error(error);
         errorUtil.createAndThrowGenericError("Invalid iteration", 404);
     });
+};
+
+Iteration.statics.createAndInitializeIteration = function(iteration, numStations){
+    return this.create(iteration).then(function(newIteration){
+        let measurementsArray = [];
+        for (let it = 1; it <= numStations; it++) {
+            let measurementData = {
+                stationNumber: it,
+                startTime: null,
+                stopTime: null,
+                iteration: newIteration._doc._id
+            };
+            measurementsArray.push(measurementData);
+        }
+        return measurementModel.insertMany(measurementsArray).then(function (_) {
+            return newIteration;
+        });
+    });
+};
+
+// -------- Instance methods -------- //
+Iteration.methods.findMeasurementsForIteration = function() {
+    let iterationObj = this;
+    return measurementModel.findAllByIterationId(iterationObj._id);
 };
 
 module.exports.Iteration = mongoose.model("Iteration", Iteration);
