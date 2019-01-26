@@ -4,8 +4,8 @@
     "description": "",
     "main": "src/server.js",
     "scripts": {
-        "build": "browserify src/static/js/main.js > src/static/js/bundle.js",
-        "watch": "watchify src/static/js/main.js -o src/static/js/bundle.js -v",
+        "build": "webpack --config webpack.config.js",
+        "watch": "webpack --watch --config webpack.config.js",
         "start": "node src/server.js",
         "dev": "nodemon src/server.js"
     },
@@ -21,10 +21,11 @@
         "socket.io": "^2.1.1"
     },
     "devDependencies": {
-        "browserify": "^16.2.3",
-        "chokidar": "^2.0.4",
+        "css-loader": "^2.1.0",
         "nodemon": "^1.18.9",
-        "watchify": "^3.11.0"
+        "style-loader": "^0.23.1",
+        "webpack": "^4.29.0",
+        "webpack-cli": "^3.2.1"
     },
     "nodemonConfig": {
         "ext": "js css html.tpl"

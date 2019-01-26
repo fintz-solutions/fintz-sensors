@@ -6,7 +6,7 @@ const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 module.exports = {
     show: function(req, res) {
         projectService.getProjects().then(function(data) {
-            res.render("landing.html.tpl", {
+            res.render("pages/landing.html.tpl", {
                 title: global.appTitle,
                 projects: data
             });

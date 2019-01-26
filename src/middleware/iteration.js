@@ -27,5 +27,5 @@ module.exports = {
             console.error(error);
             responseUtil.sendErrorResponse(error, `Error when looking for the latest iteration for run with id: ${req.run._id}`, null, res);
         });
-    } 
+    }
 };

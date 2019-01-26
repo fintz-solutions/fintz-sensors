@@ -1,1534 +1,256 @@
-(function(){function r(e,n,t){function o(i,f){if(!n[i]){if(!e[i]){var c="function"==typeof require&&require;if(!f&&c)return c(i,!0);if(u)return u(i,!0);var a=new Error("Cannot find module '"+i+"'");throw a.code="MODULE_NOT_FOUND",a}var p=n[i]={exports:{}};e[i][0].call(p.exports,function(r){var n=e[i][1][r];return o(n||r)},p,p.exports,r,e,n,t)}return n[i].exports}for(var u="function"==typeof require&&require,i=0;i<t.length;i++)o(t[i]);return o}return r})()({1:[function(require,module,exports){
-/**
- * easytimer.js
- * Generated: 2018-12-14
- * Version: 3.0.0
- */
-
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-  typeof define === 'function' && define.amd ? define(['exports'], factory) :
-  (factory((global.easytimer = {})));
-}(this, (function (exports) { 'use strict';
-
-  function _typeof(obj) {
-    if (typeof Symbol === "function" && typeof Symbol.iterator === "symbol") {
-      _typeof = function (obj) {
-        return typeof obj;
-      };
-    } else {
-      _typeof = function (obj) {
-        return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj;
-      };
-    }
-
-    return _typeof(obj);
-  }
-
-  function leftPadding(string, padLength, character) {
-    var i;
-    var characters = '';
-
-    if (string.length > padLength) {
-      return string;
-    }
-
-    for (i = 0; i < padLength; i = i + 1) {
-      characters += String(character);
-    }
-
-    return (characters + string).slice(-characters.length);
-  }
-
-  function TimeCounter() {
-    this.secondTenths = 0;
-    this.seconds = 0;
-    this.minutes = 0;
-    this.hours = 0;
-    this.days = 0;
-    /**
-     * [toString convert the counted values on a string]
-     * @param  {[array]} units           [array with the units to display]
-     * @param  {[string]} separator       [separator of the units]
-     * @param  {[integer]} leftZeroPadding [number of zero padding]
-     * @return {[string]}                 [result string]
-     */
-
-    this.toString = function (units, separator, leftZeroPadding) {
-      units = units || ['hours', 'minutes', 'seconds'];
-      separator = separator || ':';
-      leftZeroPadding = leftZeroPadding || 2;
-      var stringTime;
-      var arrayTime = [];
-      var i;
-
-      for (i = 0; i < units.length; i = i + 1) {
-        if (this[units[i]] !== undefined) {
-          if (units[i] === 'secondTenths') {
-            arrayTime.push(this[units[i]]);
-          } else {
-            arrayTime.push(leftPadding(this[units[i]], leftZeroPadding, '0'));
-          }
-        }
-      }
-
-      stringTime = arrayTime.join(separator);
-      return stringTime;
-    };
-  }
-
-  /*
-  * Polyfill por IE9, IE10 and IE11
-  */
-  var CustomEvent$1 = typeof window !== 'undefined' ? window.CustomEvent : undefined;
-
-  if (typeof window !== 'undefined' && typeof CustomEvent$1 !== 'function') {
-    CustomEvent$1 = function CustomEvent(event, params) {
-      params = params || {
-        bubbles: false,
-        cancelable: false,
-        detail: undefined
-      };
-      var evt = document.createEvent('CustomEvent');
-      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
-      return evt;
-    };
-
-    CustomEvent$1.prototype = window.Event.prototype;
-    window.CustomEvent = CustomEvent$1;
-  }
-
-  /*
-   * General functions, variables and constants
-   */
-
-  var SECOND_TENTHS_PER_SECOND = 10;
-  var SECONDS_PER_MINUTE = 60;
-  var MINUTES_PER_HOUR = 60;
-  var HOURS_PER_DAY = 24;
-  var SECOND_TENTHS_POSITION = 0;
-  var SECONDS_POSITION = 1;
-  var MINUTES_POSITION = 2;
-  var HOURS_POSITION = 3;
-  var DAYS_POSITION = 4;
-  var SECOND_TENTHS = 'secondTenths';
-  var SECONDS = 'seconds';
-  var MINUTES = 'minutes';
-  var HOURS = 'hours';
-  var DAYS = 'days';
-  var unitsInMilliseconds = {
-    secondTenths: 100,
-    seconds: 1000,
-    minutes: 60000,
-    hours: 3600000,
-    days: 86400000
-  };
-  var groupedUnits = {
-    secondTenths: SECOND_TENTHS_PER_SECOND,
-    seconds: SECONDS_PER_MINUTE,
-    minutes: MINUTES_PER_HOUR,
-    hours: HOURS_PER_DAY
-  };
-  var events = typeof module !== 'undefined' && module.exports && typeof require === 'function' ? require('events') : undefined;
-
-  function hasDOM() {
-    return typeof document !== 'undefined';
-  }
-
-  function hasEventEmitter() {
-    return events;
-  }
-
-  function mod(number, module) {
-    return (number % module + module) % module;
-  }
-  /**
-   * [Timer Timer/Chronometer/Countdown compatible with AMD and NodeJS.
-   * Can update time values with different time intervals: tenth of seconds,
-   * seconds, minutes and hours.]
-   */
-
-
-  function Timer() {
-    /*
-    * PRIVATE variables and Functions
-    */
-    var counters = new TimeCounter();
-    var totalCounters = new TimeCounter();
-    var intervalId;
-    var eventEmitter = hasDOM() ? document.createElement('span') : hasEventEmitter() ? new events.EventEmitter() : undefined;
-    var running = false;
-    var paused = false;
-    var precision;
-    var timerTypeFactor;
-    var customCallback;
-    var timerConfig = {};
-    var currentParams;
-    var targetValues;
-    var startValues;
-    var countdown;
-    var startingDate;
-    var targetDate;
-    var eventData = {
-      detail: {
-        timer: this
-      }
-    };
-
-    function updateCounters(precision, roundedValue) {
-      totalCounters[precision] = roundedValue;
-
-      if (precision === DAYS) {
-        counters[precision] = roundedValue;
-      } else if (roundedValue >= 0) {
-        counters[precision] = mod(roundedValue, groupedUnits[precision]);
-      } else {
-        counters[precision] = groupedUnits[precision] - mod(roundedValue, groupedUnits[precision]);
-      }
-    }
-
-    function updateDays(value) {
-      return updateUnitByPrecision(value, DAYS);
-    }
-
-    function updateHours(value) {
-      return updateUnitByPrecision(value, HOURS);
-    }
-
-    function updateMinutes(value) {
-      return updateUnitByPrecision(value, MINUTES);
-    }
-
-    function updateSeconds(value) {
-      return updateUnitByPrecision(value, SECONDS);
-    }
-
-    function updateSecondTenths(value) {
-      return updateUnitByPrecision(value, SECOND_TENTHS);
-    }
-
-    function updateUnitByPrecision(value, precision) {
-      var previousValue = totalCounters[precision];
-      updateCounters(precision, calculateIntegerUnitQuotient(value, unitsInMilliseconds[precision]));
-      return totalCounters[precision] !== previousValue;
-    }
-
-    function stopTimerAndResetCounters() {
-      stopTimer();
-      resetCounters();
-    }
-
-    function stopTimer() {
-      clearInterval(intervalId);
-      intervalId = undefined;
-      running = false;
-      paused = false;
-    }
-
-    function setParamsAndStartTimer(params) {
-      if (!isPaused()) {
-        setParams(params);
-      } else {
-        startingDate = calculateStartingDate();
-        targetValues = setTarget(currentParams.target);
-      }
-
-      startTimer();
-    }
-
-    function startTimer() {
-      var interval = unitsInMilliseconds[precision];
-
-      if (isTargetAchieved(roundTimestamp(Date.now()))) {
-        return;
-      }
-
-      intervalId = setInterval(updateTimerAndDispatchEvents, interval);
-      running = true;
-      paused = false;
-    }
-
-    function calculateStartingDate() {
-      return roundTimestamp(Date.now()) - totalCounters.secondTenths * unitsInMilliseconds[SECOND_TENTHS] * timerTypeFactor;
-    }
-
-    function updateTimerAndDispatchEvents() {
-      var currentTime = roundTimestamp(Date.now());
-      var valuesUpdated = updateTimer();
-      dispatchEvents(valuesUpdated);
-      customCallback(eventData.detail.timer);
-
-      if (isTargetAchieved(currentTime)) {
-        stop();
-        dispatchEvent('targetAchieved', eventData);
-      }
-    }
-
-    function updateTimer() {
-      var currentTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : roundTimestamp(Date.now());
-      var ellapsedTime = timerTypeFactor > 0 ? currentTime - startingDate : startingDate - currentTime;
-      var valuesUpdated = {};
-      valuesUpdated[SECOND_TENTHS] = updateSecondTenths(ellapsedTime);
-      valuesUpdated[SECONDS] = updateSeconds(ellapsedTime);
-      valuesUpdated[MINUTES] = updateMinutes(ellapsedTime);
-      valuesUpdated[HOURS] = updateHours(ellapsedTime);
-      valuesUpdated[DAYS] = updateDays(ellapsedTime);
-      return valuesUpdated;
-    }
-
-    function roundTimestamp(timestamp) {
-      return Math.floor(timestamp / unitsInMilliseconds[precision]) * unitsInMilliseconds[precision];
-    }
-
-    function dispatchEvents(valuesUpdated) {
-      if (valuesUpdated[SECOND_TENTHS]) {
-        dispatchEvent('secondTenthsUpdated', eventData);
-      }
-
-      if (valuesUpdated[SECONDS]) {
-        dispatchEvent('secondsUpdated', eventData);
-      }
-
-      if (valuesUpdated[MINUTES]) {
-        dispatchEvent('minutesUpdated', eventData);
-      }
-
-      if (valuesUpdated[HOURS]) {
-        dispatchEvent('hoursUpdated', eventData);
-      }
-
-      if (valuesUpdated[DAYS]) {
-        dispatchEvent('daysUpdated', eventData);
-      }
-    }
-
-    function isTargetAchieved(currentDate) {
-      return targetValues instanceof Array && currentDate >= targetDate;
-    }
-
-    function resetCounters() {
-      for (var counter in counters) {
-        if (counters.hasOwnProperty(counter) && typeof counters[counter] === 'number') {
-          counters[counter] = 0;
-        }
-      }
-
-      for (var _counter in totalCounters) {
-        if (totalCounters.hasOwnProperty(_counter) && typeof totalCounters[_counter] === 'number') {
-          totalCounters[_counter] = 0;
-        }
-      }
-    }
-
-    function setParams(params) {
-      params = params || {};
-      precision = typeof params.precision === 'string' ? params.precision : SECONDS;
-      customCallback = typeof params.callback === 'function' ? params.callback : function () {};
-      countdown = params.countdown === true;
-      timerTypeFactor = countdown === true ? -1 : 1;
-
-      if (_typeof(params.startValues) === 'object') {
-        setStartValues(params.startValues);
-      } else {
-        startValues = null;
-      }
-
-      startingDate = calculateStartingDate();
-      updateTimer();
-
-      if (_typeof(params.target) === 'object') {
-        targetValues = setTarget(params.target);
-      } else if (countdown) {
-        params.target = {
-          seconds: 0
-        };
-        targetValues = setTarget(params.target);
-      } else {
-        targetValues = null;
-      }
-
-      timerConfig = {
-        precision: precision,
-        callback: customCallback,
-        countdown: _typeof(params) === 'object' && params.countdown === true,
-        target: targetValues,
-        startValues: startValues
-      };
-      currentParams = params;
-    }
-
-    function configInputValues(inputValues) {
-      var secondTenths, seconds, minutes, hours, days, values;
-
-      if (_typeof(inputValues) === 'object') {
-        if (inputValues instanceof Array) {
-          if (inputValues.length !== 5) {
-            throw new Error('Array size not valid');
-          }
-
-          values = inputValues;
-        } else {
-          values = [inputValues.secondTenths || 0, inputValues.seconds || 0, inputValues.minutes || 0, inputValues.hours || 0, inputValues.days || 0];
-        }
-      }
-
-      secondTenths = values[SECOND_TENTHS_POSITION];
-      seconds = values[SECONDS_POSITION] + calculateIntegerUnitQuotient(secondTenths, SECOND_TENTHS_PER_SECOND);
-      minutes = values[MINUTES_POSITION] + calculateIntegerUnitQuotient(seconds, SECONDS_PER_MINUTE);
-      hours = values[HOURS_POSITION] + calculateIntegerUnitQuotient(minutes, MINUTES_PER_HOUR);
-      days = values[DAYS_POSITION] + calculateIntegerUnitQuotient(hours, HOURS_PER_DAY);
-      values[SECOND_TENTHS_POSITION] = secondTenths % SECOND_TENTHS_PER_SECOND;
-      values[SECONDS_POSITION] = seconds % SECONDS_PER_MINUTE;
-      values[MINUTES_POSITION] = minutes % MINUTES_PER_HOUR;
-      values[HOURS_POSITION] = hours % HOURS_PER_DAY;
-      values[DAYS_POSITION] = days;
-      return values;
-    }
-
-    function calculateIntegerUnitQuotient(unit, divisor) {
-      var quotient = unit / divisor;
-      return quotient < 0 ? Math.ceil(quotient) : Math.floor(quotient);
-    }
-
-    function setTarget(inputTarget) {
-      if (!inputTarget) {
-        return;
-      }
-
-      targetValues = configInputValues(inputTarget);
-      var targetCounter = calculateTotalCounterFromValues(targetValues);
-      targetDate = startingDate + targetCounter.secondTenths * unitsInMilliseconds[SECOND_TENTHS] * timerTypeFactor;
-      return targetValues;
-    }
-
-    function setStartValues(inputStartValues) {
-      startValues = configInputValues(inputStartValues);
-      counters.secondTenths = startValues[SECOND_TENTHS_POSITION];
-      counters.seconds = startValues[SECONDS_POSITION];
-      counters.minutes = startValues[MINUTES_POSITION];
-      counters.hours = startValues[HOURS_POSITION];
-      counters.days = startValues[DAYS_POSITION];
-      totalCounters = calculateTotalCounterFromValues(startValues, totalCounters);
-    }
-
-    function calculateTotalCounterFromValues(values, outputCounter) {
-      var total = outputCounter || {};
-      total.days = values[DAYS_POSITION];
-      total.hours = total.days * HOURS_PER_DAY + values[HOURS_POSITION];
-      total.minutes = total.hours * MINUTES_PER_HOUR + values[MINUTES_POSITION];
-      total.seconds = total.minutes * SECONDS_PER_MINUTE + values[SECONDS_POSITION];
-      total.secondTenths = total.seconds * SECOND_TENTHS_PER_SECOND + values[[SECOND_TENTHS_POSITION]];
-      return total;
-    }
-    /*
-     * PUBLIC functions
-     */
-
-    /**
-     * [stop stops the timer and resets the counters. Dispatch stopped event]
-     */
-
-
-    function stop() {
-      stopTimerAndResetCounters();
-      dispatchEvent('stopped', eventData);
-    }
-    /**
-     * [stop stops and starts the timer. Dispatch stopped event]
-     */
-
-
-    function reset() {
-      stopTimerAndResetCounters();
-      setParamsAndStartTimer(currentParams);
-      dispatchEvent('reset', eventData);
-    }
-    /**
-     * [start starts the timer configured by the params object. Dispatch started event]
-     * @param  {[object]} params [Configuration parameters]
-     */
-
-
-    function start(params) {
-      if (isRunning()) {
-        return;
-      }
-
-      setParamsAndStartTimer(params);
-      dispatchEvent('started', eventData);
-    }
-    /**
-     * [pause stops the timer without resetting the counters. The timer it can be restarted with start function.
-     * Dispatch paused event]
-     * @return {[type]} [description]
-     */
-
-
-    function pause() {
-      stopTimer();
-      paused = true;
-      dispatchEvent('paused', eventData);
-    }
-    /**
-     * [addEventListener Adds event listener to the timer]
-     * @param {[string]} event      [event to listen]
-     * @param {[function]} listener   [the event listener function]
-     */
-
-
-    function addEventListener(event, listener) {
-      if (hasDOM()) {
-        eventEmitter.addEventListener(event, listener);
-      } else if (hasEventEmitter()) {
-        eventEmitter.on(event, listener);
-      }
-    }
-    /**
-     * [removeEventListener Removes event listener to the timer]
-     * @param  {[string]} event    [event to remove listener]
-     * @param  {[function]} listener [listener to remove]
-     */
-
-
-    function removeEventListener(event, listener) {
-      if (hasDOM()) {
-        eventEmitter.removeEventListener(event, listener);
-      } else if (hasEventEmitter()) {
-        eventEmitter.removeListener(event, listener);
-      }
-    }
-    /**
-     * [dispatchEvent dispatchs an event]
-     * @param  {string} event [event to dispatch]
-     */
-
-
-    function dispatchEvent(event, data) {
-      if (hasDOM()) {
-        eventEmitter.dispatchEvent(new CustomEvent(event, data));
-      } else if (hasEventEmitter()) {
-        eventEmitter.emit(event, data);
-      }
-    }
-    /**
-     * [isRunning return true if the timer is running]
-     * @return {Boolean}
-     */
-
-
-    function isRunning() {
-      return running;
-    }
-    /**
-     * [isPaused returns true if the timer is paused]
-     * @return {Boolean}
-     */
-
-
-    function isPaused() {
-      return paused;
-    }
-    /**
-     * [getTimeValues returns the counter with the current timer values]
-     * @return {[TimeCounter]}
-     */
-
-
-    function getTimeValues() {
-      return counters;
-    }
-    /**
-     * [getTotalTimeValues returns the counter with the current timer total values]
-     * @return {[TimeCounter]}
-     */
-
-    function getTotalTimeValues() {
-      return totalCounters;
-    }
-    /**
-     * [getConfig returns the configuration paramameters]
-     * @return {[type]}
-     */
-
-    function getConfig() {
-      return timerConfig;
-    }
-    /**
-     * Public API
-     * Definition of Timer instance public functions
-     */
-
-    if (typeof this !== 'undefined') {
-      this.start = start;
-      this.pause = pause;
-      this.stop = stop;
-      this.reset = reset;
-      this.isRunning = isRunning;
-      this.isPaused = isPaused;
-      this.getTimeValues = getTimeValues;
-      this.getTotalTimeValues = getTotalTimeValues;
-      this.getConfig = getConfig;
-      this.addEventListener = addEventListener;
-      this.on = addEventListener;
-      this.removeEventListener = removeEventListener;
-      this.off = removeEventListener;
-    }
-  }
-
-  exports.default = Timer;
-  exports.Timer = Timer;
-
-  Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
-
-},{"events":2}],2:[function(require,module,exports){
-// Copyright Joyent, Inc. and other Node contributors.
-//
-// Permission is hereby granted, free of charge, to any person obtaining a
-// copy of this software and associated documentation files (the
-// "Software"), to deal in the Software without restriction, including
-// without limitation the rights to use, copy, modify, merge, publish,
-// distribute, sublicense, and/or sell copies of the Software, and to permit
-// persons to whom the Software is furnished to do so, subject to the
-// following conditions:
-//
-// The above copyright notice and this permission notice shall be included
-// in all copies or substantial portions of the Software.
-//
-// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS
-// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN
-// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
-// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
-// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE
-// USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-var objectCreate = Object.create || objectCreatePolyfill
-var objectKeys = Object.keys || objectKeysPolyfill
-var bind = Function.prototype.bind || functionBindPolyfill
-
-function EventEmitter() {
-  if (!this._events || !Object.prototype.hasOwnProperty.call(this, '_events')) {
-    this._events = objectCreate(null);
-    this._eventsCount = 0;
-  }
-
-  this._maxListeners = this._maxListeners || undefined;
-}
-module.exports = EventEmitter;
-
-// Backwards-compat with node 0.10.x
-EventEmitter.EventEmitter = EventEmitter;
-
-EventEmitter.prototype._events = undefined;
-EventEmitter.prototype._maxListeners = undefined;
-
-// By default EventEmitters will print a warning if more than 10 listeners are
-// added to it. This is a useful default which helps finding memory leaks.
-var defaultMaxListeners = 10;
-
-var hasDefineProperty;
-try {
-  var o = {};
-  if (Object.defineProperty) Object.defineProperty(o, 'x', { value: 0 });
-  hasDefineProperty = o.x === 0;
-} catch (err) { hasDefineProperty = false }
-if (hasDefineProperty) {
-  Object.defineProperty(EventEmitter, 'defaultMaxListeners', {
-    enumerable: true,
-    get: function() {
-      return defaultMaxListeners;
-    },
-    set: function(arg) {
-      // check whether the input is a positive number (whose value is zero or
-      // greater and not a NaN).
-      if (typeof arg !== 'number' || arg < 0 || arg !== arg)
-        throw new TypeError('"defaultMaxListeners" must be a positive number');
-      defaultMaxListeners = arg;
-    }
-  });
-} else {
-  EventEmitter.defaultMaxListeners = defaultMaxListeners;
-}
-
-// Obviously not all Emitters should be limited to 10. This function allows
-// that to be increased. Set to zero for unlimited.
-EventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {
-  if (typeof n !== 'number' || n < 0 || isNaN(n))
-    throw new TypeError('"n" argument must be a positive number');
-  this._maxListeners = n;
-  return this;
-};
-
-function $getMaxListeners(that) {
-  if (that._maxListeners === undefined)
-    return EventEmitter.defaultMaxListeners;
-  return that._maxListeners;
-}
-
-EventEmitter.prototype.getMaxListeners = function getMaxListeners() {
-  return $getMaxListeners(this);
-};
-
-// These standalone emit* functions are used to optimize calling of event
-// handlers for fast cases because emit() itself often has a variable number of
-// arguments and can be deoptimized because of that. These functions always have
-// the same number of arguments and thus do not get deoptimized, so the code
-// inside them can execute faster.
-function emitNone(handler, isFn, self) {
-  if (isFn)
-    handler.call(self);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self);
-  }
-}
-function emitOne(handler, isFn, self, arg1) {
-  if (isFn)
-    handler.call(self, arg1);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self, arg1);
-  }
-}
-function emitTwo(handler, isFn, self, arg1, arg2) {
-  if (isFn)
-    handler.call(self, arg1, arg2);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self, arg1, arg2);
-  }
-}
-function emitThree(handler, isFn, self, arg1, arg2, arg3) {
-  if (isFn)
-    handler.call(self, arg1, arg2, arg3);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].call(self, arg1, arg2, arg3);
-  }
-}
-
-function emitMany(handler, isFn, self, args) {
-  if (isFn)
-    handler.apply(self, args);
-  else {
-    var len = handler.length;
-    var listeners = arrayClone(handler, len);
-    for (var i = 0; i < len; ++i)
-      listeners[i].apply(self, args);
-  }
-}
-
-EventEmitter.prototype.emit = function emit(type) {
-  var er, handler, len, args, i, events;
-  var doError = (type === 'error');
-
-  events = this._events;
-  if (events)
-    doError = (doError && events.error == null);
-  else if (!doError)
-    return false;
-
-  // If there is no 'error' event listener then throw.
-  if (doError) {
-    if (arguments.length > 1)
-      er = arguments[1];
-    if (er instanceof Error) {
-      throw er; // Unhandled 'error' event
-    } else {
-      // At least give some kind of context to the user
-      var err = new Error('Unhandled "error" event. (' + er + ')');
-      err.context = er;
-      throw err;
-    }
-    return false;
-  }
-
-  handler = events[type];
-
-  if (!handler)
-    return false;
-
-  var isFn = typeof handler === 'function';
-  len = arguments.length;
-  switch (len) {
-      // fast cases
-    case 1:
-      emitNone(handler, isFn, this);
-      break;
-    case 2:
-      emitOne(handler, isFn, this, arguments[1]);
-      break;
-    case 3:
-      emitTwo(handler, isFn, this, arguments[1], arguments[2]);
-      break;
-    case 4:
-      emitThree(handler, isFn, this, arguments[1], arguments[2], arguments[3]);
-      break;
-      // slower
-    default:
-      args = new Array(len - 1);
-      for (i = 1; i < len; i++)
-        args[i - 1] = arguments[i];
-      emitMany(handler, isFn, this, args);
-  }
-
-  return true;
-};
-
-function _addListener(target, type, listener, prepend) {
-  var m;
-  var events;
-  var existing;
-
-  if (typeof listener !== 'function')
-    throw new TypeError('"listener" argument must be a function');
-
-  events = target._events;
-  if (!events) {
-    events = target._events = objectCreate(null);
-    target._eventsCount = 0;
-  } else {
-    // To avoid recursion in the case that type === "newListener"! Before
-    // adding it to the listeners, first emit "newListener".
-    if (events.newListener) {
-      target.emit('newListener', type,
-          listener.listener ? listener.listener : listener);
-
-      // Re-assign `events` because a newListener handler could have caused the
-      // this._events to be assigned to a new object
-      events = target._events;
-    }
-    existing = events[type];
-  }
-
-  if (!existing) {
-    // Optimize the case of one listener. Don't need the extra array object.
-    existing = events[type] = listener;
-    ++target._eventsCount;
-  } else {
-    if (typeof existing === 'function') {
-      // Adding the second element, need to change to array.
-      existing = events[type] =
-          prepend ? [listener, existing] : [existing, listener];
-    } else {
-      // If we've already got an array, just append.
-      if (prepend) {
-        existing.unshift(listener);
-      } else {
-        existing.push(listener);
-      }
-    }
-
-    // Check for listener leak
-    if (!existing.warned) {
-      m = $getMaxListeners(target);
-      if (m && m > 0 && existing.length > m) {
-        existing.warned = true;
-        var w = new Error('Possible EventEmitter memory leak detected. ' +
-            existing.length + ' "' + String(type) + '" listeners ' +
-            'added. Use emitter.setMaxListeners() to ' +
-            'increase limit.');
-        w.name = 'MaxListenersExceededWarning';
-        w.emitter = target;
-        w.type = type;
-        w.count = existing.length;
-        if (typeof console === 'object' && console.warn) {
-          console.warn('%s: %s', w.name, w.message);
-        }
-      }
-    }
-  }
-
-  return target;
-}
-
-EventEmitter.prototype.addListener = function addListener(type, listener) {
-  return _addListener(this, type, listener, false);
-};
-
-EventEmitter.prototype.on = EventEmitter.prototype.addListener;
-
-EventEmitter.prototype.prependListener =
-    function prependListener(type, listener) {
-      return _addListener(this, type, listener, true);
-    };
-
-function onceWrapper() {
-  if (!this.fired) {
-    this.target.removeListener(this.type, this.wrapFn);
-    this.fired = true;
-    switch (arguments.length) {
-      case 0:
-        return this.listener.call(this.target);
-      case 1:
-        return this.listener.call(this.target, arguments[0]);
-      case 2:
-        return this.listener.call(this.target, arguments[0], arguments[1]);
-      case 3:
-        return this.listener.call(this.target, arguments[0], arguments[1],
-            arguments[2]);
-      default:
-        var args = new Array(arguments.length);
-        for (var i = 0; i < args.length; ++i)
-          args[i] = arguments[i];
-        this.listener.apply(this.target, args);
-    }
-  }
-}
-
-function _onceWrap(target, type, listener) {
-  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };
-  var wrapped = bind.call(onceWrapper, state);
-  wrapped.listener = listener;
-  state.wrapFn = wrapped;
-  return wrapped;
-}
-
-EventEmitter.prototype.once = function once(type, listener) {
-  if (typeof listener !== 'function')
-    throw new TypeError('"listener" argument must be a function');
-  this.on(type, _onceWrap(this, type, listener));
-  return this;
-};
-
-EventEmitter.prototype.prependOnceListener =
-    function prependOnceListener(type, listener) {
-      if (typeof listener !== 'function')
-        throw new TypeError('"listener" argument must be a function');
-      this.prependListener(type, _onceWrap(this, type, listener));
-      return this;
-    };
-
-// Emits a 'removeListener' event if and only if the listener was removed.
-EventEmitter.prototype.removeListener =
-    function removeListener(type, listener) {
-      var list, events, position, i, originalListener;
-
-      if (typeof listener !== 'function')
-        throw new TypeError('"listener" argument must be a function');
-
-      events = this._events;
-      if (!events)
-        return this;
-
-      list = events[type];
-      if (!list)
-        return this;
-
-      if (list === listener || list.listener === listener) {
-        if (--this._eventsCount === 0)
-          this._events = objectCreate(null);
-        else {
-          delete events[type];
-          if (events.removeListener)
-            this.emit('removeListener', type, list.listener || listener);
-        }
-      } else if (typeof list !== 'function') {
-        position = -1;
-
-        for (i = list.length - 1; i >= 0; i--) {
-          if (list[i] === listener || list[i].listener === listener) {
-            originalListener = list[i].listener;
-            position = i;
-            break;
-          }
-        }
-
-        if (position < 0)
-          return this;
-
-        if (position === 0)
-          list.shift();
-        else
-          spliceOne(list, position);
-
-        if (list.length === 1)
-          events[type] = list[0];
-
-        if (events.removeListener)
-          this.emit('removeListener', type, originalListener || listener);
-      }
-
-      return this;
-    };
-
-EventEmitter.prototype.removeAllListeners =
-    function removeAllListeners(type) {
-      var listeners, events, i;
-
-      events = this._events;
-      if (!events)
-        return this;
-
-      // not listening for removeListener, no need to emit
-      if (!events.removeListener) {
-        if (arguments.length === 0) {
-          this._events = objectCreate(null);
-          this._eventsCount = 0;
-        } else if (events[type]) {
-          if (--this._eventsCount === 0)
-            this._events = objectCreate(null);
-          else
-            delete events[type];
-        }
-        return this;
-      }
-
-      // emit removeListener for all listeners on all events
-      if (arguments.length === 0) {
-        var keys = objectKeys(events);
-        var key;
-        for (i = 0; i < keys.length; ++i) {
-          key = keys[i];
-          if (key === 'removeListener') continue;
-          this.removeAllListeners(key);
-        }
-        this.removeAllListeners('removeListener');
-        this._events = objectCreate(null);
-        this._eventsCount = 0;
-        return this;
-      }
-
-      listeners = events[type];
-
-      if (typeof listeners === 'function') {
-        this.removeListener(type, listeners);
-      } else if (listeners) {
-        // LIFO order
-        for (i = listeners.length - 1; i >= 0; i--) {
-          this.removeListener(type, listeners[i]);
-        }
-      }
-
-      return this;
-    };
-
-function _listeners(target, type, unwrap) {
-  var events = target._events;
-
-  if (!events)
-    return [];
-
-  var evlistener = events[type];
-  if (!evlistener)
-    return [];
-
-  if (typeof evlistener === 'function')
-    return unwrap ? [evlistener.listener || evlistener] : [evlistener];
-
-  return unwrap ? unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);
-}
-
-EventEmitter.prototype.listeners = function listeners(type) {
-  return _listeners(this, type, true);
-};
-
-EventEmitter.prototype.rawListeners = function rawListeners(type) {
-  return _listeners(this, type, false);
-};
-
-EventEmitter.listenerCount = function(emitter, type) {
-  if (typeof emitter.listenerCount === 'function') {
-    return emitter.listenerCount(type);
-  } else {
-    return listenerCount.call(emitter, type);
-  }
-};
-
-EventEmitter.prototype.listenerCount = listenerCount;
-function listenerCount(type) {
-  var events = this._events;
-
-  if (events) {
-    var evlistener = events[type];
-
-    if (typeof evlistener === 'function') {
-      return 1;
-    } else if (evlistener) {
-      return evlistener.length;
-    }
-  }
-
-  return 0;
-}
-
-EventEmitter.prototype.eventNames = function eventNames() {
-  return this._eventsCount > 0 ? Reflect.ownKeys(this._events) : [];
-};
-
-// About 1.5x faster than the two-arg version of Array#splice().
-function spliceOne(list, index) {
-  for (var i = index, k = i + 1, n = list.length; k < n; i += 1, k += 1)
-    list[i] = list[k];
-  list.pop();
-}
-
-function arrayClone(arr, n) {
-  var copy = new Array(n);
-  for (var i = 0; i < n; ++i)
-    copy[i] = arr[i];
-  return copy;
-}
-
-function unwrapListeners(arr) {
-  var ret = new Array(arr.length);
-  for (var i = 0; i < ret.length; ++i) {
-    ret[i] = arr[i].listener || arr[i];
-  }
-  return ret;
-}
-
-function objectCreatePolyfill(proto) {
-  var F = function() {};
-  F.prototype = proto;
-  return new F;
-}
-function objectKeysPolyfill(obj) {
-  var keys = [];
-  for (var k in obj) if (Object.prototype.hasOwnProperty.call(obj, k)) {
-    keys.push(k);
-  }
-  return k;
-}
-function functionBindPolyfill(context) {
-  var fn = this;
-  return function () {
-    return fn.apply(context, arguments);
-  };
-}
-
-},{}],3:[function(require,module,exports){
-(function(jQuery) {
-    jQuery.fn.fintzsensors = function() {        
-        var createProjectPlugin = require("./pages/landing/createProject");
-        var deleteProjectPlugin = require("./pages/landing/deleteProject");
-        var activeRunPlugin = require("./pages/run/activeRun");
-
-
-        // retrieves the current context as the matched object, this
-        // is considered to be the default/expected behaviour
-        var matchedObject = this;
-        var addProjectForm = jQuery(".form.add-project", matchedObject);
-        var deleteProjectButton = jQuery(".button.delete-project", matchedObject);
-        var activeRunContainer = jQuery(".active-run-container", matchedObject);
-
-        createProjectPlugin(addProjectForm);
-        deleteProjectPlugin(deleteProjectButton);
-        activeRunPlugin(activeRunContainer);
-
-        // returns the current context to the caller function/method
-        // so that proper chaining may be applied to the context
-        return this;
-    };
-})(jQuery);
-
-jQuery(document).ready(function() {
-    var _body = jQuery("body");    
-    _body.fintzsensors();
-});
-
-},{"./pages/landing/createProject":4,"./pages/landing/deleteProject":5,"./pages/run/activeRun":6}],4:[function(require,module,exports){
-var createProject = function(element) {
-    var matchedObject = jQuery(element);
-
-    var init = function() {
-        if (!matchedObject || matchedObject.length === 0) {
-            return;
-        }
-    };
-
-    var bind = function() {
-        if (!matchedObject || matchedObject.length === 0) {
-            return;
-        }
-
-        matchedObject.submit(event, function () {
-            if(!event || event.length === 0) {
-                return;
-            }
-
-            //prevents default form behaviour, on submit
-            event.preventDefault();
-
-            var element = jQuery(this);
-            element.triggerHandler("pre_submit");
-            var url = event.currentTarget && event.currentTarget.action;
-            var name = jQuery(".name-field", element);
-            var numStations = jQuery(".stations-num-field", element);
-            var numRuns = jQuery(".runs-num-field", element);
-            var timePerRun = jQuery(".time-run-field", element);
-            var productionTarget = jQuery(".production-target-field", element);
-
-            name = name && name.val() || "New project";
-            numStations = numStations && parseInt(numStations.val()) || 8;
-            numRuns = numRuns && parseInt(numRuns.val()) || 3;
-            timePerRun = timePerRun && parseInt(timePerRun.val()) || 30;
-            productionTarget = productionTarget && parseInt(productionTarget.val()) || 1;
-            jQuery.ajax({
-                url: url,
-                type: 'POST',
-                contentType: 'application/json',
-                data: JSON.stringify({
-                    "name": name,
-                    "numStations": numStations,
-                    "numRuns": numRuns,
-                    "timePerRun": timePerRun,
-                    "productionTarget": productionTarget,
-                    "status": "CREATED"
-                }),
-                success: function(data, status) {
-                    element.triggerHandler("success", data);
-                },
-                error: function(data) {
-                    var message = data && data.responseJSON && data.responseJSON.message || "Form error";
-                    matchedObject.triggerHandler("error", message);
-                }
-              });
-        });
-
-        matchedObject.bind("pre_submit", function() {
-            var element = jQuery(this);
-            element.addClass("loading");
-            element.removeClass("success");
-            element.removeClass("error");
-        });
-
-        matchedObject.bind("success", function() {
-            var element = jQuery(this);
-            element.removeClass("loading");
-            element.addClass("success");
-        });
-
-        matchedObject.bind("error", function(event, message) {
-            var element = jQuery(this);
-            var errorMessage = jQuery(".error-message", element);
-            errorMessage.text(message);
-            element.removeClass("loading");
-            element.addClass("error");
-        });
-    };
-
-    init();
-    bind();
-
-    return matchedObject;
-};
-
-module.exports = createProject;
-
-},{}],5:[function(require,module,exports){
-var deleteProject = function(element) {
-    var matchedObject = jQuery(element);
-
-    var init = function() {
-        if (!matchedObject || matchedObject.length === 0) {
-            return;
-        }
-    };
-
-    var bind = function() {
-        if (!matchedObject || matchedObject.length === 0) {
-            return;
-        }
-
-        matchedObject.click(event, function () {
-            var element = jQuery(this);
-            var projectElement = element.parents(".element-project");
-            var projectNumber = projectElement.attr("data-number");
-
-            element.each(function() {
-                var _element = jQuery(this);
-                var number = _element.attr("data-number");
-                number === projectNumber && clickHandler(event, _element);
-            });
-        });
-
-        matchedObject.bind("success", function() {
-            var element = jQuery(this);
-            var projectElement = element.parents(".element-project");
-            projectElement.remove();
-        });
-
-        matchedObject.bind("error", function(event, message) {
-            var element = jQuery(this);
-            var projectElement = element.parents(".element-project");
-            projectElement.addClass("error");
-        });
-    };
-
-    var clickHandler = function (event, element) {
-        if(!event || event.length === 0) {
-            return;
-        }
-
-        //prevents default click behaviour
-        event.preventDefault();
-
-        var url = element.attr("href");
-
-        jQuery.ajax({
-            url: url,
-            type: 'DELETE',
-            success: function(data, status) {
-                element.triggerHandler("success", data);
-            },
-            error: function(data) {
-                var message = data && data.responseJSON && data.responseJSON.message || "Delete operation error";
-                matchedObject.triggerHandler("error", message);
-            }
-          });
-    };
-
-    init();
-    bind();
-
-    return matchedObject;
-};
-
-module.exports = deleteProject;
-
-},{}],6:[function(require,module,exports){
-const Timer = require('easytimer.js').Timer;
-
-const ACTION_TYPES = {
-    START_RUN: "START",
-    MOVE_ITER: "MOVE",
-    CONTINUE_RUN: "CONTINUE",
-    KILL: "KILL"
-  };
-Object.freeze(ACTION_TYPES);
-
-var activeRun = function(element) {
-    var matchedObject = jQuery(element);
-
-    var init = function() {
-        if (!matchedObject || matchedObject.length === 0) {
-            return;
-        }
-    };
-
-    var bind = function() {
-        if (!matchedObject || matchedObject.length === 0) {
-            return;
-        }
-
-        var startButton = jQuery(".button-start", matchedObject);
-        var moveButton = jQuery(".button-move", matchedObject);
-        var continueButton = jQuery(".button-continue", matchedObject);
-        var killButton = jQuery(".button-kill", matchedObject);
-        
-        startButton.click(function(event){
-            event.preventDefault();
-            var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
-            activeRunContainer.triggerHandler("pre_start");
-        });
-        
-        moveButton.click(function(event){
-            event.preventDefault();
-            var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
-            activeRunContainer.triggerHandler("pre_move");
-        });
-        
-        continueButton.click(function(event){
-            event.preventDefault();
-            var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");            
-            activeRunContainer.triggerHandler("pre_continue");
-        });
-
-        killButton.click(function(event){
-            event.preventDefault();
-            var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");            
-            activeRunContainer.triggerHandler("pre_kill");
-        });
-
-        matchedObject.bind("pre_start", function(event) {
-            var element = jQuery(this);
-            _sendActionType(element, ACTION_TYPES.START_RUN);
-        });
-
-        matchedObject.bind("start_action", function(event){
-            _startGlobalTimer(globalTimer);
-            _startTaktTimer(taktTimer);
-            startButton.addClass("disabled");
-            killButton.removeClass("disabled");
-        });
-
-        matchedObject.bind("pre_move", function(event) {
-            var element = jQuery(this);
-            _sendActionType(element, ACTION_TYPES.MOVE_ITER);
-        });
-
-        matchedObject.bind("move_action", function(event){
-            moveButton.addClass("disabled");
-            continueButton.removeClass("disabled");
-            _clearStationTimers();
-        });
-
-        matchedObject.bind("pre_continue", function(event) {
-            var element = jQuery(this);
-            _sendActionType(element, ACTION_TYPES.CONTINUE_RUN);
-        });
-
-        matchedObject.bind("continue_action", function(event){
-            continueButton.addClass("disabled");
-        });
-
-        matchedObject.bind("pre_kill", function(event) {
-            var element = jQuery(this);
-            _sendActionType(element, ACTION_TYPES.KILL);
-        });
-
-        matchedObject.bind("kill_action", function(event){
-            var buttons = jQuery(".button" ,matchedObject);
-            buttons.addClass("disabled");
-            // TODO: redirects to?
-            window.location.href = '/'; //TODO: improve this redirect!
-        });
-        
-        _initTimers();
-    };
-
-    var _sendActionType = function(element, actionType) {
-        var startButton = jQuery(".button-start", element);
-        var url = startButton.attr("href");
-
-        jQuery.ajax({
-            url: url,
-            type: 'POST',
-            contentType: 'application/json',
-            data: JSON.stringify({
-                "actionType": actionType,
-            }),
-            success: function(data, status) {
-                var event = actionType.toLowerCase() + "_action";
-                element.triggerHandler(event, data);
-            },
-            error: function(data) {
-                var message = data && data.responseJSON && data.responseJSON.message || "Error sending action";
-                matchedObject.triggerHandler("error", message);
-            }
-        });
-    };
-  
-    var _initTimers = function(element) {
-         /*
-         *      
-         *      
-         * TODO: this need a proper refactoring
-         *
-         *
-        */
-        var timers = [
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer()
-        ];
-        let globalTimer = new Timer();
-        globalTimer.addEventListener('secondsUpdated', function (e) {
-            jQuery('.global-timer').html(globalTimer.getTimeValues().toString());
-        });
-        let taktTimer = new Timer();
-        taktTimer.addEventListener('secondsUpdated', function (e) {
-            jQuery('.takt-time-desc').html(taktTimer.getTimeValues().toString());
-        });
-
-        jQuery(document).ready(function(){
-            _startGlobalTimer(globalTimer);
-        });
-
-        for (let i = 0; i < timers.length; i++){
-            let timerNr = i+1;
-            timers[i].addEventListener('secondsUpdated', function (e) {
-                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
-            });
-            timers[i].addEventListener('started', function (e) {
-                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
-            });
-        }
-        var socket = io.connect();
-        socket.on('toggleTimer', function(data){
-
-            let stationToToggle = data.station;
-            //TODO: validate if station is valid
-            let timerToUpdate = timers[stationToToggle-1];
-
-            if(data.operation === "start") {
-                timerToUpdate.stop();
-                if(data.currentTime)
-                {
-                    timerToUpdate.start({startValues: {seconds: data.currentTime}});
-                }
-                else
-                {
-                    timerToUpdate.start({startValues: {seconds: 0}});
-                }
-                let station = $('#timer-station-'+stationToToggle).parents(".station");
-                station.addClass("active");
-                station.removeClass("stop");
-            }
-            else if(data.operation === "stop")
-            {
-                timerToUpdate.pause();
-                let station = $('#timer-station-'+stationToToggle).parents(".station");
-                station.removeClass("active");
-                station.addClass("stop");
-            }
-        });
-    };
-    
-    var _startGlobalTimer = function(globalTimer) {
-        var globalTimerElement = jQuery('.global-timer')
-        var minutes = globalTimerElement.attr("data-duration");
-        minutes = parseInt(minutes);
-        globalTimer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-
-    var _startTaktTimer = function(timer){
-        var taktTimerElement = jQuery('.takt-time-desc')
-        var minutes = taktTimerElement.attr("duration");
-        minutes = parseInt(minutes);
-        timer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-
-    var _clearStationTimers = function(element) {
-        //TODO: implement this
-    };
-
-    init();
-    bind();
-
-    return matchedObject;
-};
-
-module.exports = activeRun;
-
-},{"easytimer.js":1}]},{},[3]);
+/******/ (function(modules) { // webpackBootstrap
+/******/     // The module cache
+/******/     var installedModules = {};
+/******/
+/******/     // The require function
+/******/     function __webpack_require__(moduleId) {
+/******/
+/******/         // Check if module is in cache
+/******/         if(installedModules[moduleId]) {
+/******/             return installedModules[moduleId].exports;
+/******/         }
+/******/         // Create a new module (and put it into the cache)
+/******/         var module = installedModules[moduleId] = {
+/******/             i: moduleId,
+/******/             l: false,
+/******/             exports: {}
+/******/         };
+/******/
+/******/         // Execute the module function
+/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/
+/******/         // Flag the module as loaded
+/******/         module.l = true;
+/******/
+/******/         // Return the exports of the module
+/******/         return module.exports;
+/******/     }
+/******/
+/******/
+/******/     // expose the modules object (__webpack_modules__)
+/******/     __webpack_require__.m = modules;
+/******/
+/******/     // expose the module cache
+/******/     __webpack_require__.c = installedModules;
+/******/
+/******/     // define getter function for harmony exports
+/******/     __webpack_require__.d = function(exports, name, getter) {
+/******/         if(!__webpack_require__.o(exports, name)) {
+/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/         }
+/******/     };
+/******/
+/******/     // define __esModule on exports
+/******/     __webpack_require__.r = function(exports) {
+/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/         }
+/******/         Object.defineProperty(exports, '__esModule', { value: true });
+/******/     };
+/******/
+/******/     // create a fake namespace object
+/******/     // mode & 1: value is a module id, require it
+/******/     // mode & 2: merge all properties of value into the ns
+/******/     // mode & 4: return value when already ns object
+/******/     // mode & 8|1: behave like require
+/******/     __webpack_require__.t = function(value, mode) {
+/******/         if(mode & 1) value = __webpack_require__(value);
+/******/         if(mode & 8) return value;
+/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/         var ns = Object.create(null);
+/******/         __webpack_require__.r(ns);
+/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/         return ns;
+/******/     };
+/******/
+/******/     // getDefaultExport function for compatibility with non-harmony modules
+/******/     __webpack_require__.n = function(module) {
+/******/         var getter = module && module.__esModule ?
+/******/             function getDefault() { return module['default']; } :
+/******/             function getModuleExports() { return module; };
+/******/         __webpack_require__.d(getter, 'a', getter);
+/******/         return getter;
+/******/     };
+/******/
+/******/     // Object.prototype.hasOwnProperty.call
+/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/     // __webpack_public_path__
+/******/     __webpack_require__.p = "";
+/******/
+/******/
+/******/     // Load entry module and return exports
+/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/ })
+/************************************************************************/
+/******/ ({
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/static/css/layout.css":
+/*!*************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/static/css/layout.css ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"html {\\r\\n    height: 100%;\\r\\n}\\r\\n.body {\\r\\n    background-color: #ffffff;\\r\\n    display: block;\\r\\n    font-family: Arial, \\\"Open Sans\\\", \\\"Helvetica Neue\\\", Helvetica, sans-serif;\\r\\n    font-size: 20px;\\r\\n    height: 100%;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n}\\r\\n\\r\\n.body .hidden {\\r\\n    display: none;\\r\\n}\\r\\n\\r\\n.body .button.disabled {\\r\\n    opacity: 0.5;\\r\\n    -o-opacity: 0.5;\\r\\n    -ms-opacity: 0.5;\\r\\n    -moz-opacity: 0.5;\\r\\n    -khtml-opacity: 0.5;\\r\\n    -webkit-opacity: 0.5;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.content{\\r\\n    background-color: #f4f6f9;\\r\\n    height: 100%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    padding: 5px 5px 5px 5px;\\r\\n    width: 100%;\\r\\n}\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/layout.css?./node_modules/css-loader/dist/cjs.js");
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/static/css/pages/active_run.css":
+/*!***********************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/static/css/pages/active_run.css ***!
+  \***********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .header-run {\\n    background-color: #3584b5;\\n    border: 2px solid black;\\n    height: 15%;\\n}\\n\\n.body .header-run .logo .image {\\n    height: 50px;\\n    position: absolute;\\n    right: 3%;\\n    text-align: right;\\n    top: 4%;\\n    width: auto;\\n}\\n\\n.body .header-run .global-timer {\\n    color: #ffffff;\\n    font-size: 60px;\\n    height: 50px;\\n    line-height: 50px;\\n    margin: auto auto auto auto;\\n    margin-top: 3%;\\n    margin-bottom: 1%;\\n    position: relative;\\n    text-align: center;\\n}\\n\\n.body .header-run .takt-time {\\n    color: #ffffff;\\n    font-size: 20px;\\n    position: absolute;\\n    left: 3%;\\n    text-align: left;\\n    top: 4%;\\n    width: auto;\\n}\\n.body .header-run .takt-time-desc {\\n    color: #ffffff;\\n    font-size: 20px;\\n    position: absolute;\\n    left: 3%;\\n    text-align: left;\\n    top: 7%;\\n    width: auto;\\n}\\n\\n.body .stations .station {\\n    background-color: #ffffff;\\n    border: 2px solid black;\\n    border-top: 1px solid black;\\n    display: block;\\n    height: 100px;\\n    padding-left: 15%;\\n    padding-right: 15%;\\n    position: relative;\\n}\\n\\n.body .button-actions-run .button {\\n    float: left;\\n    width: 15%;\\n    background-color: whitesmoke;\\n    border: 2px solid black;\\n    border-top: 1px solid black;\\n    text-align: center;\\n    height: 30px;\\n    position: center;\\n    margin-top: 1%;\\n}\\n\\n.body .stations .station.active {\\n    background-color: green;\\n}\\n\\n.body .stations .station.stop {\\n    background-color: red;\\n}\\n\\n.body .stations .station.off {\\n    background-color: lightgrey;\\n}\\n\\n.body .stations .stationsRow {\\n    float: left;\\n    width: 50%;\\n}\\n\\n.body .stations .station .info p {\\n    display: inline-block;\\n    font-size: 35px;\\n}\\n\\n.body .stations .station .info .name {\\n    margin-top: 35px;\\n    text-align: left;\\n    width: 30%;\\n}\\n\\n.body .stations .station .info .timer {\\n    text-align: right;\\n    width: 65%;\\n}\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/active_run.css?./node_modules/css-loader/dist/cjs.js");
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/cjs.js!./src/static/css/partials/form.css":
+/*!********************************************************************************!*\
+  !*** ./node_modules/css-loader/dist/cjs.js!./src/static/css/partials/form.css ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body form.form-ajax.error .error-message {\\n    color: red;\\n    display: block;\\n}\\n\\n.body form.form-ajax .error-message {\\n    display: none;\\n}\\n\\n.body form.form-ajax.success .success-message {\\n    color: green;\\n    display: block;\\n}\\n\\n.body form.form-ajax .success-message {\\n    display: none;\\n}\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/partials/form.css?./node_modules/css-loader/dist/cjs.js");
+
+/***/ }),
+
+/***/ "./node_modules/css-loader/dist/runtime/api.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/css-loader/dist/runtime/api.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("\n\n/*\n  MIT License http://www.opensource.org/licenses/mit-license.php\n  Author Tobias Koppers @sokra\n*/\n// css base code, injected by the css-loader\nmodule.exports = function (useSourceMap) {\n  var list = []; // return the list of modules as css string\n\n  list.toString = function toString() {\n    return this.map(function (item) {\n      var content = cssWithMappingToString(item, useSourceMap);\n\n      if (item[2]) {\n        return '@media ' + item[2] + '{' + content + '}';\n      } else {\n        return content;\n      }\n    }).join('');\n  }; // import a list of modules into the list\n\n\n  list.i = function (modules, mediaQuery) {\n    if (typeof modules === 'string') {\n      modules = [[null, modules, '']];\n    }\n\n    var alreadyImportedModules = {};\n\n    for (var i = 0; i < this.length; i++) {\n      var id = this[i][0];\n\n      if (id != null) {\n        alreadyImportedModules[id] = true;\n      }\n    }\n\n    for (i = 0; i < modules.length; i++) {\n      var item = modules[i]; // skip already imported module\n      // this implementation is not 100% perfect for weird media query combinations\n      // when a module is imported multiple times with different media queries.\n      // I hope this will never occur (Hey this way we have smaller bundles)\n\n      if (item[0] == null || !alreadyImportedModules[item[0]]) {\n        if (mediaQuery && !item[2]) {\n          item[2] = mediaQuery;\n        } else if (mediaQuery) {\n          item[2] = '(' + item[2] + ') and (' + mediaQuery + ')';\n        }\n\n        list.push(item);\n      }\n    }\n  };\n\n  return list;\n};\n\nfunction cssWithMappingToString(item, useSourceMap) {\n  var content = item[1] || '';\n  var cssMapping = item[3];\n\n  if (!cssMapping) {\n    return content;\n  }\n\n  if (useSourceMap && typeof btoa === 'function') {\n    var sourceMapping = toComment(cssMapping);\n    var sourceURLs = cssMapping.sources.map(function (source) {\n      return '/*# sourceURL=' + cssMapping.sourceRoot + source + ' */';\n    });\n    return [content].concat(sourceURLs).concat([sourceMapping]).join('\\n');\n  }\n\n  return [content].join('\\n');\n} // Adapted from convert-source-map (MIT)\n\n\nfunction toComment(sourceMap) {\n  // eslint-disable-next-line no-undef\n  var base64 = btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap))));\n  var data = 'sourceMappingURL=data:application/json;charset=utf-8;base64,' + base64;\n  return '/*# ' + data + ' */';\n}\n\n//# sourceURL=webpack:///./node_modules/css-loader/dist/runtime/api.js?");
+
+/***/ }),
+
+/***/ "./node_modules/easytimer.js/dist/easytimer.js":
+/*!*****************************************************!*\
+  !*** ./node_modules/easytimer.js/dist/easytimer.js ***!
+  \*****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/**\n * easytimer.js\n * Generated: 2019-01-13\n * Version: 3.0.1\n */\n\n(function (global, factory) {\n   true ? factory(exports) :\n  undefined;\n}(this, (function (exports) { 'use strict';\n\n  function _typeof(obj) {\n    if (typeof Symbol === \"function\" && typeof Symbol.iterator === \"symbol\") {\n      _typeof = function (obj) {\n        return typeof obj;\n      };\n    } else {\n      _typeof = function (obj) {\n        return obj && typeof Symbol === \"function\" && obj.constructor === Symbol && obj !== Symbol.prototype ? \"symbol\" : typeof obj;\n      };\n    }\n\n    return _typeof(obj);\n  }\n\n  function leftPadding(string, padLength, character) {\n    var i;\n    var characters = '';\n\n    if (string.length > padLength) {\n      return string;\n    }\n\n    for (i = 0; i < padLength; i = i + 1) {\n      characters += String(character);\n    }\n\n    return (characters + string).slice(-characters.length);\n  }\n\n  function TimeCounter() {\n    this.secondTenths = 0;\n    this.seconds = 0;\n    this.minutes = 0;\n    this.hours = 0;\n    this.days = 0;\n    /**\n     * [toString convert the counted values on a string]\n     * @param  {[array]} units           [array with the units to display]\n     * @param  {[string]} separator       [separator of the units]\n     * @param  {[integer]} leftZeroPadding [number of zero padding]\n     * @return {[string]}                 [result string]\n     */\n\n    this.toString = function (units, separator, leftZeroPadding) {\n      units = units || ['hours', 'minutes', 'seconds'];\n      separator = separator || ':';\n      leftZeroPadding = leftZeroPadding || 2;\n      var stringTime;\n      var arrayTime = [];\n      var i;\n\n      for (i = 0; i < units.length; i = i + 1) {\n        if (this[units[i]] !== undefined) {\n          if (units[i] === 'secondTenths') {\n            arrayTime.push(this[units[i]]);\n          } else {\n            arrayTime.push(leftPadding(this[units[i]], leftZeroPadding, '0'));\n          }\n        }\n      }\n\n      stringTime = arrayTime.join(separator);\n      return stringTime;\n    };\n  }\n\n  /*\n  * Polyfill por IE9, IE10 and IE11\n  */\n  var CustomEvent$1 = typeof window !== 'undefined' ? window.CustomEvent : undefined;\n\n  if (typeof window !== 'undefined' && typeof CustomEvent$1 !== 'function') {\n    CustomEvent$1 = function CustomEvent(event, params) {\n      params = params || {\n        bubbles: false,\n        cancelable: false,\n        detail: undefined\n      };\n      var evt = document.createEvent('CustomEvent');\n      evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);\n      return evt;\n    };\n\n    CustomEvent$1.prototype = window.Event.prototype;\n    window.CustomEvent = CustomEvent$1;\n  }\n\n  /*\n   * General functions, variables and constants\n   */\n\n  var SECOND_TENTHS_PER_SECOND = 10;\n  var SECONDS_PER_MINUTE = 60;\n  var MINUTES_PER_HOUR = 60;\n  var HOURS_PER_DAY = 24;\n  var SECOND_TENTHS_POSITION = 0;\n  var SECONDS_POSITION = 1;\n  var MINUTES_POSITION = 2;\n  var HOURS_POSITION = 3;\n  var DAYS_POSITION = 4;\n  var SECOND_TENTHS = 'secondTenths';\n  var SECONDS = 'seconds';\n  var MINUTES = 'minutes';\n  var HOURS = 'hours';\n  var DAYS = 'days';\n  var unitsInMilliseconds = {\n    secondTenths: 100,\n    seconds: 1000,\n    minutes: 60000,\n    hours: 3600000,\n    days: 86400000\n  };\n  var groupedUnits = {\n    secondTenths: SECOND_TENTHS_PER_SECOND,\n    seconds: SECONDS_PER_MINUTE,\n    minutes: MINUTES_PER_HOUR,\n    hours: HOURS_PER_DAY\n  };\n  var events =  true && module.exports && \"function\" === 'function' ? __webpack_require__(/*! events */ \"./node_modules/events/events.js\") : undefined;\n\n  function hasDOM() {\n    return typeof document !== 'undefined';\n  }\n\n  function hasEventEmitter() {\n    return events;\n  }\n\n  function mod(number, module) {\n    return (number % module + module) % module;\n  }\n  /**\n   * [Timer Timer/Chronometer/Countdown compatible with AMD and NodeJS.\n   * Can update time values with different time intervals: tenth of seconds,\n   * seconds, minutes and hours.]\n   */\n\n\n  function Timer() {\n    /*\n    * PRIVATE variables and Functions\n    */\n    var counters = new TimeCounter();\n    var totalCounters = new TimeCounter();\n    var intervalId;\n    var eventEmitter = hasDOM() ? document.createElement('span') : hasEventEmitter() ? new events.EventEmitter() : undefined;\n    var running = false;\n    var paused = false;\n    var precision;\n    var timerTypeFactor;\n    var customCallback;\n    var timerConfig = {};\n    var currentParams;\n    var targetValues;\n    var startValues;\n    var countdown;\n    var startingDate;\n    var targetDate;\n    var eventData = {\n      detail: {\n        timer: this\n      }\n    };\n\n    function updateCounters(precision, roundedValue) {\n      totalCounters[precision] = roundedValue;\n\n      if (precision === DAYS) {\n        counters[precision] = roundedValue;\n      } else if (roundedValue >= 0) {\n        counters[precision] = mod(roundedValue, groupedUnits[precision]);\n      } else {\n        counters[precision] = groupedUnits[precision] - mod(roundedValue, groupedUnits[precision]);\n      }\n    }\n\n    function updateDays(value) {\n      return updateUnitByPrecision(value, DAYS);\n    }\n\n    function updateHours(value) {\n      return updateUnitByPrecision(value, HOURS);\n    }\n\n    function updateMinutes(value) {\n      return updateUnitByPrecision(value, MINUTES);\n    }\n\n    function updateSeconds(value) {\n      return updateUnitByPrecision(value, SECONDS);\n    }\n\n    function updateSecondTenths(value) {\n      return updateUnitByPrecision(value, SECOND_TENTHS);\n    }\n\n    function updateUnitByPrecision(value, precision) {\n      var previousValue = totalCounters[precision];\n      updateCounters(precision, calculateIntegerUnitQuotient(value, unitsInMilliseconds[precision]));\n      return totalCounters[precision] !== previousValue;\n    }\n\n    function stopTimerAndResetCounters() {\n      stopTimer();\n      resetCounters();\n    }\n\n    function stopTimer() {\n      clearInterval(intervalId);\n      intervalId = undefined;\n      running = false;\n      paused = false;\n    }\n\n    function setParamsAndStartTimer(params) {\n      if (!isPaused()) {\n        setParams(params);\n      } else {\n        startingDate = calculateStartingDate();\n        targetValues = setTarget(currentParams.target);\n      }\n\n      startTimer();\n    }\n\n    function startTimer() {\n      var interval = unitsInMilliseconds[precision];\n\n      if (isTargetAchieved(roundTimestamp(Date.now()))) {\n        return;\n      }\n\n      intervalId = setInterval(updateTimerAndDispatchEvents, interval);\n      running = true;\n      paused = false;\n    }\n\n    function calculateStartingDate() {\n      return roundTimestamp(Date.now()) - totalCounters.secondTenths * unitsInMilliseconds[SECOND_TENTHS] * timerTypeFactor;\n    }\n\n    function updateTimerAndDispatchEvents() {\n      var currentTime = roundTimestamp(Date.now());\n      var valuesUpdated = updateTimer();\n      dispatchEvents(valuesUpdated);\n      customCallback(eventData.detail.timer);\n\n      if (isTargetAchieved(currentTime)) {\n        stop();\n        dispatchEvent('targetAchieved', eventData);\n      }\n    }\n\n    function updateTimer() {\n      var currentTime = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : roundTimestamp(Date.now());\n      var ellapsedTime = timerTypeFactor > 0 ? currentTime - startingDate : startingDate - currentTime;\n      var valuesUpdated = {};\n      valuesUpdated[SECOND_TENTHS] = updateSecondTenths(ellapsedTime);\n      valuesUpdated[SECONDS] = updateSeconds(ellapsedTime);\n      valuesUpdated[MINUTES] = updateMinutes(ellapsedTime);\n      valuesUpdated[HOURS] = updateHours(ellapsedTime);\n      valuesUpdated[DAYS] = updateDays(ellapsedTime);\n      return valuesUpdated;\n    }\n\n    function roundTimestamp(timestamp) {\n      return Math.floor(timestamp / unitsInMilliseconds[precision]) * unitsInMilliseconds[precision];\n    }\n\n    function dispatchEvents(valuesUpdated) {\n      if (valuesUpdated[SECOND_TENTHS]) {\n        dispatchEvent('secondTenthsUpdated', eventData);\n      }\n\n      if (valuesUpdated[SECONDS]) {\n        dispatchEvent('secondsUpdated', eventData);\n      }\n\n      if (valuesUpdated[MINUTES]) {\n        dispatchEvent('minutesUpdated', eventData);\n      }\n\n      if (valuesUpdated[HOURS]) {\n        dispatchEvent('hoursUpdated', eventData);\n      }\n\n      if (valuesUpdated[DAYS]) {\n        dispatchEvent('daysUpdated', eventData);\n      }\n    }\n\n    function isTargetAchieved(currentDate) {\n      return targetValues instanceof Array && currentDate >= targetDate;\n    }\n\n    function resetCounters() {\n      for (var counter in counters) {\n        if (counters.hasOwnProperty(counter) && typeof counters[counter] === 'number') {\n          counters[counter] = 0;\n        }\n      }\n\n      for (var _counter in totalCounters) {\n        if (totalCounters.hasOwnProperty(_counter) && typeof totalCounters[_counter] === 'number') {\n          totalCounters[_counter] = 0;\n        }\n      }\n    }\n\n    function setParams(params) {\n      params = params || {};\n      precision = typeof params.precision === 'string' ? params.precision : SECONDS;\n      customCallback = typeof params.callback === 'function' ? params.callback : function () {};\n      countdown = params.countdown === true;\n      timerTypeFactor = countdown === true ? -1 : 1;\n\n      if (_typeof(params.startValues) === 'object') {\n        setStartValues(params.startValues);\n      } else {\n        startValues = null;\n      }\n\n      startingDate = calculateStartingDate();\n      updateTimer();\n\n      if (_typeof(params.target) === 'object') {\n        targetValues = setTarget(params.target);\n      } else if (countdown) {\n        params.target = {\n          seconds: 0\n        };\n        targetValues = setTarget(params.target);\n      } else {\n        targetValues = null;\n      }\n\n      timerConfig = {\n        precision: precision,\n        callback: customCallback,\n        countdown: _typeof(params) === 'object' && params.countdown === true,\n        target: targetValues,\n        startValues: startValues\n      };\n      currentParams = params;\n    }\n\n    function configInputValues(inputValues) {\n      var secondTenths, seconds, minutes, hours, days, values;\n\n      if (_typeof(inputValues) === 'object') {\n        if (inputValues instanceof Array) {\n          if (inputValues.length !== 5) {\n            throw new Error('Array size not valid');\n          }\n\n          values = inputValues;\n        } else {\n          values = [inputValues.secondTenths || 0, inputValues.seconds || 0, inputValues.minutes || 0, inputValues.hours || 0, inputValues.days || 0];\n        }\n      }\n\n      secondTenths = values[SECOND_TENTHS_POSITION];\n      seconds = values[SECONDS_POSITION] + calculateIntegerUnitQuotient(secondTenths, SECOND_TENTHS_PER_SECOND);\n      minutes = values[MINUTES_POSITION] + calculateIntegerUnitQuotient(seconds, SECONDS_PER_MINUTE);\n      hours = values[HOURS_POSITION] + calculateIntegerUnitQuotient(minutes, MINUTES_PER_HOUR);\n      days = values[DAYS_POSITION] + calculateIntegerUnitQuotient(hours, HOURS_PER_DAY);\n      values[SECOND_TENTHS_POSITION] = secondTenths % SECOND_TENTHS_PER_SECOND;\n      values[SECONDS_POSITION] = seconds % SECONDS_PER_MINUTE;\n      values[MINUTES_POSITION] = minutes % MINUTES_PER_HOUR;\n      values[HOURS_POSITION] = hours % HOURS_PER_DAY;\n      values[DAYS_POSITION] = days;\n      return values;\n    }\n\n    function calculateIntegerUnitQuotient(unit, divisor) {\n      var quotient = unit / divisor;\n      return quotient < 0 ? Math.ceil(quotient) : Math.floor(quotient);\n    }\n\n    function setTarget(inputTarget) {\n      if (!inputTarget) {\n        return;\n      }\n\n      targetValues = configInputValues(inputTarget);\n      var targetCounter = calculateTotalCounterFromValues(targetValues);\n      targetDate = startingDate + targetCounter.secondTenths * unitsInMilliseconds[SECOND_TENTHS] * timerTypeFactor;\n      return targetValues;\n    }\n\n    function setStartValues(inputStartValues) {\n      startValues = configInputValues(inputStartValues);\n      counters.secondTenths = startValues[SECOND_TENTHS_POSITION];\n      counters.seconds = startValues[SECONDS_POSITION];\n      counters.minutes = startValues[MINUTES_POSITION];\n      counters.hours = startValues[HOURS_POSITION];\n      counters.days = startValues[DAYS_POSITION];\n      totalCounters = calculateTotalCounterFromValues(startValues, totalCounters);\n    }\n\n    function calculateTotalCounterFromValues(values, outputCounter) {\n      var total = outputCounter || {};\n      total.days = values[DAYS_POSITION];\n      total.hours = total.days * HOURS_PER_DAY + values[HOURS_POSITION];\n      total.minutes = total.hours * MINUTES_PER_HOUR + values[MINUTES_POSITION];\n      total.seconds = total.minutes * SECONDS_PER_MINUTE + values[SECONDS_POSITION];\n      total.secondTenths = total.seconds * SECOND_TENTHS_PER_SECOND + values[[SECOND_TENTHS_POSITION]];\n      return total;\n    }\n    /*\n     * PUBLIC functions\n     */\n\n    /**\n     * [stop stops the timer and resets the counters. Dispatch stopped event]\n     */\n\n\n    function stop() {\n      stopTimerAndResetCounters();\n      dispatchEvent('stopped', eventData);\n    }\n    /**\n     * [stop stops and starts the timer. Dispatch stopped event]\n     */\n\n\n    function reset() {\n      stopTimerAndResetCounters();\n      setParamsAndStartTimer(currentParams);\n      dispatchEvent('reset', eventData);\n    }\n    /**\n     * [start starts the timer configured by the params object. Dispatch started event]\n     * @param  {[object]} params [Configuration parameters]\n     */\n\n\n    function start(params) {\n      if (isRunning()) {\n        return;\n      }\n\n      setParamsAndStartTimer(params);\n      dispatchEvent('started', eventData);\n    }\n    /**\n     * [pause stops the timer without resetting the counters. The timer it can be restarted with start function.\n     * Dispatch paused event]\n     * @return {[type]} [description]\n     */\n\n\n    function pause() {\n      stopTimer();\n      paused = true;\n      dispatchEvent('paused', eventData);\n    }\n    /**\n     * [addEventListener Adds event listener to the timer]\n     * @param {[string]} event      [event to listen]\n     * @param {[function]} listener   [the event listener function]\n     */\n\n\n    function addEventListener(event, listener) {\n      if (hasDOM()) {\n        eventEmitter.addEventListener(event, listener);\n      } else if (hasEventEmitter()) {\n        eventEmitter.on(event, listener);\n      }\n    }\n    /**\n     * [removeEventListener Removes event listener to the timer]\n     * @param  {[string]} event    [event to remove listener]\n     * @param  {[function]} listener [listener to remove]\n     */\n\n\n    function removeEventListener(event, listener) {\n      if (hasDOM()) {\n        eventEmitter.removeEventListener(event, listener);\n      } else if (hasEventEmitter()) {\n        eventEmitter.removeListener(event, listener);\n      }\n    }\n    /**\n     * [dispatchEvent dispatchs an event]\n     * @param  {string} event [event to dispatch]\n     */\n\n\n    function dispatchEvent(event, data) {\n      if (hasDOM()) {\n        eventEmitter.dispatchEvent(new CustomEvent(event, data));\n      } else if (hasEventEmitter()) {\n        eventEmitter.emit(event, data);\n      }\n    }\n    /**\n     * [isRunning return true if the timer is running]\n     * @return {Boolean}\n     */\n\n\n    function isRunning() {\n      return running;\n    }\n    /**\n     * [isPaused returns true if the timer is paused]\n     * @return {Boolean}\n     */\n\n\n    function isPaused() {\n      return paused;\n    }\n    /**\n     * [getTimeValues returns the counter with the current timer values]\n     * @return {[TimeCounter]}\n     */\n\n\n    function getTimeValues() {\n      return counters;\n    }\n    /**\n     * [getTotalTimeValues returns the counter with the current timer total values]\n     * @return {[TimeCounter]}\n     */\n\n    function getTotalTimeValues() {\n      return totalCounters;\n    }\n    /**\n     * [getConfig returns the configuration paramameters]\n     * @return {[type]}\n     */\n\n    function getConfig() {\n      return timerConfig;\n    }\n    /**\n     * Public API\n     * Definition of Timer instance public functions\n     */\n\n    if (typeof this !== 'undefined') {\n      this.start = start;\n      this.pause = pause;\n      this.stop = stop;\n      this.reset = reset;\n      this.isRunning = isRunning;\n      this.isPaused = isPaused;\n      this.getTimeValues = getTimeValues;\n      this.getTotalTimeValues = getTotalTimeValues;\n      this.getConfig = getConfig;\n      this.addEventListener = addEventListener;\n      this.on = addEventListener;\n      this.removeEventListener = removeEventListener;\n      this.off = removeEventListener;\n    }\n  }\n\n  exports.default = Timer;\n  exports.Timer = Timer;\n\n  Object.defineProperty(exports, '__esModule', { value: true });\n\n})));\n\n\n//# sourceURL=webpack:///./node_modules/easytimer.js/dist/easytimer.js?");
+
+/***/ }),
+
+/***/ "./node_modules/events/events.js":
+/*!***************************************!*\
+  !*** ./node_modules/events/events.js ***!
+  \***************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+eval("// Copyright Joyent, Inc. and other Node contributors.\n//\n// Permission is hereby granted, free of charge, to any person obtaining a\n// copy of this software and associated documentation files (the\n// \"Software\"), to deal in the Software without restriction, including\n// without limitation the rights to use, copy, modify, merge, publish,\n// distribute, sublicense, and/or sell copies of the Software, and to permit\n// persons to whom the Software is furnished to do so, subject to the\n// following conditions:\n//\n// The above copyright notice and this permission notice shall be included\n// in all copies or substantial portions of the Software.\n//\n// THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS\n// OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n// MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN\n// NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,\n// DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR\n// OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE\n// USE OR OTHER DEALINGS IN THE SOFTWARE.\n\n\n\nvar R = typeof Reflect === 'object' ? Reflect : null\nvar ReflectApply = R && typeof R.apply === 'function'\n  ? R.apply\n  : function ReflectApply(target, receiver, args) {\n    return Function.prototype.apply.call(target, receiver, args);\n  }\n\nvar ReflectOwnKeys\nif (R && typeof R.ownKeys === 'function') {\n  ReflectOwnKeys = R.ownKeys\n} else if (Object.getOwnPropertySymbols) {\n  ReflectOwnKeys = function ReflectOwnKeys(target) {\n    return Object.getOwnPropertyNames(target)\n      .concat(Object.getOwnPropertySymbols(target));\n  };\n} else {\n  ReflectOwnKeys = function ReflectOwnKeys(target) {\n    return Object.getOwnPropertyNames(target);\n  };\n}\n\nfunction ProcessEmitWarning(warning) {\n  if (console && console.warn) console.warn(warning);\n}\n\nvar NumberIsNaN = Number.isNaN || function NumberIsNaN(value) {\n  return value !== value;\n}\n\nfunction EventEmitter() {\n  EventEmitter.init.call(this);\n}\nmodule.exports = EventEmitter;\n\n// Backwards-compat with node 0.10.x\nEventEmitter.EventEmitter = EventEmitter;\n\nEventEmitter.prototype._events = undefined;\nEventEmitter.prototype._eventsCount = 0;\nEventEmitter.prototype._maxListeners = undefined;\n\n// By default EventEmitters will print a warning if more than 10 listeners are\n// added to it. This is a useful default which helps finding memory leaks.\nvar defaultMaxListeners = 10;\n\nObject.defineProperty(EventEmitter, 'defaultMaxListeners', {\n  enumerable: true,\n  get: function() {\n    return defaultMaxListeners;\n  },\n  set: function(arg) {\n    if (typeof arg !== 'number' || arg < 0 || NumberIsNaN(arg)) {\n      throw new RangeError('The value of \"defaultMaxListeners\" is out of range. It must be a non-negative number. Received ' + arg + '.');\n    }\n    defaultMaxListeners = arg;\n  }\n});\n\nEventEmitter.init = function() {\n\n  if (this._events === undefined ||\n      this._events === Object.getPrototypeOf(this)._events) {\n    this._events = Object.create(null);\n    this._eventsCount = 0;\n  }\n\n  this._maxListeners = this._maxListeners || undefined;\n};\n\n// Obviously not all Emitters should be limited to 10. This function allows\n// that to be increased. Set to zero for unlimited.\nEventEmitter.prototype.setMaxListeners = function setMaxListeners(n) {\n  if (typeof n !== 'number' || n < 0 || NumberIsNaN(n)) {\n    throw new RangeError('The value of \"n\" is out of range. It must be a non-negative number. Received ' + n + '.');\n  }\n  this._maxListeners = n;\n  return this;\n};\n\nfunction $getMaxListeners(that) {\n  if (that._maxListeners === undefined)\n    return EventEmitter.defaultMaxListeners;\n  return that._maxListeners;\n}\n\nEventEmitter.prototype.getMaxListeners = function getMaxListeners() {\n  return $getMaxListeners(this);\n};\n\nEventEmitter.prototype.emit = function emit(type) {\n  var args = [];\n  for (var i = 1; i < arguments.length; i++) args.push(arguments[i]);\n  var doError = (type === 'error');\n\n  var events = this._events;\n  if (events !== undefined)\n    doError = (doError && events.error === undefined);\n  else if (!doError)\n    return false;\n\n  // If there is no 'error' event listener then throw.\n  if (doError) {\n    var er;\n    if (args.length > 0)\n      er = args[0];\n    if (er instanceof Error) {\n      // Note: The comments on the `throw` lines are intentional, they show\n      // up in Node's output if this results in an unhandled exception.\n      throw er; // Unhandled 'error' event\n    }\n    // At least give some kind of context to the user\n    var err = new Error('Unhandled error.' + (er ? ' (' + er.message + ')' : ''));\n    err.context = er;\n    throw err; // Unhandled 'error' event\n  }\n\n  var handler = events[type];\n\n  if (handler === undefined)\n    return false;\n\n  if (typeof handler === 'function') {\n    ReflectApply(handler, this, args);\n  } else {\n    var len = handler.length;\n    var listeners = arrayClone(handler, len);\n    for (var i = 0; i < len; ++i)\n      ReflectApply(listeners[i], this, args);\n  }\n\n  return true;\n};\n\nfunction _addListener(target, type, listener, prepend) {\n  var m;\n  var events;\n  var existing;\n\n  if (typeof listener !== 'function') {\n    throw new TypeError('The \"listener\" argument must be of type Function. Received type ' + typeof listener);\n  }\n\n  events = target._events;\n  if (events === undefined) {\n    events = target._events = Object.create(null);\n    target._eventsCount = 0;\n  } else {\n    // To avoid recursion in the case that type === \"newListener\"! Before\n    // adding it to the listeners, first emit \"newListener\".\n    if (events.newListener !== undefined) {\n      target.emit('newListener', type,\n                  listener.listener ? listener.listener : listener);\n\n      // Re-assign `events` because a newListener handler could have caused the\n      // this._events to be assigned to a new object\n      events = target._events;\n    }\n    existing = events[type];\n  }\n\n  if (existing === undefined) {\n    // Optimize the case of one listener. Don't need the extra array object.\n    existing = events[type] = listener;\n    ++target._eventsCount;\n  } else {\n    if (typeof existing === 'function') {\n      // Adding the second element, need to change to array.\n      existing = events[type] =\n        prepend ? [listener, existing] : [existing, listener];\n      // If we've already got an array, just append.\n    } else if (prepend) {\n      existing.unshift(listener);\n    } else {\n      existing.push(listener);\n    }\n\n    // Check for listener leak\n    m = $getMaxListeners(target);\n    if (m > 0 && existing.length > m && !existing.warned) {\n      existing.warned = true;\n      // No error code for this since it is a Warning\n      // eslint-disable-next-line no-restricted-syntax\n      var w = new Error('Possible EventEmitter memory leak detected. ' +\n                          existing.length + ' ' + String(type) + ' listeners ' +\n                          'added. Use emitter.setMaxListeners() to ' +\n                          'increase limit');\n      w.name = 'MaxListenersExceededWarning';\n      w.emitter = target;\n      w.type = type;\n      w.count = existing.length;\n      ProcessEmitWarning(w);\n    }\n  }\n\n  return target;\n}\n\nEventEmitter.prototype.addListener = function addListener(type, listener) {\n  return _addListener(this, type, listener, false);\n};\n\nEventEmitter.prototype.on = EventEmitter.prototype.addListener;\n\nEventEmitter.prototype.prependListener =\n    function prependListener(type, listener) {\n      return _addListener(this, type, listener, true);\n    };\n\nfunction onceWrapper() {\n  var args = [];\n  for (var i = 0; i < arguments.length; i++) args.push(arguments[i]);\n  if (!this.fired) {\n    this.target.removeListener(this.type, this.wrapFn);\n    this.fired = true;\n    ReflectApply(this.listener, this.target, args);\n  }\n}\n\nfunction _onceWrap(target, type, listener) {\n  var state = { fired: false, wrapFn: undefined, target: target, type: type, listener: listener };\n  var wrapped = onceWrapper.bind(state);\n  wrapped.listener = listener;\n  state.wrapFn = wrapped;\n  return wrapped;\n}\n\nEventEmitter.prototype.once = function once(type, listener) {\n  if (typeof listener !== 'function') {\n    throw new TypeError('The \"listener\" argument must be of type Function. Received type ' + typeof listener);\n  }\n  this.on(type, _onceWrap(this, type, listener));\n  return this;\n};\n\nEventEmitter.prototype.prependOnceListener =\n    function prependOnceListener(type, listener) {\n      if (typeof listener !== 'function') {\n        throw new TypeError('The \"listener\" argument must be of type Function. Received type ' + typeof listener);\n      }\n      this.prependListener(type, _onceWrap(this, type, listener));\n      return this;\n    };\n\n// Emits a 'removeListener' event if and only if the listener was removed.\nEventEmitter.prototype.removeListener =\n    function removeListener(type, listener) {\n      var list, events, position, i, originalListener;\n\n      if (typeof listener !== 'function') {\n        throw new TypeError('The \"listener\" argument must be of type Function. Received type ' + typeof listener);\n      }\n\n      events = this._events;\n      if (events === undefined)\n        return this;\n\n      list = events[type];\n      if (list === undefined)\n        return this;\n\n      if (list === listener || list.listener === listener) {\n        if (--this._eventsCount === 0)\n          this._events = Object.create(null);\n        else {\n          delete events[type];\n          if (events.removeListener)\n            this.emit('removeListener', type, list.listener || listener);\n        }\n      } else if (typeof list !== 'function') {\n        position = -1;\n\n        for (i = list.length - 1; i >= 0; i--) {\n          if (list[i] === listener || list[i].listener === listener) {\n            originalListener = list[i].listener;\n            position = i;\n            break;\n          }\n        }\n\n        if (position < 0)\n          return this;\n\n        if (position === 0)\n          list.shift();\n        else {\n          spliceOne(list, position);\n        }\n\n        if (list.length === 1)\n          events[type] = list[0];\n\n        if (events.removeListener !== undefined)\n          this.emit('removeListener', type, originalListener || listener);\n      }\n\n      return this;\n    };\n\nEventEmitter.prototype.off = EventEmitter.prototype.removeListener;\n\nEventEmitter.prototype.removeAllListeners =\n    function removeAllListeners(type) {\n      var listeners, events, i;\n\n      events = this._events;\n      if (events === undefined)\n        return this;\n\n      // not listening for removeListener, no need to emit\n      if (events.removeListener === undefined) {\n        if (arguments.length === 0) {\n          this._events = Object.create(null);\n          this._eventsCount = 0;\n        } else if (events[type] !== undefined) {\n          if (--this._eventsCount === 0)\n            this._events = Object.create(null);\n          else\n            delete events[type];\n        }\n        return this;\n      }\n\n      // emit removeListener for all listeners on all events\n      if (arguments.length === 0) {\n        var keys = Object.keys(events);\n        var key;\n        for (i = 0; i < keys.length; ++i) {\n          key = keys[i];\n          if (key === 'removeListener') continue;\n          this.removeAllListeners(key);\n        }\n        this.removeAllListeners('removeListener');\n        this._events = Object.create(null);\n        this._eventsCount = 0;\n        return this;\n      }\n\n      listeners = events[type];\n\n      if (typeof listeners === 'function') {\n        this.removeListener(type, listeners);\n      } else if (listeners !== undefined) {\n        // LIFO order\n        for (i = listeners.length - 1; i >= 0; i--) {\n          this.removeListener(type, listeners[i]);\n        }\n      }\n\n      return this;\n    };\n\nfunction _listeners(target, type, unwrap) {\n  var events = target._events;\n\n  if (events === undefined)\n    return [];\n\n  var evlistener = events[type];\n  if (evlistener === undefined)\n    return [];\n\n  if (typeof evlistener === 'function')\n    return unwrap ? [evlistener.listener || evlistener] : [evlistener];\n\n  return unwrap ?\n    unwrapListeners(evlistener) : arrayClone(evlistener, evlistener.length);\n}\n\nEventEmitter.prototype.listeners = function listeners(type) {\n  return _listeners(this, type, true);\n};\n\nEventEmitter.prototype.rawListeners = function rawListeners(type) {\n  return _listeners(this, type, false);\n};\n\nEventEmitter.listenerCount = function(emitter, type) {\n  if (typeof emitter.listenerCount === 'function') {\n    return emitter.listenerCount(type);\n  } else {\n    return listenerCount.call(emitter, type);\n  }\n};\n\nEventEmitter.prototype.listenerCount = listenerCount;\nfunction listenerCount(type) {\n  var events = this._events;\n\n  if (events !== undefined) {\n    var evlistener = events[type];\n\n    if (typeof evlistener === 'function') {\n      return 1;\n    } else if (evlistener !== undefined) {\n      return evlistener.length;\n    }\n  }\n\n  return 0;\n}\n\nEventEmitter.prototype.eventNames = function eventNames() {\n  return this._eventsCount > 0 ? ReflectOwnKeys(this._events) : [];\n};\n\nfunction arrayClone(arr, n) {\n  var copy = new Array(n);\n  for (var i = 0; i < n; ++i)\n    copy[i] = arr[i];\n  return copy;\n}\n\nfunction spliceOne(list, index) {\n  for (; index + 1 < list.length; index++)\n    list[index] = list[index + 1];\n  list.pop();\n}\n\nfunction unwrapListeners(arr) {\n  var ret = new Array(arr.length);\n  for (var i = 0; i < ret.length; ++i) {\n    ret[i] = arr[i].listener || arr[i];\n  }\n  return ret;\n}\n\n\n//# sourceURL=webpack:///./node_modules/events/events.js?");
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/addStyles.js":
+/*!****************************************************!*\
+  !*** ./node_modules/style-loader/lib/addStyles.js ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("/*\n\tMIT License http://www.opensource.org/licenses/mit-license.php\n\tAuthor Tobias Koppers @sokra\n*/\n\nvar stylesInDom = {};\n\nvar\tmemoize = function (fn) {\n\tvar memo;\n\n\treturn function () {\n\t\tif (typeof memo === \"undefined\") memo = fn.apply(this, arguments);\n\t\treturn memo;\n\t};\n};\n\nvar isOldIE = memoize(function () {\n\t// Test for IE <= 9 as proposed by Browserhacks\n\t// @see http://browserhacks.com/#hack-e71d8692f65334173fee715c222cb805\n\t// Tests for existence of standard globals is to allow style-loader\n\t// to operate correctly into non-standard environments\n\t// @see https://github.com/webpack-contrib/style-loader/issues/177\n\treturn window && document && document.all && !window.atob;\n});\n\nvar getTarget = function (target, parent) {\n  if (parent){\n    return parent.querySelector(target);\n  }\n  return document.querySelector(target);\n};\n\nvar getElement = (function (fn) {\n\tvar memo = {};\n\n\treturn function(target, parent) {\n                // If passing function in options, then use it for resolve \"head\" element.\n                // Useful for Shadow Root style i.e\n                // {\n                //   insertInto: function () { return document.querySelector(\"#foo\").shadowRoot }\n                // }\n                if (typeof target === 'function') {\n                        return target();\n                }\n                if (typeof memo[target] === \"undefined\") {\n\t\t\tvar styleTarget = getTarget.call(this, target, parent);\n\t\t\t// Special case to return head of iframe instead of iframe itself\n\t\t\tif (window.HTMLIFrameElement && styleTarget instanceof window.HTMLIFrameElement) {\n\t\t\t\ttry {\n\t\t\t\t\t// This will throw an exception if access to iframe is blocked\n\t\t\t\t\t// due to cross-origin restrictions\n\t\t\t\t\tstyleTarget = styleTarget.contentDocument.head;\n\t\t\t\t} catch(e) {\n\t\t\t\t\tstyleTarget = null;\n\t\t\t\t}\n\t\t\t}\n\t\t\tmemo[target] = styleTarget;\n\t\t}\n\t\treturn memo[target]\n\t};\n})();\n\nvar singleton = null;\nvar\tsingletonCounter = 0;\nvar\tstylesInsertedAtTop = [];\n\nvar\tfixUrls = __webpack_require__(/*! ./urls */ \"./node_modules/style-loader/lib/urls.js\");\n\nmodule.exports = function(list, options) {\n\tif (typeof DEBUG !== \"undefined\" && DEBUG) {\n\t\tif (typeof document !== \"object\") throw new Error(\"The style-loader cannot be used in a non-browser environment\");\n\t}\n\n\toptions = options || {};\n\n\toptions.attrs = typeof options.attrs === \"object\" ? options.attrs : {};\n\n\t// Force single-tag solution on IE6-9, which has a hard limit on the # of <style>\n\t// tags it will allow on a page\n\tif (!options.singleton && typeof options.singleton !== \"boolean\") options.singleton = isOldIE();\n\n\t// By default, add <style> tags to the <head> element\n        if (!options.insertInto) options.insertInto = \"head\";\n\n\t// By default, add <style> tags to the bottom of the target\n\tif (!options.insertAt) options.insertAt = \"bottom\";\n\n\tvar styles = listToStyles(list, options);\n\n\taddStylesToDom(styles, options);\n\n\treturn function update (newList) {\n\t\tvar mayRemove = [];\n\n\t\tfor (var i = 0; i < styles.length; i++) {\n\t\t\tvar item = styles[i];\n\t\t\tvar domStyle = stylesInDom[item.id];\n\n\t\t\tdomStyle.refs--;\n\t\t\tmayRemove.push(domStyle);\n\t\t}\n\n\t\tif(newList) {\n\t\t\tvar newStyles = listToStyles(newList, options);\n\t\t\taddStylesToDom(newStyles, options);\n\t\t}\n\n\t\tfor (var i = 0; i < mayRemove.length; i++) {\n\t\t\tvar domStyle = mayRemove[i];\n\n\t\t\tif(domStyle.refs === 0) {\n\t\t\t\tfor (var j = 0; j < domStyle.parts.length; j++) domStyle.parts[j]();\n\n\t\t\t\tdelete stylesInDom[domStyle.id];\n\t\t\t}\n\t\t}\n\t};\n};\n\nfunction addStylesToDom (styles, options) {\n\tfor (var i = 0; i < styles.length; i++) {\n\t\tvar item = styles[i];\n\t\tvar domStyle = stylesInDom[item.id];\n\n\t\tif(domStyle) {\n\t\t\tdomStyle.refs++;\n\n\t\t\tfor(var j = 0; j < domStyle.parts.length; j++) {\n\t\t\t\tdomStyle.parts[j](item.parts[j]);\n\t\t\t}\n\n\t\t\tfor(; j < item.parts.length; j++) {\n\t\t\t\tdomStyle.parts.push(addStyle(item.parts[j], options));\n\t\t\t}\n\t\t} else {\n\t\t\tvar parts = [];\n\n\t\t\tfor(var j = 0; j < item.parts.length; j++) {\n\t\t\t\tparts.push(addStyle(item.parts[j], options));\n\t\t\t}\n\n\t\t\tstylesInDom[item.id] = {id: item.id, refs: 1, parts: parts};\n\t\t}\n\t}\n}\n\nfunction listToStyles (list, options) {\n\tvar styles = [];\n\tvar newStyles = {};\n\n\tfor (var i = 0; i < list.length; i++) {\n\t\tvar item = list[i];\n\t\tvar id = options.base ? item[0] + options.base : item[0];\n\t\tvar css = item[1];\n\t\tvar media = item[2];\n\t\tvar sourceMap = item[3];\n\t\tvar part = {css: css, media: media, sourceMap: sourceMap};\n\n\t\tif(!newStyles[id]) styles.push(newStyles[id] = {id: id, parts: [part]});\n\t\telse newStyles[id].parts.push(part);\n\t}\n\n\treturn styles;\n}\n\nfunction insertStyleElement (options, style) {\n\tvar target = getElement(options.insertInto)\n\n\tif (!target) {\n\t\tthrow new Error(\"Couldn't find a style target. This probably means that the value for the 'insertInto' parameter is invalid.\");\n\t}\n\n\tvar lastStyleElementInsertedAtTop = stylesInsertedAtTop[stylesInsertedAtTop.length - 1];\n\n\tif (options.insertAt === \"top\") {\n\t\tif (!lastStyleElementInsertedAtTop) {\n\t\t\ttarget.insertBefore(style, target.firstChild);\n\t\t} else if (lastStyleElementInsertedAtTop.nextSibling) {\n\t\t\ttarget.insertBefore(style, lastStyleElementInsertedAtTop.nextSibling);\n\t\t} else {\n\t\t\ttarget.appendChild(style);\n\t\t}\n\t\tstylesInsertedAtTop.push(style);\n\t} else if (options.insertAt === \"bottom\") {\n\t\ttarget.appendChild(style);\n\t} else if (typeof options.insertAt === \"object\" && options.insertAt.before) {\n\t\tvar nextSibling = getElement(options.insertAt.before, target);\n\t\ttarget.insertBefore(style, nextSibling);\n\t} else {\n\t\tthrow new Error(\"[Style Loader]\\n\\n Invalid value for parameter 'insertAt' ('options.insertAt') found.\\n Must be 'top', 'bottom', or Object.\\n (https://github.com/webpack-contrib/style-loader#insertat)\\n\");\n\t}\n}\n\nfunction removeStyleElement (style) {\n\tif (style.parentNode === null) return false;\n\tstyle.parentNode.removeChild(style);\n\n\tvar idx = stylesInsertedAtTop.indexOf(style);\n\tif(idx >= 0) {\n\t\tstylesInsertedAtTop.splice(idx, 1);\n\t}\n}\n\nfunction createStyleElement (options) {\n\tvar style = document.createElement(\"style\");\n\n\tif(options.attrs.type === undefined) {\n\t\toptions.attrs.type = \"text/css\";\n\t}\n\n\tif(options.attrs.nonce === undefined) {\n\t\tvar nonce = getNonce();\n\t\tif (nonce) {\n\t\t\toptions.attrs.nonce = nonce;\n\t\t}\n\t}\n\n\taddAttrs(style, options.attrs);\n\tinsertStyleElement(options, style);\n\n\treturn style;\n}\n\nfunction createLinkElement (options) {\n\tvar link = document.createElement(\"link\");\n\n\tif(options.attrs.type === undefined) {\n\t\toptions.attrs.type = \"text/css\";\n\t}\n\toptions.attrs.rel = \"stylesheet\";\n\n\taddAttrs(link, options.attrs);\n\tinsertStyleElement(options, link);\n\n\treturn link;\n}\n\nfunction addAttrs (el, attrs) {\n\tObject.keys(attrs).forEach(function (key) {\n\t\tel.setAttribute(key, attrs[key]);\n\t});\n}\n\nfunction getNonce() {\n\tif (false) {}\n\n\treturn __webpack_require__.nc;\n}\n\nfunction addStyle (obj, options) {\n\tvar style, update, remove, result;\n\n\t// If a transform function was defined, run it on the css\n\tif (options.transform && obj.css) {\n\t    result = typeof options.transform === 'function'\n\t\t ? options.transform(obj.css) \n\t\t : options.transform.default(obj.css);\n\n\t    if (result) {\n\t    \t// If transform returns a value, use that instead of the original css.\n\t    \t// This allows running runtime transformations on the css.\n\t    \tobj.css = result;\n\t    } else {\n\t    \t// If the transform function returns a falsy value, don't add this css.\n\t    \t// This allows conditional loading of css\n\t    \treturn function() {\n\t    \t\t// noop\n\t    \t};\n\t    }\n\t}\n\n\tif (options.singleton) {\n\t\tvar styleIndex = singletonCounter++;\n\n\t\tstyle = singleton || (singleton = createStyleElement(options));\n\n\t\tupdate = applyToSingletonTag.bind(null, style, styleIndex, false);\n\t\tremove = applyToSingletonTag.bind(null, style, styleIndex, true);\n\n\t} else if (\n\t\tobj.sourceMap &&\n\t\ttypeof URL === \"function\" &&\n\t\ttypeof URL.createObjectURL === \"function\" &&\n\t\ttypeof URL.revokeObjectURL === \"function\" &&\n\t\ttypeof Blob === \"function\" &&\n\t\ttypeof btoa === \"function\"\n\t) {\n\t\tstyle = createLinkElement(options);\n\t\tupdate = updateLink.bind(null, style, options);\n\t\tremove = function () {\n\t\t\tremoveStyleElement(style);\n\n\t\t\tif(style.href) URL.revokeObjectURL(style.href);\n\t\t};\n\t} else {\n\t\tstyle = createStyleElement(options);\n\t\tupdate = applyToTag.bind(null, style);\n\t\tremove = function () {\n\t\t\tremoveStyleElement(style);\n\t\t};\n\t}\n\n\tupdate(obj);\n\n\treturn function updateStyle (newObj) {\n\t\tif (newObj) {\n\t\t\tif (\n\t\t\t\tnewObj.css === obj.css &&\n\t\t\t\tnewObj.media === obj.media &&\n\t\t\t\tnewObj.sourceMap === obj.sourceMap\n\t\t\t) {\n\t\t\t\treturn;\n\t\t\t}\n\n\t\t\tupdate(obj = newObj);\n\t\t} else {\n\t\t\tremove();\n\t\t}\n\t};\n}\n\nvar replaceText = (function () {\n\tvar textStore = [];\n\n\treturn function (index, replacement) {\n\t\ttextStore[index] = replacement;\n\n\t\treturn textStore.filter(Boolean).join('\\n');\n\t};\n})();\n\nfunction applyToSingletonTag (style, index, remove, obj) {\n\tvar css = remove ? \"\" : obj.css;\n\n\tif (style.styleSheet) {\n\t\tstyle.styleSheet.cssText = replaceText(index, css);\n\t} else {\n\t\tvar cssNode = document.createTextNode(css);\n\t\tvar childNodes = style.childNodes;\n\n\t\tif (childNodes[index]) style.removeChild(childNodes[index]);\n\n\t\tif (childNodes.length) {\n\t\t\tstyle.insertBefore(cssNode, childNodes[index]);\n\t\t} else {\n\t\t\tstyle.appendChild(cssNode);\n\t\t}\n\t}\n}\n\nfunction applyToTag (style, obj) {\n\tvar css = obj.css;\n\tvar media = obj.media;\n\n\tif(media) {\n\t\tstyle.setAttribute(\"media\", media)\n\t}\n\n\tif(style.styleSheet) {\n\t\tstyle.styleSheet.cssText = css;\n\t} else {\n\t\twhile(style.firstChild) {\n\t\t\tstyle.removeChild(style.firstChild);\n\t\t}\n\n\t\tstyle.appendChild(document.createTextNode(css));\n\t}\n}\n\nfunction updateLink (link, options, obj) {\n\tvar css = obj.css;\n\tvar sourceMap = obj.sourceMap;\n\n\t/*\n\t\tIf convertToAbsoluteUrls isn't defined, but sourcemaps are enabled\n\t\tand there is no publicPath defined then lets turn convertToAbsoluteUrls\n\t\ton by default.  Otherwise default to the convertToAbsoluteUrls option\n\t\tdirectly\n\t*/\n\tvar autoFixUrls = options.convertToAbsoluteUrls === undefined && sourceMap;\n\n\tif (options.convertToAbsoluteUrls || autoFixUrls) {\n\t\tcss = fixUrls(css);\n\t}\n\n\tif (sourceMap) {\n\t\t// http://stackoverflow.com/a/26603875\n\t\tcss += \"\\n/*# sourceMappingURL=data:application/json;base64,\" + btoa(unescape(encodeURIComponent(JSON.stringify(sourceMap)))) + \" */\";\n\t}\n\n\tvar blob = new Blob([css], { type: \"text/css\" });\n\n\tvar oldSrc = link.href;\n\n\tlink.href = URL.createObjectURL(blob);\n\n\tif(oldSrc) URL.revokeObjectURL(oldSrc);\n}\n\n\n//# sourceURL=webpack:///./node_modules/style-loader/lib/addStyles.js?");
+
+/***/ }),
+
+/***/ "./node_modules/style-loader/lib/urls.js":
+/*!***********************************************!*\
+  !*** ./node_modules/style-loader/lib/urls.js ***!
+  \***********************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("\n/**\n * When source maps are enabled, `style-loader` uses a link element with a data-uri to\n * embed the css on the page. This breaks all relative urls because now they are relative to a\n * bundle instead of the current page.\n *\n * One solution is to only use full urls, but that may be impossible.\n *\n * Instead, this function \"fixes\" the relative urls to be absolute according to the current page location.\n *\n * A rudimentary test suite is located at `test/fixUrls.js` and can be run via the `npm test` command.\n *\n */\n\nmodule.exports = function (css) {\n  // get current location\n  var location = typeof window !== \"undefined\" && window.location;\n\n  if (!location) {\n    throw new Error(\"fixUrls requires window.location\");\n  }\n\n\t// blank or null?\n\tif (!css || typeof css !== \"string\") {\n\t  return css;\n  }\n\n  var baseUrl = location.protocol + \"//\" + location.host;\n  var currentDir = baseUrl + location.pathname.replace(/\\/[^\\/]*$/, \"/\");\n\n\t// convert each url(...)\n\t/*\n\tThis regular expression is just a way to recursively match brackets within\n\ta string.\n\n\t /url\\s*\\(  = Match on the word \"url\" with any whitespace after it and then a parens\n\t   (  = Start a capturing group\n\t     (?:  = Start a non-capturing group\n\t         [^)(]  = Match anything that isn't a parentheses\n\t         |  = OR\n\t         \\(  = Match a start parentheses\n\t             (?:  = Start another non-capturing groups\n\t                 [^)(]+  = Match anything that isn't a parentheses\n\t                 |  = OR\n\t                 \\(  = Match a start parentheses\n\t                     [^)(]*  = Match anything that isn't a parentheses\n\t                 \\)  = Match a end parentheses\n\t             )  = End Group\n              *\\) = Match anything and then a close parens\n          )  = Close non-capturing group\n          *  = Match anything\n       )  = Close capturing group\n\t \\)  = Match a close parens\n\n\t /gi  = Get all matches, not the first.  Be case insensitive.\n\t */\n\tvar fixedCss = css.replace(/url\\s*\\(((?:[^)(]|\\((?:[^)(]+|\\([^)(]*\\))*\\))*)\\)/gi, function(fullMatch, origUrl) {\n\t\t// strip quotes (if they exist)\n\t\tvar unquotedOrigUrl = origUrl\n\t\t\t.trim()\n\t\t\t.replace(/^\"(.*)\"$/, function(o, $1){ return $1; })\n\t\t\t.replace(/^'(.*)'$/, function(o, $1){ return $1; });\n\n\t\t// already a full url? no change\n\t\tif (/^(#|data:|http:\\/\\/|https:\\/\\/|file:\\/\\/\\/|\\s*$)/i.test(unquotedOrigUrl)) {\n\t\t  return fullMatch;\n\t\t}\n\n\t\t// convert the url to a full url\n\t\tvar newUrl;\n\n\t\tif (unquotedOrigUrl.indexOf(\"//\") === 0) {\n\t\t  \t//TODO: should we add protocol?\n\t\t\tnewUrl = unquotedOrigUrl;\n\t\t} else if (unquotedOrigUrl.indexOf(\"/\") === 0) {\n\t\t\t// path should be relative to the base url\n\t\t\tnewUrl = baseUrl + unquotedOrigUrl; // already starts with '/'\n\t\t} else {\n\t\t\t// path should be relative to current directory\n\t\t\tnewUrl = currentDir + unquotedOrigUrl.replace(/^\\.\\//, \"\"); // Strip leading './'\n\t\t}\n\n\t\t// send back the fixed url(...)\n\t\treturn \"url(\" + JSON.stringify(newUrl) + \")\";\n\t});\n\n\t// send back the fixed css\n\treturn fixedCss;\n};\n\n\n//# sourceURL=webpack:///./node_modules/style-loader/lib/urls.js?");
+
+/***/ }),
+
+/***/ "./src/static/css/layout.css":
+/*!***********************************!*\
+  !*** ./src/static/css/layout.css ***!
+  \***********************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nvar content = __webpack_require__(/*! !../../../node_modules/css-loader/dist/cjs.js!./layout.css */ \"./node_modules/css-loader/dist/cjs.js!./src/static/css/layout.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./src/static/css/layout.css?");
+
+/***/ }),
+
+/***/ "./src/static/css/pages/active_run.css":
+/*!*********************************************!*\
+  !*** ./src/static/css/pages/active_run.css ***!
+  \*********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nvar content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./active_run.css */ \"./node_modules/css-loader/dist/cjs.js!./src/static/css/pages/active_run.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./src/static/css/pages/active_run.css?");
+
+/***/ }),
+
+/***/ "./src/static/css/partials/form.css":
+/*!******************************************!*\
+  !*** ./src/static/css/partials/form.css ***!
+  \******************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("\nvar content = __webpack_require__(/*! !../../../../node_modules/css-loader/dist/cjs.js!./form.css */ \"./node_modules/css-loader/dist/cjs.js!./src/static/css/partials/form.css\");\n\nif(typeof content === 'string') content = [[module.i, content, '']];\n\nvar transform;\nvar insertInto;\n\n\n\nvar options = {\"hmr\":true}\n\noptions.transform = transform\noptions.insertInto = undefined;\n\nvar update = __webpack_require__(/*! ../../../../node_modules/style-loader/lib/addStyles.js */ \"./node_modules/style-loader/lib/addStyles.js\")(content, options);\n\nif(content.locals) module.exports = content.locals;\n\nif(false) {}\n\n//# sourceURL=webpack:///./src/static/css/partials/form.css?");
+
+/***/ }),
+
+/***/ "./src/static/js/main.js":
+/*!*******************************!*\
+  !*** ./src/static/js/main.js ***!
+  \*******************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("__webpack_require__(/*! ../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n// require(\"../css/pages/landing.css\");\r\n// require(\"../css/pages/project_details.css\");\r\n// require(\"../css/pages/run_details.css\");\r\n\r\n\r\n(function(jQuery) {\r\n    jQuery.fn.fintzsensors = function() {        \r\n        var createProjectPlugin = __webpack_require__(/*! ./pages/landing/createProject */ \"./src/static/js/pages/landing/createProject.js\");\r\n        var deleteProjectPlugin = __webpack_require__(/*! ./pages/landing/deleteProject */ \"./src/static/js/pages/landing/deleteProject.js\");\r\n        var activeRunPlugin = __webpack_require__(/*! ./pages/run/activeRun */ \"./src/static/js/pages/run/activeRun.js\");\r\n\r\n\r\n        // retrieves the current context as the matched object, this\r\n        // is considered to be the default/expected behaviour\r\n        var matchedObject = this;\r\n        var addProjectForm = jQuery(\".form.add-project\", matchedObject);\r\n        var deleteProjectButton = jQuery(\".button.delete-project\", matchedObject);\r\n        var activeRunContainer = jQuery(\".active-run-container\", matchedObject);\r\n\r\n        createProjectPlugin(addProjectForm);\r\n        deleteProjectPlugin(deleteProjectButton);\r\n        activeRunPlugin(activeRunContainer);\r\n\r\n        // returns the current context to the caller function/method\r\n        // so that proper chaining may be applied to the context\r\n        return this;\r\n    };\r\n})(jQuery);\r\n\r\njQuery(document).ready(function() {\r\n    var _body = jQuery(\"body\");    \r\n    _body.fintzsensors();\r\n});\r\n\n\n//# sourceURL=webpack:///./src/static/js/main.js?");
+
+/***/ }),
+
+/***/ "./src/static/js/pages/landing/createProject.js":
+/*!******************************************************!*\
+  !*** ./src/static/js/pages/landing/createProject.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var createProject = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        matchedObject.submit(event, function () {\r\n            if(!event || event.length === 0) {\r\n                return;\r\n            }\r\n\r\n            //prevents default form behaviour, on submit\r\n            event.preventDefault();\r\n\r\n            var element = jQuery(this);\r\n            element.triggerHandler(\"pre_submit\");\r\n            var url = event.currentTarget && event.currentTarget.action;\r\n            var name = jQuery(\".name-field\", element);\r\n            var numStations = jQuery(\".stations-num-field\", element);\r\n            var numRuns = jQuery(\".runs-num-field\", element);\r\n            var timePerRun = jQuery(\".time-run-field\", element);\r\n            var productionTarget = jQuery(\".production-target-field\", element);\r\n\r\n            name = name && name.val() || \"New project\";\r\n            numStations = numStations && parseInt(numStations.val()) || 8;\r\n            numRuns = numRuns && parseInt(numRuns.val()) || 3;\r\n            timePerRun = timePerRun && parseInt(timePerRun.val()) || 30;\r\n            productionTarget = productionTarget && parseInt(productionTarget.val()) || 1;\r\n            jQuery.ajax({\r\n                url: url,\r\n                type: 'POST',\r\n                contentType: 'application/json',\r\n                data: JSON.stringify({\r\n                    \"name\": name,\r\n                    \"numStations\": numStations,\r\n                    \"numRuns\": numRuns,\r\n                    \"timePerRun\": timePerRun,\r\n                    \"productionTarget\": productionTarget,\r\n                    \"status\": \"CREATED\"\r\n                }),\r\n                success: function(data, status) {\r\n                    element.triggerHandler(\"success\", data);\r\n                },\r\n                error: function(data) {\r\n                    var message = data && data.responseJSON && data.responseJSON.message || \"Form error\";\r\n                    matchedObject.triggerHandler(\"error\", message);\r\n                }\r\n              });\r\n        });\r\n\r\n        matchedObject.bind(\"pre_submit\", function() {\r\n            var element = jQuery(this);\r\n            element.addClass(\"loading\");\r\n            element.removeClass(\"success\");\r\n            element.removeClass(\"error\");\r\n        });\r\n\r\n        matchedObject.bind(\"success\", function() {\r\n            var element = jQuery(this);\r\n            element.removeClass(\"loading\");\r\n            element.addClass(\"success\");\r\n        });\r\n\r\n        matchedObject.bind(\"error\", function(event, message) {\r\n            var element = jQuery(this);\r\n            var errorMessage = jQuery(\".error-message\", element);\r\n            errorMessage.text(message);\r\n            element.removeClass(\"loading\");\r\n            element.addClass(\"error\");\r\n        });\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = createProject;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/landing/createProject.js?");
+
+/***/ }),
+
+/***/ "./src/static/js/pages/landing/deleteProject.js":
+/*!******************************************************!*\
+  !*** ./src/static/js/pages/landing/deleteProject.js ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+eval("var deleteProject = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        matchedObject.click(event, function () {\r\n            var element = jQuery(this);\r\n            var projectElement = element.parents(\".element-project\");\r\n            var projectNumber = projectElement.attr(\"data-number\");\r\n\r\n            element.each(function() {\r\n                var _element = jQuery(this);\r\n                var number = _element.attr(\"data-number\");\r\n                number === projectNumber && clickHandler(event, _element);\r\n            });\r\n        });\r\n\r\n        matchedObject.bind(\"success\", function() {\r\n            var element = jQuery(this);\r\n            var projectElement = element.parents(\".element-project\");\r\n            projectElement.remove();\r\n        });\r\n\r\n        matchedObject.bind(\"error\", function(event, message) {\r\n            var element = jQuery(this);\r\n            var projectElement = element.parents(\".element-project\");\r\n            projectElement.addClass(\"error\");\r\n        });\r\n    };\r\n\r\n    var clickHandler = function (event, element) {\r\n        if(!event || event.length === 0) {\r\n            return;\r\n        }\r\n\r\n        //prevents default click behaviour\r\n        event.preventDefault();\r\n\r\n        var url = element.attr(\"href\");\r\n\r\n        jQuery.ajax({\r\n            url: url,\r\n            type: 'DELETE',\r\n            success: function(data, status) {\r\n                element.triggerHandler(\"success\", data);\r\n            },\r\n            error: function(data) {\r\n                var message = data && data.responseJSON && data.responseJSON.message || \"Delete operation error\";\r\n                matchedObject.triggerHandler(\"error\", message);\r\n            }\r\n          });\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = deleteProject;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/landing/deleteProject.js?");
+
+/***/ }),
+
+/***/ "./src/static/js/pages/run/activeRun.js":
+/*!**********************************************!*\
+  !*** ./src/static/js/pages/run/activeRun.js ***!
+  \**********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+eval("__webpack_require__(/*! ../../../css/pages/active_run.css */ \"./src/static/css/pages/active_run.css\");\n\nconst Timer = __webpack_require__(/*! easytimer.js */ \"./node_modules/easytimer.js/dist/easytimer.js\").Timer;\n\nconst ACTION_TYPES = {\n    START_RUN: \"START\",\n    MOVE_ITER: \"MOVE\",\n    CONTINUE_RUN: \"CONTINUE\",\n    KILL: \"KILL\"\n  };\nObject.freeze(ACTION_TYPES);\n\nvar activeRun = function(element) {\n    var matchedObject = jQuery(element);\n\n    var init = function() {\n        if (!matchedObject || matchedObject.length === 0) {\n            return;\n        }\n    };\n\n    var bind = function() {\n        if (!matchedObject || matchedObject.length === 0) {\n            return;\n        }\n\n        var startButton = jQuery(\".button-start\", matchedObject);\n        var moveButton = jQuery(\".button-move\", matchedObject);\n        var continueButton = jQuery(\".button-continue\", matchedObject);\n        var killButton = jQuery(\".button-kill\", matchedObject);\n        \n        startButton.click(function(event){\n            event.preventDefault();\n            var element = jQuery(this);\n            var activeRunContainer = element.parents(\".active-run-container\");\n            activeRunContainer.triggerHandler(\"pre_start\");\n        });\n        \n        moveButton.click(function(event){\n            event.preventDefault();\n            var element = jQuery(this);\n            var activeRunContainer = element.parents(\".active-run-container\");\n            activeRunContainer.triggerHandler(\"pre_move\");\n        });\n        \n        continueButton.click(function(event){\n            event.preventDefault();\n            var element = jQuery(this);\n            var activeRunContainer = element.parents(\".active-run-container\");            \n            activeRunContainer.triggerHandler(\"pre_continue\");\n        });\n\n        killButton.click(function(event){\n            event.preventDefault();\n            var element = jQuery(this);\n            var activeRunContainer = element.parents(\".active-run-container\");            \n            activeRunContainer.triggerHandler(\"pre_kill\");\n        });\n\n        matchedObject.bind(\"pre_start\", function(event) {\n            var element = jQuery(this);\n            _sendActionType(element, ACTION_TYPES.START_RUN);\n        });\n\n        matchedObject.bind(\"start_action\", function(event){\n            _startGlobalTimer(globalTimer);\n            _startTaktTimer(taktTimer);\n            startButton.addClass(\"disabled\");\n            killButton.removeClass(\"disabled\");\n        });\n\n        matchedObject.bind(\"pre_move\", function(event) {\n            var element = jQuery(this);\n            _sendActionType(element, ACTION_TYPES.MOVE_ITER);\n        });\n\n        matchedObject.bind(\"move_action\", function(event){\n            moveButton.addClass(\"disabled\");\n            continueButton.removeClass(\"disabled\");\n            _clearStationTimers();\n        });\n\n        matchedObject.bind(\"pre_continue\", function(event) {\n            var element = jQuery(this);\n            _sendActionType(element, ACTION_TYPES.CONTINUE_RUN);\n        });\n\n        matchedObject.bind(\"continue_action\", function(event){\n            continueButton.addClass(\"disabled\");\n        });\n\n        matchedObject.bind(\"pre_kill\", function(event) {\n            var element = jQuery(this);\n            _sendActionType(element, ACTION_TYPES.KILL);\n        });\n\n        matchedObject.bind(\"kill_action\", function(event){\n            var buttons = jQuery(\".button\" ,matchedObject);\n            buttons.addClass(\"disabled\");\n            // TODO: redirects to?\n            window.location.href = '/'; //TODO: improve this redirect!\n        });\n        \n        _initTimers();\n    };\n\n    var _sendActionType = function(element, actionType) {\n        var startButton = jQuery(\".button-start\", element);\n        var url = startButton.attr(\"href\");\n\n        jQuery.ajax({\n            url: url,\n            type: 'POST',\n            contentType: 'application/json',\n            data: JSON.stringify({\n                \"actionType\": actionType,\n            }),\n            success: function(data, status) {\n                var event = actionType.toLowerCase() + \"_action\";\n                element.triggerHandler(event, data);\n            },\n            error: function(data) {\n                var message = data && data.responseJSON && data.responseJSON.message || \"Error sending action\";\n                matchedObject.triggerHandler(\"error\", message);\n            }\n        });\n    };\n  \n    var _initTimers = function(element) {\n         /*\n         *      \n         *      \n         * TODO: this need a proper refactoring\n         *\n         *\n        */\n        var timers = [\n            new Timer(),\n            new Timer(),\n            new Timer(),\n            new Timer(),\n            new Timer(),\n            new Timer(),\n            new Timer(),\n            new Timer()\n        ];\n        let globalTimer = new Timer();\n        globalTimer.addEventListener('secondsUpdated', function (e) {\n            jQuery('.global-timer').html(globalTimer.getTimeValues().toString());\n        });\n        let taktTimer = new Timer();\n        taktTimer.addEventListener('secondsUpdated', function (e) {\n            jQuery('.takt-time-desc').html(taktTimer.getTimeValues().toString());\n        });\n\n        jQuery(document).ready(function(){\n            _startGlobalTimer(globalTimer);\n        });\n\n        for (let i = 0; i < timers.length; i++){\n            let timerNr = i+1;\n            timers[i].addEventListener('secondsUpdated', function (e) {\n                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());\n            });\n            timers[i].addEventListener('started', function (e) {\n                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());\n            });\n        }\n        var socket = io.connect();\n        socket.on('toggleTimer', function(data){\n\n            let stationToToggle = data.station;\n            //TODO: validate if station is valid\n            let timerToUpdate = timers[stationToToggle-1];\n\n            if(data.operation === \"start\") {\n                timerToUpdate.stop();\n                if(data.currentTime)\n                {\n                    timerToUpdate.start({startValues: {seconds: data.currentTime}});\n                }\n                else\n                {\n                    timerToUpdate.start({startValues: {seconds: 0}});\n                }\n                let station = $('#timer-station-'+stationToToggle).parents(\".station\");\n                station.addClass(\"active\");\n                station.removeClass(\"stop\");\n            }\n            else if(data.operation === \"stop\")\n            {\n                timerToUpdate.pause();\n                let station = $('#timer-station-'+stationToToggle).parents(\".station\");\n                station.removeClass(\"active\");\n                station.addClass(\"stop\");\n            }\n        });\n    };\n    \n    var _startGlobalTimer = function(globalTimer) {\n        var globalTimerElement = jQuery('.global-timer')\n        var minutes = globalTimerElement.attr(\"data-duration\");\n        minutes = parseInt(minutes);\n        globalTimer.start({\n            countdown: true,\n            startValues: {\n                minutes: minutes\n            }\n        });\n    };\n\n    var _startTaktTimer = function(timer){\n        var taktTimerElement = jQuery('.takt-time-desc')\n        var minutes = taktTimerElement.attr(\"duration\");\n        minutes = parseInt(minutes);\n        timer.start({\n            countdown: true,\n            startValues: {\n                minutes: minutes\n            }\n        });\n    };\n\n    var _clearStationTimers = function(element) {\n        //TODO: implement this\n    };\n\n    init();\n    bind();\n\n    return matchedObject;\n};\n\nmodule.exports = activeRun;\n\n\n//# sourceURL=webpack:///./src/static/js/pages/run/activeRun.js?");
+
+/***/ })
+
+/******/ });

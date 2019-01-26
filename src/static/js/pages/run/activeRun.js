@@ -1,3 +1,5 @@
+require("../../../css/pages/active_run.css");
+
 const Timer = require('easytimer.js').Timer;
 
 const ACTION_TYPES = {
@@ -26,32 +28,32 @@ var activeRun = function(element) {
         var moveButton = jQuery(".button-move", matchedObject);
         var continueButton = jQuery(".button-continue", matchedObject);
         var killButton = jQuery(".button-kill", matchedObject);
-        
+
         startButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
             var activeRunContainer = element.parents(".active-run-container");
             activeRunContainer.triggerHandler("pre_start");
         });
-        
+
         moveButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
             var activeRunContainer = element.parents(".active-run-container");
             activeRunContainer.triggerHandler("pre_move");
         });
-        
+
         continueButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");            
+            var activeRunContainer = element.parents(".active-run-container");
             activeRunContainer.triggerHandler("pre_continue");
         });
 
         killButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");            
+            var activeRunContainer = element.parents(".active-run-container");
             activeRunContainer.triggerHandler("pre_kill");
         });
 
@@ -98,7 +100,7 @@ var activeRun = function(element) {
             // TODO: redirects to?
             window.location.href = '/'; //TODO: improve this redirect!
         });
-        
+
         _initTimers();
     };
 
@@ -123,11 +125,11 @@ var activeRun = function(element) {
             }
         });
     };
-  
+
     var _initTimers = function(element) {
          /*
-         *      
-         *      
+         *
+         *
          * TODO: this need a proper refactoring
          *
          *
@@ -194,7 +196,7 @@ var activeRun = function(element) {
             }
         });
     };
-    
+
     var _startGlobalTimer = function(globalTimer) {
         var globalTimerElement = jQuery('.global-timer')
         var minutes = globalTimerElement.attr("data-duration");
