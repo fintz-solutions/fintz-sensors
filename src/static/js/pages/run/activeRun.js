@@ -1,6 +1,7 @@
 require("../../../css/pages/active_run.css");
 
 const Timer = require('easytimer.js').Timer;
+const io = require('socket.io-client')
 
 const ACTION_TYPES = {
     START_RUN: "START",
@@ -166,6 +167,7 @@ var activeRun = function(element) {
                 jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
             });
         }
+
         var socket = io.connect();
         socket.on('toggleTimer', function(data){
 
