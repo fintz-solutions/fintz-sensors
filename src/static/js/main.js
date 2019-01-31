@@ -4,6 +4,8 @@ require("../css/partials/form.css");
 // require("../css/pages/project_details.css");
 // require("../css/pages/run_details.css");
 
+var jQuery = $ = require('jquery');
+window.$ = window.jQuery = jQuery;
 
 (function(jQuery) {
     jQuery.fn.fintzsensors = function() {
