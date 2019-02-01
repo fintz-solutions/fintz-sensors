@@ -28,8 +28,8 @@ const acceptedActionsTypes = {
     //TODO NELSON also all measurements for that iteration must have a start and stop time(meaning all stations have stopped work for that iteration)
     //TODO then mark iteration as done(add a stop time)
     //TODO NELSON block socket events for project(meaning it does not exist an iteration with a start time only)
-    MOVE_KART: {
-        key: "MOVE_KART",
+    MOVE_ITER: {
+        key: "MOVE",
         canExecute: function (project, run, iteration, measurements) {
             let baseCheck = (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -41,7 +41,7 @@ const acceptedActionsTypes = {
             if (baseCheck) {
                 let result = true;
                 measurements.forEach(function (measurement) {
-                    //each measurement must have a startTime and stopTime to be able to move kart
+                    //each measurement must have a startTime and stopTime to be able to move iteration
                     if (!measurement.startTime || !measurement.stopTime) {
                         result = false;
                         return;
@@ -53,11 +53,11 @@ const acceptedActionsTypes = {
             }
         }
     },
-    //TODO NELSON this action can only be executed after move kart is clicked(meaning when it does not exist an iteration with a start time only related to that run)
+    //TODO NELSON this action can only be executed after move iteration is clicked(meaning when it does not exist an iteration with a start time only related to that run)
     //TODO NELSON unlocks socket events for project
     //TODO NELSON create a new iteration for the run in the DB(add only a start time to it)
-    CONTINUE_WORKING: {
-        key: "CONTINUE_WORKING",
+    CONTINUE: {
+        key: "CONTINUE",
         canExecute: function (project, run, iteration, measurements) {
             return (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -77,8 +77,8 @@ const acceptedActionsTypes = {
         }
     },
     //TODO NELSON -> Frontend needs to call this action when the run total time reached zero
-    END_RUN: {
-        key: "END_RUN",
+    END: {
+        key: "END",
         canExecute: function (project, run, iteration, measurements) {
             return (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -120,8 +120,8 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 errorUtil.createAndThrowGenericError("Cannot start a new run", 400);
             }
             break;
-        case acceptedActionsTypes.MOVE_KART.key:
-            if (acceptedActionsTypes.MOVE_KART.canExecute(project, run, iteration, measurements)) {
+        case acceptedActionsTypes.MOVE_ITER.key:
+            if (acceptedActionsTypes.MOVE_ITER.canExecute(project, run, iteration, measurements)) {
                 //TODO NELSON implement transactions here
                 let iterationStopTime = dateUtil.getCurrentTimestamp();
                 let promises = [
@@ -143,11 +143,11 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                     throw error;
                 });
             } else {
-                errorUtil.createAndThrowGenericError("Cannot move kart", 400);
+                errorUtil.createAndThrowGenericError("Cannot move iteration", 400);
             }
             break;
-        case acceptedActionsTypes.CONTINUE_WORKING.key:
-            if (acceptedActionsTypes.CONTINUE_WORKING.canExecute(project, run, iteration, measurements)) {
+        case acceptedActionsTypes.CONTINUE.key:
+            if (acceptedActionsTypes.CONTINUE.canExecute(project, run, iteration, measurements)) {
                 let iterationStartTime = dateUtil.getCurrentTimestamp();
                 return iteration.updateOne({startTime: iterationStartTime}).then(function (updatedIteration) {
                     iteration.startTime = iterationStartTime;
@@ -160,7 +160,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                     };
                 });
             } else {
-                errorUtil.createAndThrowGenericError("Cannot continue working", 400);
+                errorUtil.createAndThrowGenericError("Cannot continue", 400);
             }
             break;
         case acceptedActionsTypes.KILL.key:
@@ -178,8 +178,8 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 errorUtil.createAndThrowGenericError("Cannot Kill project", 400);
             }
             break;
-        case acceptedActionsTypes.END_RUN.key:
-            if (acceptedActionsTypes.END_RUN.canExecute(project, run, iteration, measurements)) {
+        case acceptedActionsTypes.END.key:
+            if (acceptedActionsTypes.END.canExecute(project, run, iteration, measurements)) {
                 let promises = [
                     run.updateOne({status: "FINISHED"})
                 ];

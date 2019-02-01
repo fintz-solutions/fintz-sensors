@@ -7,9 +7,16 @@ const ACTION_TYPES = {
     START_RUN: "START",
     MOVE_ITER: "MOVE",
     CONTINUE_RUN: "CONTINUE",
-    KILL: "KILL"
+    KILL: "KILL",
+    END_RUN: "END" //TODO: call this action when the run total time reached zero
   };
 Object.freeze(ACTION_TYPES);
+
+const TIMER_EVENT = {
+    START: "START",
+    STOP: "STOP"
+  };
+Object.freeze(TIMER_EVENT);
 
 var activeRun = function(element) {
     var matchedObject = jQuery(element);
@@ -25,10 +32,60 @@ var activeRun = function(element) {
             return;
         }
 
+        /** Action buttons **/
         var startButton = jQuery(".button-start", matchedObject);
         var moveButton = jQuery(".button-move", matchedObject);
         var continueButton = jQuery(".button-continue", matchedObject);
         var killButton = jQuery(".button-kill", matchedObject);
+
+        /** Timers **/
+        var sations = jQuery(".stations", element);
+        var stationsNum = sations.attr("data-stations_num");
+        var runTimerElement = jQuery(".run-timer", element);
+        var stationTimersElement = jQuery(".station-timer", element);
+        var taktTimerElement = jQuery(".takt-time-desc", element);
+        var runTimer = new Timer();
+        var taktTimer = new Timer();
+        var stationTimers = [];
+
+        while (stationsNum > stationTimers.length) {
+            stationTimers.push(new Timer());
+        }
+
+        runTimer.addEventListener('secondsUpdated', function () {
+            runTimerElement.html(runTimer.getTimeValues().toString());
+        });
+
+        taktTimer.addEventListener('secondsUpdated', function () {
+            taktTimerElement.html(taktTimer.getTimeValues().toString());
+        });
+
+        for (var t = 0, length = stationTimers.length; t < length; t++) {
+            var timerNum = t + 1;
+            stationTimers[t].addEventListener('secondsUpdated', function () {
+                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
+                element.html(stationTimers[t].getTimeValues().toString());
+            });
+
+            stationTimers[t].addEventListener('started', function (e) {
+                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
+                element.html(stationTimers[t].getTimeValues().toString());
+            });
+        };
+
+        var socket = io.connect();
+        socket.on('toggleTimer', function(data){
+            if (!data || data.length === 0 || data.station <= stationTimers.length ) {
+                return;
+            }
+
+            var stationToToggle = data.station;
+            var seconds = data.currentTime || 0;
+            var timerToUpdate = stationTimers[stationToToggle - 1];
+            var station = jQuery(".station-" + stationToToggle);
+            data.operation === TIMER_EVENT.START && _startStationTimer(station, timerToUpdate, seconds);
+            data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
+        });
 
         startButton.click(function(event){
             event.preventDefault();
@@ -64,8 +121,11 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("start_action", function(event){
-            _startGlobalTimer(globalTimer);
-            _startTaktTimer(taktTimer);
+            var element = jQuery(this);
+            var runTimerElement = jQuery(".run-timer", element);
+            var taktTimerElement = jQuery(".takt-time-desc", element);
+            _startRunTimer(runTimerElement, runTimer);
+            _startTaktTimer(taktTimerElement, taktTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -78,7 +138,7 @@ var activeRun = function(element) {
         matchedObject.bind("move_action", function(event){
             moveButton.addClass("disabled");
             continueButton.removeClass("disabled");
-            _clearStationTimers();
+            _clearStationTimers(stationTimers);
         });
 
         matchedObject.bind("pre_continue", function(event) {
@@ -98,11 +158,10 @@ var activeRun = function(element) {
         matchedObject.bind("kill_action", function(event){
             var buttons = jQuery(".button" ,matchedObject);
             buttons.addClass("disabled");
-            // TODO: redirects to?
-            window.location.href = '/'; //TODO: improve this redirect!
+            // TODO: redirects to where?
+            //TODO: improve this
+            window.location.href = '/';
         });
-
-        _initTimers();
     };
 
     var _sendActionType = function(element, actionType) {
@@ -127,94 +186,9 @@ var activeRun = function(element) {
         });
     };
 
-    var _initTimers = function(element) {
-         /*
-         *
-         *
-         * TODO: this need a proper refactoring
-         *
-         *
-        */
-        var timers = [
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer(),
-            new Timer()
-        ];
-        let globalTimer = new Timer();
-        globalTimer.addEventListener('secondsUpdated', function (e) {
-            jQuery('.global-timer').html(globalTimer.getTimeValues().toString());
-        });
-        let taktTimer = new Timer();
-        taktTimer.addEventListener('secondsUpdated', function (e) {
-            jQuery('.takt-time-desc').html(taktTimer.getTimeValues().toString());
-        });
-
-        jQuery(document).ready(function(){
-            _startGlobalTimer(globalTimer);
-        });
-
-        for (let i = 0; i < timers.length; i++){
-            let timerNr = i+1;
-            timers[i].addEventListener('secondsUpdated', function (e) {
-                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
-            });
-            timers[i].addEventListener('started', function (e) {
-                jQuery('.timer-station-'+timerNr).html(timers[i].getTimeValues().toString());
-            });
-        }
-
-        var socket = io.connect();
-        socket.on('toggleTimer', function(data){
-
-            let stationToToggle = data.station;
-            //TODO: validate if station is valid
-            let timerToUpdate = timers[stationToToggle-1];
-
-            if(data.operation === "start") {
-                timerToUpdate.stop();
-                if(data.currentTime)
-                {
-                    timerToUpdate.start({startValues: {seconds: data.currentTime}});
-                }
-                else
-                {
-                    timerToUpdate.start({startValues: {seconds: 0}});
-                }
-                let station = $('#timer-station-'+stationToToggle).parents(".station");
-                station.addClass("active");
-                station.removeClass("stop");
-            }
-            else if(data.operation === "stop")
-            {
-                timerToUpdate.pause();
-                let station = $('#timer-station-'+stationToToggle).parents(".station");
-                station.removeClass("active");
-                station.addClass("stop");
-            }
-        });
-    };
-
-    var _startGlobalTimer = function(globalTimer) {
-        var globalTimerElement = jQuery('.global-timer')
-        var minutes = globalTimerElement.attr("data-duration");
-        minutes = parseInt(minutes);
-        globalTimer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-
-    var _startTaktTimer = function(timer){
-        var taktTimerElement = jQuery('.takt-time-desc')
-        var minutes = taktTimerElement.attr("duration");
-        minutes = parseInt(minutes);
+    var _startRunTimer = function(element, timer) {
+        var minutes = element.attr("data-duration");
+        minutes = parseFloat(minutes);
         timer.start({
             countdown: true,
             startValues: {
@@ -223,8 +197,37 @@ var activeRun = function(element) {
         });
     };
 
-    var _clearStationTimers = function(element) {
-        //TODO: implement this
+    var _startTaktTimer = function(element, timer) {
+        element.removeClass("hidden");
+        var minutes = element.attr("data-duration");
+        minutes = parseFloat(minutes);
+        timer.start({
+            countdown: true,
+            startValues: {
+                minutes: minutes
+            }
+        });
+    };
+
+    var _startStationTimer = function(element, timer, seconds) {
+        timer.stop();
+        timer.start({ startValues: { seconds: seconds }});
+        element.addClass("active");
+        element.removeClass("stop");
+    };
+
+    var _stopStationTimer = function(element, timer) {
+        timer.pause();
+        element.removeClass("active");
+        element.addClass("stop");
+    };
+
+    var _clearStationTimers = function(timers) {
+        for(var i = 0, length = timers.length; i < length; i++) {
+            timers[i].reset();
+        }
+        element.removeClass("stop")
+        // TODO:review this: add reset class?
     };
 
     init();
