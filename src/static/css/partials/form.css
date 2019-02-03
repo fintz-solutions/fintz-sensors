@@ -1,0 +1,17 @@
+.body form.form-ajax.error .error-message {
+    color: red;
+    display: block;
+}
+
+.body form.form-ajax .error-message {
+    display: none;
+}
+
+.body form.form-ajax.success .success-message {
+    color: green;
+    display: block;
+}
+
+.body form.form-ajax .success-message {
+    display: none;
+}

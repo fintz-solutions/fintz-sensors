@@ -12,7 +12,7 @@ module.exports.processTimerEvent = async function(project, run, iteration, measu
         // measurement data update
         return {
             station: measurement.stationNumber,
-            operation: "start"
+            operation: "START"
         };
     }
     else {
@@ -23,7 +23,7 @@ module.exports.processTimerEvent = async function(project, run, iteration, measu
             // measurement data update
             return {
                 station: measurement.stationNumber,
-                operation: "stop"
+                operation: "STOP"
             };
         }
         else {
@@ -35,7 +35,7 @@ module.exports.processTimerEvent = async function(project, run, iteration, measu
             // measurement data update
             return {
                 station: measurement.stationNumber,
-                operation: "start",
+                operation: "START",
                 currentTime: currentTime
             };
         }

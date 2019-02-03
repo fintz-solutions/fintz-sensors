@@ -142,15 +142,17 @@ Run.methods.deleteAssociatedIterationsForRun = function () {
     });
 };
 
-Run.methods.createNewIterationForRun = function (previousIterationNumber, createWithStartTime) {
+Run.methods.createNewIterationForRun = function (previousIterationNumber, createWithStartTime, numStations) {
     let runObj = this;
     let iterationNumber = previousIterationNumber ? previousIterationNumber + 1 : 1;
     let iterationStartTime = createWithStartTime ? dateUtil.getCurrentTimestamp() : null;
-    return iterationModel.create({
+
+    return iterationModel.createAndInitializeIteration({
         number: iterationNumber,
         startTime: iterationStartTime,
         run: runObj._doc._id
-    });
+        },
+        numStations);
 };
 
 module.exports.Run = mongoose.model("Run", Run);
