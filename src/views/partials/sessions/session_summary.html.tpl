@@ -1,4 +1,4 @@
-<div class="project-summary">
+<div class="session-summary">
     <h2>{{ title }}</h2>
     <p class="name">#{{ project.number }} | {{ project.name }}</p>
     <p class="status">status: {{ project.status }}</p>

@@ -1,4 +1,4 @@
-var createProject = function(element) {
+var createSession = function(element) {
     var matchedObject = jQuery(element);
 
     var init = function() {
@@ -29,7 +29,7 @@ var createProject = function(element) {
             var timePerRun = jQuery(".time-run-field", element);
             var productionTarget = jQuery(".production-target-field", element);
 
-            name = name && name.val() || "New project";
+            name = name && name.val() || "New session";
             numStations = numStations && parseInt(numStations.val()) || 8;
             numRuns = numRuns && parseInt(numRuns.val()) || 3;
             timePerRun = timePerRun && parseInt(timePerRun.val()) || 30;
@@ -84,4 +84,4 @@ var createProject = function(element) {
     return matchedObject;
 };
 
-module.exports = createProject;
+module.exports = createSession;

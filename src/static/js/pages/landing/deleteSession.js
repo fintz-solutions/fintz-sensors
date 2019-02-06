@@ -1,4 +1,4 @@
-var deleteProject = function(element) {
+var deleteSession = function(element) {
     var matchedObject = jQuery(element);
 
     var init = function() {
@@ -14,26 +14,26 @@ var deleteProject = function(element) {
 
         matchedObject.click(event, function () {
             var element = jQuery(this);
-            var projectElement = element.parents(".element-project");
-            var projectNumber = projectElement.attr("data-number");
+            var sessionElement = element.parents(".element-session");
+            var sessionNumber = sessionElement.attr("data-number");
 
             element.each(function() {
                 var _element = jQuery(this);
                 var number = _element.attr("data-number");
-                number === projectNumber && clickHandler(event, _element);
+                number === sessionNumber && clickHandler(event, _element);
             });
         });
 
         matchedObject.bind("success", function() {
             var element = jQuery(this);
-            var projectElement = element.parents(".element-project");
-            projectElement.remove();
+            var sessionElement = element.parents(".element-session");
+            sessionElement.remove();
         });
 
         matchedObject.bind("error", function(event, message) {
             var element = jQuery(this);
-            var projectElement = element.parents(".element-project");
-            projectElement.addClass("error");
+            var sessionElement = element.parents(".element-session");
+            sessionElement.addClass("error");
         });
     };
 
@@ -66,4 +66,4 @@ var deleteProject = function(element) {
     return matchedObject;
 };
 
-module.exports = deleteProject;
+module.exports = deleteSession;

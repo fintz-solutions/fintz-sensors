@@ -27,19 +27,21 @@
                 <title>{% block htitle %}{{ htitle }}{% endblock %}</title>
             {% endblock %}
         </head>
-        <body class="body fintz-sensors">
-            <div id="header" class="header">
-                 {% block header %}
-                    {% include "partials/header.html.tpl" %}
-                {% endblock %}
-            </div>
-            <div id="content" class="content">
-                {% block content %}{% endblock %}
-            </div>
-            <div id="footer" class="footer">
-                {% block footer %}
-                    {% include "partials/footer.html.tpl" %}
-                {% endblock %}
+        <body class="body">
+            <div id="app" class="app fintz-sensors">
+                <div id="side-menu" class="container side-menu-container side-menu">
+                    {% block sidemenu %}
+                        {% include "partials/side_menu.html.tpl" %}
+                    {% endblock %}
+                </div>
+                <div id="content" class="content main-content">
+                    {% block content %}{% endblock %}
+                </div>
+                <div id="footer" class="footer">
+                    {% block footer %}
+                        {% include "partials/footer.html.tpl" %}
+                    {% endblock %}
+                </div>
             </div>
         </body>
     </html>

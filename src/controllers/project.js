@@ -18,7 +18,7 @@ module.exports = {
                 responseUtil.sendSuccessResponse("Project details retrieved successfully", 200, data, res);
             } else {
                 data = JSON.parse(JSON.stringify(data));
-                res.render("pages/project_show.html.tpl", {
+                res.render("pages/session_show.html.tpl", {
                     title: "Project Details",
                     project: data
                 });

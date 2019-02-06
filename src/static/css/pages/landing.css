@@ -1,1 +1,164 @@
-/* landing page related css */
+.body .content .landing {
+    height: 100%;
+}
+
+.body .landing .header {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 20%;
+    padding: 25px 25px 25px 25px;
+    width: 100%;
+}
+
+/* Create session container */
+.body .landing .create-session-container {
+    height: 36%;
+}
+
+.body .landing .create-session-container .form.add-session {
+    height: 80%;
+    position: relative;
+}
+
+.body .landing .create-session-container .button-submit {
+    bottom: 25px;
+    position: absolute;
+    right: 25px;
+}
+
+.body .landing .create-session-container .group .field {
+    margin: 0px 2px 5px 0px;
+}
+
+.body .landing .create-session-container .group {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: inline-block;
+    height: 100%;
+    padding: 2% 0% 0% 6%;
+    width: 50%;
+}
+
+.body .landing .create-session-container .group.right {
+    float: right;
+}
+
+.body .landing .create-session-container .label {
+    display: inline-block;
+    font-size: 12pt;
+    font-weight: 800;
+    height: 30px;
+    vertical-align: middle;
+    width: 85px;
+}
+
+/* List sessions container */
+.body .landing .list-sessions-container {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 60%;
+    margin-top: 3%;
+}
+
+.body .landing .list-sessions-container .sessions-content {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 12pt;
+    font-weight: 500;
+    height: 80%;
+    padding: 1% 3% 2% 3%;
+    position: relative;
+}
+
+.body .landing .list-sessions-container .sessions-content .list-sessions {
+    overflow: scroll; /* TODO: while we have no pagination */
+    height: 90%;
+    position: relative;
+}
+
+.body .landing .list-sessions-container .sessions-content .pagination {
+    color: #a7a9ac;
+    height: 10%;
+    position: relative;
+}
+
+.body .landing .list-sessions-container .sessions-content .pagination .active {
+    color: #000000;
+}
+
+.body .landing .list-sessions .element {
+    /* width: 95%;
+    padding: 0% 2.5%; */
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 50px;
+    position: relative;
+}
+
+.body .landing .list-sessions .element.element-session.selected {
+    background: #4298c0;
+    border-radius: 25px 25px 25px 25px;
+    -o-border-radius: 25px 25px 25px 25px;
+    -ms-border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -khtml-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    outline: 0;
+    -o-outline: 0;
+    -ms-outline: 0;
+    -moz-outline: 0;
+    -khtml-outline: 0;
+    -webkit-outline: 0;
+}
+
+.body .landing .list-sessions .element .row {
+    height: 20px;
+    position: absolute;
+    top: 15px;
+    width: 100%;
+}
+
+.body .landing .list-sessions .element-session:nth-child(even) {
+    background: #fcfcfc;
+}
+
+.body .landing .element-session .info {
+    display: inline-block;
+}
+
+.body .landing .element-session .date {
+    width: 20%;
+}
+
+.body .landing .element-session .name {
+    width: 50%;
+}
+
+.body .landing .element-session .button-actions .button-open {
+    width: 20%;
+}
+
+.body .landing .element-session .button-actions .button-delete {
+    width: 20%;
+}
+
