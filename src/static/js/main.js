@@ -1,5 +1,14 @@
+require("../css/layout.css");
+require("../css/partials/form.css");
+// require("../css/pages/landing.css");
+// require("../css/pages/project_details.css");
+// require("../css/pages/run_details.css");
+
+var jQuery = $ = require('jquery');
+window.$ = window.jQuery = jQuery;
+
 (function(jQuery) {
-    jQuery.fn.fintzsensors = function() {        
+    jQuery.fn.fintzsensors = function() {
         var createProjectPlugin = require("./pages/landing/createProject");
         var deleteProjectPlugin = require("./pages/landing/deleteProject");
         var activeRunPlugin = require("./pages/run/activeRun");
@@ -23,6 +32,6 @@
 })(jQuery);
 
 jQuery(document).ready(function() {
-    var _body = jQuery("body");    
+    var _body = jQuery("body");
     _body.fintzsensors();
 });
