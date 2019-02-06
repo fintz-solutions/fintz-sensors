@@ -25,6 +25,11 @@ let Measurement = new Schema({
 Measurement.statics.findAllByIterationId = function (iterationId) {
     return this.find({
         iteration: iterationId
+    }).then(function(measurements){
+        return measurements;
+    }).catch(function(error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Invalid Measurements", 404);
     });
 };
 

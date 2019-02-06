@@ -27,5 +27,14 @@ module.exports = {
             console.error(error);
             responseUtil.sendErrorResponse(error, `Error when looking for the latest iteration for run with id: ${req.run._id}`, null, res);
         });
-    } 
+    },
+    getAllIterations: function (req, res, next){
+        req.run.findAllIterationsForRun().then(function (iterations){
+            req.iterations = iterations;
+            next();
+        }).catch(function(error){
+            console.error(error);
+            responseUtil.sendErrorResponse(error, `Error when looking for the iterations for run with id: ${req.run._id}`, null, res);
+        });
+    }
 };

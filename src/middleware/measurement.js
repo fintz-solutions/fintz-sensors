@@ -42,5 +42,33 @@ module.exports = {
             req.measurements = [];
             next();
         }
+    },
+    getMeasurementsForIterations: function(req, res, next){
+
+        /*
+        for(let i = 0; i<req.iterations.length; i++){
+            req.iterations[i].findMeasurementsForIteration().then(function(measurements){
+                req.iterations[i].measurements = measurements;
+            }).catch(function(error) {
+                console.error(error);
+                responseUtil.sendErrorResponse(error, `Error when looking for measurements for iteration with id ${req.iterations[i]._id}`, null, res);
+            });
+        }
+
+        next();
+        */
+        let promises = [];
+
+        req.iterations.forEach(function(iteration) {
+            promises.push(iteration.findMeasurementsForIteration().then(function(measurements){
+                iteration._doc.measurements = measurements;
+                return iteration;
+            }));
+        });
+
+        return Promise.all(promises).then(function(iterationsWithMeasurements){
+            req.iterations = iterationsWithMeasurements;
+            next();
+        });
     }
 };

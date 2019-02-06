@@ -1,6 +1,8 @@
 const path = require("path");
 const modelsFolder = global.modelsFolder;
+const servicesFolder = global.servicesFolder;
 const projectModel = require(path.resolve(modelsFolder, "project")).Project;
+const projectService = require(path.resolve(servicesFolder, "project"));
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 module.exports = {
@@ -20,6 +22,20 @@ module.exports = {
     },
     getProject : function (req, res, next) {
         projectModel.findByProjectNumber(req.params.projectNumber).then(function (project) {
+            if(project === null){
+                let error = errorUtil.createGenericError(`Could not find project specified by number ${req.params.projectNumber}`, 404);
+                responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.projectNumber}`, null, res);
+            } else {
+                req.project = project;
+                next();
+            }
+        }).catch(function(error) {
+            console.error(error);
+            responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.projectNumber}`, null, res);
+        });
+    },
+    getCompleteProject : function(req, res, next){
+        projectService.getProject(req.params.projectNumber).then(function(project){
             if(project === null){
                 let error = errorUtil.createGenericError(`Could not find project specified by number ${req.params.projectNumber}`, 404);
                 responseUtil.sendErrorResponse(error, `Could not find project specified by number ${req.params.projectNumber}`, null, res);

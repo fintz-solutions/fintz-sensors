@@ -73,7 +73,9 @@ Iteration.statics.createAndInitializeIteration = function(iteration, numStations
 // -------- Instance methods -------- //
 Iteration.methods.findMeasurementsForIteration = function() {
     let iterationObj = this;
-    return measurementModel.findAllByIterationId(iterationObj._id);
+    return measurementModel.findAllByIterationId(iterationObj._doc._id).then(function(measurements){
+        return measurements;
+    });
 };
 
 module.exports.Iteration = mongoose.model("Iteration", Iteration);
