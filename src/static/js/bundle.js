@@ -1,87 +1,87 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/     // The module cache
+/******/     var installedModules = {};
 /******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/     // The require function
+/******/     function __webpack_require__(moduleId) {
 /******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
+/******/         // Check if module is in cache
+/******/         if(installedModules[moduleId]) {
+/******/             return installedModules[moduleId].exports;
+/******/         }
+/******/         // Create a new module (and put it into the cache)
+/******/         var module = installedModules[moduleId] = {
+/******/             i: moduleId,
+/******/             l: false,
+/******/             exports: {}
+/******/         };
 /******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/         // Execute the module function
+/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
+/******/         // Flag the module as loaded
+/******/         module.l = true;
 /******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/         // Return the exports of the module
+/******/         return module.exports;
+/******/     }
 /******/
 /******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/     // expose the modules object (__webpack_modules__)
+/******/     __webpack_require__.m = modules;
+/******/
+/******/     // expose the module cache
+/******/     __webpack_require__.c = installedModules;
+/******/
+/******/     // define getter function for harmony exports
+/******/     __webpack_require__.d = function(exports, name, getter) {
+/******/         if(!__webpack_require__.o(exports, name)) {
+/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/         }
+/******/     };
+/******/
+/******/     // define __esModule on exports
+/******/     __webpack_require__.r = function(exports) {
+/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/         }
+/******/         Object.defineProperty(exports, '__esModule', { value: true });
+/******/     };
+/******/
+/******/     // create a fake namespace object
+/******/     // mode & 1: value is a module id, require it
+/******/     // mode & 2: merge all properties of value into the ns
+/******/     // mode & 4: return value when already ns object
+/******/     // mode & 8|1: behave like require
+/******/     __webpack_require__.t = function(value, mode) {
+/******/         if(mode & 1) value = __webpack_require__(value);
+/******/         if(mode & 8) return value;
+/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/         var ns = Object.create(null);
+/******/         __webpack_require__.r(ns);
+/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/         return ns;
+/******/     };
+/******/
+/******/     // getDefaultExport function for compatibility with non-harmony modules
+/******/     __webpack_require__.n = function(module) {
+/******/         var getter = module && module.__esModule ?
+/******/             function getDefault() { return module['default']; } :
+/******/             function getModuleExports() { return module; };
+/******/         __webpack_require__.d(getter, 'a', getter);
+/******/         return getter;
+/******/     };
+/******/
+/******/     // Object.prototype.hasOwnProperty.call
+/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/     // __webpack_public_path__
+/******/     __webpack_require__.p = "";
+/******/
+/******/
+/******/     // Load entry module and return exports
+/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -205,7 +205,7 @@ eval("\nmodule.exports = function(a, b){\n  var fn = function(){};\n  fn.prototy
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"html {\\r\\n    height: 100%;\\r\\n}\\r\\n.body {\\r\\n    display: block;\\r\\n    font-family: Arial, \\\"Open Sans\\\", \\\"Helvetica Neue\\\", Helvetica, sans-serif;\\r\\n    font-size: 12pt;\\r\\n    height: 100%;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n}\\r\\n\\r\\n.body .hidden {\\r\\n    display: none;\\r\\n}\\r\\n\\r\\n.body .button.disabled {\\r\\n    /* opacity: 0.5;\\r\\n    -o-opacity: 0.5;\\r\\n    -ms-opacity: 0.5;\\r\\n    -moz-opacity: 0.5;\\r\\n    -khtml-opacity: 0.5;\\r\\n    -webkit-opacity: 0.5; */\\r\\n    color: #a7a9ac;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.body .button.button-submit {\\r\\n    background-color: #4298c0;\\r\\n    color: #ffffff;\\r\\n    border-radius: 25px;\\r\\n    text-align: center;\\r\\n    width: 170px;\\r\\n    font-size: 13pt;\\r\\n    font-weight: 500;\\r\\n    height: 30px;\\r\\n    border: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body select,\\r\\n.body input[type=text] {\\r\\n    background: #fcfcfc;\\r\\n    border: 1px solid #ededed;\\r\\n    border-radius: 25px;\\r\\n    height: 30px;\\r\\n    font-size: 12pt;\\r\\n    font-weight: 800;\\r\\n    padding-left: 20px;\\r\\n    box-sizing: border-box;\\r\\n    min-width: 200px;\\r\\n    width: 220px;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body select:focus,\\r\\n.body input[type=text]:focus {\\r\\n    border: 3px solid #a7a9ac;;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .app {\\r\\n    background-color: #ededed;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    height: 100%;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .app .content {\\r\\n    height: 100%;\\r\\n    display: inline-block;\\r\\n    position: fixed;\\r\\n    width: 80%;\\r\\n    right: 0px;\\r\\n    padding: 4.5% 3% 4.5% 3%;\\r\\n    box-sizing: border-box;\\r\\n}\\r\\n\\r\\n.body .app .side-menu {\\r\\n    background: #ffffff;\\r\\n    width: 20%;\\r\\n    height: 100%;\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\nbody .app .content .container {\\r\\n    background: #ffffff;\\r\\n    border-radius: 8px;\\r\\n}\\r\\n\\r\\n.body .app .footer {\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .app .footer .logo {\\r\\n    width: 70px;\\r\\n    box-sizing: border-box;\\r\\n    position: fixed;\\r\\n    bottom: 2%;\\r\\n    right: 3%;\\r\\n}\\r\\n\\r\\nh1, h2, h3, p, ul, li {\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    padding: 0px 0px 0px 0px;\\r\\n}\\r\\n\\r\\nh2 {\\r\\n    text-transform: uppercase;\\r\\n    font-size: 12pt;\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\nul {\\r\\n    list-style: none;\\r\\n}\\r\\n\\r\\n::-webkit-input-placeholder { /* Chrome */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n:-ms-input-placeholder { /* IE 10+ */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n::-moz-placeholder { /* Firefox 19+ */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n:-moz-placeholder { /* Firefox 4 - 18 */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar {\\r\\n    -webkit-appearance: none;\\r\\n    width: 10px;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar-thumb {\\r\\n    border-radius: 25px;\\r\\n    background-color: #ededed;\\r\\n    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/layout.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"html {\\r\\n    height: 100%;\\r\\n}\\r\\n.body {\\r\\n    display: block;\\r\\n    height: 100%;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    font-family: 'Lato', sans-serif;\\r\\n    font-size: 15pt;\\r\\n}\\r\\n\\r\\n.body .hidden {\\r\\n    display: none;\\r\\n}\\r\\n\\r\\n.body .button.disabled {\\r\\n    /* opacity: 0.5;\\r\\n    -o-opacity: 0.5;\\r\\n    -ms-opacity: 0.5;\\r\\n    -moz-opacity: 0.5;\\r\\n    -khtml-opacity: 0.5;\\r\\n    -webkit-opacity: 0.5; */\\r\\n    color: #a7a9ac;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.body .button  {\\r\\n    border-radius: 25px;\\r\\n    text-align: center;\\r\\n    height: 30px;\\r\\n    cursor: pointer;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .button.button-blue  {\\r\\n    background-color: #4298c0;\\r\\n    color: #ffffff;\\r\\n    border: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .button.button-white  {\\r\\n    background-color: #ffffff;\\r\\n    color: #000000;\\r\\n    border: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body select,\\r\\n.body input[type=text] {\\r\\n    background: #fcfcfc;\\r\\n    border: 1px solid #ededed;\\r\\n    border-radius: 25px;\\r\\n    height: 30px;\\r\\n    font-size: 10pt;\\r\\n    font-weight: 600;\\r\\n    padding-left: 20px;\\r\\n    box-sizing: border-box;\\r\\n    min-width: 200px;\\r\\n    width: 220px;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body select:focus,\\r\\n.body input[type=text]:focus {\\r\\n    border: 3px solid #a7a9ac;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .app {\\r\\n    background-color: #ededed;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    height: 100%;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .app .content {\\r\\n    height: 100%;\\r\\n    display: inline-block;\\r\\n    position: fixed;\\r\\n    width: 80%;\\r\\n    right: 0px;\\r\\n    padding: 4.5% 3% 4.5% 3%;\\r\\n    box-sizing: border-box;\\r\\n}\\r\\n\\r\\n.body .app .side-menu {\\r\\n    background: #ffffff;\\r\\n    width: 20%;\\r\\n    height: 100%;\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\nbody .app .content .container {\\r\\n    background: #ffffff;\\r\\n    border-radius: 8px;\\r\\n}\\r\\n\\r\\n.body .app .footer {\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .app .footer .logo {\\r\\n    width: 70px;\\r\\n    box-sizing: border-box;\\r\\n    position: fixed;\\r\\n    bottom: 2%;\\r\\n    right: 3%;\\r\\n}\\r\\n\\r\\nh1, h2, h3, p, ul, li {\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    padding: 0px 0px 0px 0px;\\r\\n}\\r\\n\\r\\nh2 {\\r\\n    text-transform: uppercase;\\r\\n    font-size: 10pt;\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\nul {\\r\\n    list-style: none;\\r\\n}\\r\\n\\r\\na {\\r\\n    text-decoration: inherit;\\r\\n    color: inherit;\\r\\n    cursor: auto;\\r\\n}\\r\\n\\r\\na:visited {\\r\\n    text-decoration: inherit;\\r\\n    color: inherit;\\r\\n    cursor: auto;\\r\\n}\\r\\n\\r\\n::-webkit-input-placeholder { /* Chrome */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n:-ms-input-placeholder { /* IE 10+ */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n::-moz-placeholder { /* Firefox 19+ */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n:-moz-placeholder { /* Firefox 4 - 18 */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar {\\r\\n    -webkit-appearance: none;\\r\\n    width: 10px;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar-thumb {\\r\\n    border-radius: 25px;\\r\\n    border: 1px solid #ffffff;\\r\\n    background-color: #ededed;\\r\\n    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/layout.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -227,7 +227,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .content .landing {\\r\\n    height: 100%;\\r\\n}\\r\\n\\r\\n.body .landing .header {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 20%;\\r\\n    padding: 25px 25px 25px 25px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n/* Create session container */\\r\\n.body .landing .create-session-container {\\r\\n    height: 36%;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .form.add-session {\\r\\n    height: 80%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .button-submit {\\r\\n    bottom: 25px;\\r\\n    position: absolute;\\r\\n    right: 25px;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .group .field {\\r\\n    margin: 0px 2px 5px 0px;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .group {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    display: inline-block;\\r\\n    height: 100%;\\r\\n    padding: 2% 0% 0% 6%;\\r\\n    width: 50%;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .group.right {\\r\\n    float: right;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .label {\\r\\n    display: inline-block;\\r\\n    font-size: 12pt;\\r\\n    font-weight: 800;\\r\\n    height: 30px;\\r\\n    vertical-align: middle;\\r\\n    width: 85px;\\r\\n}\\r\\n\\r\\n/* List sessions container */\\r\\n.body .landing .list-sessions-container {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 60%;\\r\\n    margin-top: 3%;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 12pt;\\r\\n    font-weight: 500;\\r\\n    height: 80%;\\r\\n    padding: 1% 3% 2% 3%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content .list-sessions {\\r\\n    overflow: scroll; /* TODO: while we have no pagination */\\r\\n    height: 90%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content .pagination {\\r\\n    color: #a7a9ac;\\r\\n    height: 10%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content .pagination .active {\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element {\\r\\n    /* width: 95%;\\r\\n    padding: 0% 2.5%; */\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 50px;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element.element-session.selected {\\r\\n    background: #4298c0;\\r\\n    border-radius: 25px 25px 25px 25px;\\r\\n    -o-border-radius: 25px 25px 25px 25px;\\r\\n    -ms-border-radius: 25px 25px 25px 25px;\\r\\n    -moz-border-radius: 25px 25px 25px 25px;\\r\\n    -khtml-border-radius: 25px 25px 25px 25px;\\r\\n    -webkit-border-radius: 25px 25px 25px 25px;\\r\\n    outline: 0;\\r\\n    -o-outline: 0;\\r\\n    -ms-outline: 0;\\r\\n    -moz-outline: 0;\\r\\n    -khtml-outline: 0;\\r\\n    -webkit-outline: 0;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element .row {\\r\\n    height: 20px;\\r\\n    position: absolute;\\r\\n    top: 15px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element-session:nth-child(even) {\\r\\n    background: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .info {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .date {\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .name {\\r\\n    width: 50%;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .button-actions .button-open {\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .button-actions .button-delete {\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/landing.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .content .landing {\\r\\n    height: 100%;\\r\\n}\\r\\n\\r\\n.body .landing .header {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 20%;\\r\\n    padding: 25px 25px 25px 25px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n/* Create session container */\\r\\n.body .landing .create-session-container {\\r\\n    height: 36%;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .form.add-session {\\r\\n    height: 80%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .button-submit {\\r\\n    bottom: 25px;\\r\\n    position: absolute;\\r\\n    right: 25px;\\r\\n    width: 150px;\\r\\n    font-size: 10pt;\\r\\n    font-weight: 400;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .group .field {\\r\\n    margin: 0px 2px 5px 0px;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .group {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    display: inline-block;\\r\\n    height: 100%;\\r\\n    padding: 2% 0% 0% 6%;\\r\\n    width: 50%;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .group.right {\\r\\n    float: right;\\r\\n}\\r\\n\\r\\n.body .landing .create-session-container .label {\\r\\n    display: inline-block;\\r\\n    font-size: 11pt;\\r\\n    font-weight: 800;\\r\\n    height: 30px;\\r\\n    vertical-align: middle;\\r\\n    width: 85px;\\r\\n}\\r\\n\\r\\n/* List sessions container */\\r\\n.body .landing .list-sessions-container {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 60%;\\r\\n    margin-top: 3%;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content {\\r\\n    /* box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box; */\\r\\n    font-size: 12pt;\\r\\n    font-weight: 500;\\r\\n    height: 80%;\\r\\n    /* padding: 1% 3% 2% 3%; */\\r\\n    position: relative;\\r\\n    /* width: 95%; */\\r\\n    margin: 0px auto;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content .list-sessions {\\r\\n    overflow: scroll; /* TODO: while we have no pagination */\\r\\n    height: 90%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content .pagination {\\r\\n    color: #a7a9ac;\\r\\n    height: 10%;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions-container .sessions-content .pagination .active {\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element-session {\\r\\n    width: 96%;\\r\\n    margin: 0px auto;\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 50px;\\r\\n    position: relative;\\r\\n    border-top: 1px solid #ededed ;\\r\\n    font-weight: 700;\\r\\n    font-size: 10pt;\\r\\n    cursor: pointer;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element.element-session.selected {\\r\\n    background: #4298c0;\\r\\n    border-radius: 25px 25px 25px 25px;\\r\\n    -o-border-radius: 25px 25px 25px 25px;\\r\\n    -ms-border-radius: 25px 25px 25px 25px;\\r\\n    -moz-border-radius: 25px 25px 25px 25px;\\r\\n    -khtml-border-radius: 25px 25px 25px 25px;\\r\\n    -webkit-border-radius: 25px 25px 25px 25px;\\r\\n    outline: 0;\\r\\n    -o-outline: 0;\\r\\n    -ms-outline: 0;\\r\\n    -moz-outline: 0;\\r\\n    -khtml-outline: 0;\\r\\n    -webkit-outline: 0;\\r\\n    color: #ffffff;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element .row {\\r\\n    height: 25px;\\r\\n    position: absolute;\\r\\n    top: 15px;\\r\\n    width: 100%;\\r\\n    padding: 0% 2% 0% 4%;\\r\\n    box-sizing: border-box;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element-session:nth-child(even) {\\r\\n    background: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .info {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .date {\\r\\n    width: 15%;\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .name {\\r\\n    width: 62%;\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .button-actions {\\r\\n    min-width: 20%;\\r\\n    display: inline-block\\r\\n}\\r\\n\\r\\n.body .landing .element-session .button-actions .button-open {\\r\\n    width: 65px;\\r\\n    display: inline-block;\\r\\n    height: 22px;\\r\\n    font-size: 10pt;\\r\\n    line-height: 20px;\\r\\n}\\r\\n\\r\\n.body .landing .list-sessions .element-session.selected .button-open{\\r\\n    background-color: #ffffff;\\r\\n    color: #000000;\\r\\n    border: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .landing .element-session .button-actions .button-delete {\\r\\n    width: 20%;\\r\\n    color: #a7a9ac;\\r\\n    height: 25px;\\r\\n    font-weight: 400;\\r\\n    margin-right: 10px;\\r\\n    margin-left: 10px; \\r\\n}\\r\\n\\r\\n.body .landing .element-session .button-actions .button-delete .icon {\\r\\n    width: 16px;    \\r\\n    vertical-align: text-bottom;\\r\\n    margin-right: 4px; \\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/landing.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -2276,7 +2276,7 @@ eval("__webpack_require__(/*! ../../../css/pages/active_run.css */ \"./src/stati
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ../../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n__webpack_require__(/*! ../../css/pages/landing.css */ \"./src/static/css/pages/landing.css\");\r\n\r\nconst moment = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\")\r\n\r\nvar fintzSensorsUI = function(element) {\r\n    var matchedObject = jQuery(element);\r\n    var listSessions = jQuery(\".list-sessions\", element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _updateDateFormats(listSessions);\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        var sessions = jQuery(\".element-session\", listSessions);\r\n\r\n        sessions.each(function(){\r\n            var session = jQuery(this);\r\n            session.click(function(){\r\n                var element = jQuery(this);\r\n                sessions.removeClass(\"selected\");\r\n                element.addClass(\"selected\");\r\n            });\r\n        });\r\n    };\r\n\r\n    var _updateDateFormats = function (element) {\r\n        var dates = jQuery(\".date\", element);\r\n        dates.each(function(){\r\n            var _element = jQuery(this);\r\n            var timestamp = _element.attr(\"data-timestamp\");\r\n            _element.text(moment.unix(timestamp).format(\"DD/MM/YYYY\"));\r\n        });\r\n    }\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = fintzSensorsUI;\r\n\n\n//# sourceURL=webpack:///./src/static/js/ui/fintzSensorsUI.js?");
+eval("__webpack_require__(/*! ../../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n__webpack_require__(/*! ../../css/pages/landing.css */ \"./src/static/css/pages/landing.css\");\r\n\r\nconst moment = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\")\r\n\r\nvar fintzSensorsUI = function(element) {\r\n    var matchedObject = jQuery(element);\r\n    var listSessions = jQuery(\".list-sessions\", element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _updateDateFormats(listSessions);\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        var sessions = jQuery(\".element-session\", listSessions);\r\n\r\n        sessions.each(function(){\r\n            var session = jQuery(this);\r\n            session.click(function(){\r\n                var element = jQuery(this);\r\n                sessions.removeClass(\"selected\");\r\n                element.addClass(\"selected\");\r\n\r\n            });\r\n        });\r\n    };\r\n\r\n    var _updateDateFormats = function (element) {\r\n        var dates = jQuery(\".date\", element);\r\n        dates.each(function(){\r\n            var _element = jQuery(this);\r\n            var timestamp = _element.attr(\"data-timestamp\");\r\n            _element.text(moment.unix(timestamp).format(\"DD/MM/YYYY\"));\r\n        });\r\n    }\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = fintzSensorsUI;\r\n\n\n//# sourceURL=webpack:///./src/static/js/ui/fintzSensorsUI.js?");
 
 /***/ }),
 

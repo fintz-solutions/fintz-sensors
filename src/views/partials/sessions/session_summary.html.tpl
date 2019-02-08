@@ -15,7 +15,7 @@
             <span>iterations |</span>
         </p>
         <ul class="list list-runs" style="list-style-type:none">
-            {% for run in project.runs | sort(False, False, "number") %}
+            {% for run in project.runs | sort(false, false, "number") %}
                 {% set active_run = run.status in ('RUNNING') %}
                 {% set completed_run = run.status in ('FINISHED') %}
                 <li class="run-element {% if active_run %}active-run{% endif %}">

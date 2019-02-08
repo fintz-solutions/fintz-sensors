@@ -1,1 +1,1 @@
-side menu
+Last/current project details

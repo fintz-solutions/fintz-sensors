@@ -9,7 +9,7 @@
         <div class="run-timer" id="run-timer" data-duration="{{ duration }}">{{ run_timer }}</div>
         <div class="logo">
             <a href="https://jmaceurope.com/">
-                <img class="image image-logo" src="https://beestatic.azureedge.net/jmaceurope-com/2018/06/logo-bianco.svg" alt="JMAC Europe" id="logo" data-height-percentage="66" data-actual-width="300" data-actual-height="101">
+                <img class="image image-logo" src="/images/logo_white.svg" alt="JMAC Europe" id="logo" data-height-percentage="66" data-actual-width="300" data-actual-height="101">
             </a>
         </div>
     </div>

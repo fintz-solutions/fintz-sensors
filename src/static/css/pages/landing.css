@@ -26,8 +26,11 @@
 
 .body .landing .create-session-container .button-submit {
     bottom: 25px;
+    font-size: 10pt;
+    font-weight: 400;
     position: absolute;
     right: 25px;
+    width: 150px;
 }
 
 .body .landing .create-session-container .group .field {
@@ -53,7 +56,7 @@
 
 .body .landing .create-session-container .label {
     display: inline-block;
-    font-size: 12pt;
+    font-size: 11pt;
     font-weight: 800;
     height: 30px;
     vertical-align: middle;
@@ -73,16 +76,18 @@
 }
 
 .body .landing .list-sessions-container .sessions-content {
-    box-sizing: border-box;
+    /* box-sizing: border-box;
     -o-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -khtml-box-sizing: border-box;
-    -webkit-box-sizing: border-box;
+    -webkit-box-sizing: border-box; */
+    /* padding: 1% 3% 2% 3%; */
+    /* width: 95%; */
     font-size: 12pt;
     font-weight: 500;
     height: 80%;
-    padding: 1% 3% 2% 3%;
+    margin: 0px auto 0px auto;
     position: relative;
 }
 
@@ -102,17 +107,21 @@
     color: #000000;
 }
 
-.body .landing .list-sessions .element {
-    /* width: 95%;
-    padding: 0% 2.5%; */
+.body .landing .list-sessions .element-session {
+    border-top: 1px solid #ededed ;
     box-sizing: border-box;
     -o-box-sizing: border-box;
     -ms-box-sizing: border-box;
     -moz-box-sizing: border-box;
     -khtml-box-sizing: border-box;
     -webkit-box-sizing: border-box;
+    cursor: pointer;
+    font-size: 10pt;
+    font-weight: 700;
     height: 50px;
+    margin: 0px auto 0px auto;
     position: relative;
+    width: 96%;
 }
 
 .body .landing .list-sessions .element.element-session.selected {
@@ -123,6 +132,7 @@
     -moz-border-radius: 25px 25px 25px 25px;
     -khtml-border-radius: 25px 25px 25px 25px;
     -webkit-border-radius: 25px 25px 25px 25px;
+    color: #ffffff;
     outline: 0;
     -o-outline: 0;
     -ms-outline: 0;
@@ -132,7 +142,14 @@
 }
 
 .body .landing .list-sessions .element .row {
-    height: 20px;
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 25px;
+    padding: 0% 2% 0% 4%;
     position: absolute;
     top: 15px;
     width: 100%;
@@ -147,18 +164,45 @@
 }
 
 .body .landing .element-session .date {
-    width: 20%;
+    display: inline-block;
+    width: 15%;
 }
 
 .body .landing .element-session .name {
-    width: 50%;
+    display: inline-block;
+    width: 62%;
+}
+
+.body .landing .element-session .button-actions {
+    display: inline-block;
+    min-width: 20%;
 }
 
 .body .landing .element-session .button-actions .button-open {
-    width: 20%;
+    display: inline-block;
+    font-size: 10pt;
+    height: 22px;
+    line-height: 20px;
+    width: 65px;
+}
+
+.body .landing .list-sessions .element-session.selected .button-open{
+    background-color: #ffffff;
+    border: #fcfcfc;
+    color: #000000;
 }
 
 .body .landing .element-session .button-actions .button-delete {
+    color: #a7a9ac;
+    font-weight: 400;
+    height: 25px;
+    margin-left: 10px;
+    margin-right: 10px;
     width: 20%;
 }
 
+.body .landing .element-session .button-actions .button-delete .icon {
+    margin-right: 4px;
+    vertical-align: text-bottom;
+    width: 16px;
+}

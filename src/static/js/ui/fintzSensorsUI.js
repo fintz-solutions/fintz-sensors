@@ -29,6 +29,7 @@ var fintzSensorsUI = function(element) {
                 var element = jQuery(this);
                 sessions.removeClass("selected");
                 element.addClass("selected");
+
             });
         });
     };

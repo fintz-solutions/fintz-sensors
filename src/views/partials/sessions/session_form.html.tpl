@@ -34,6 +34,8 @@
                     <option value="8">8</option>
                 </select>
             </div>
+            <p class="error-message"></p>
+            <p class="success-message">New session added!</p>
         </div>
         <div class="group right">
             <div class="field">
@@ -45,8 +47,6 @@
                 <input type="text" class="production-target-field" name="production_target" pattern=".{1,3}" maxlength="3" placeholder="production target">
             </div>
         </div>
-        <input class="button button-submit" type="submit" value="Create Session">
-        <p class="error-message"></p>
-        <p class="success-message">New session added!</p>
+        <input class="button button-blue button-submit" type="submit" value="Create Session">
     </form>
 </div>
