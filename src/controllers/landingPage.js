@@ -8,7 +8,8 @@ module.exports = {
         projectService.getProjects().then(function(data) {
             res.render("pages/landing.html.tpl", {
                 title: global.appTitle,
-                projects: data
+                projects: data,
+                isHomepage: true
             });
         }).catch(function(error) {
             responseUtil.sendErrorResponse(error, "Could not build landing page", null, res);

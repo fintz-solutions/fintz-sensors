@@ -1,5 +1,6 @@
 require("../../css/layout.css");
 require("../../css/partials/form.css");
+require("../../css/partials/side_menu.css");
 require("../../css/pages/landing.css");
 
 const moment = require('moment')
