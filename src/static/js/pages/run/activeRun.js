@@ -37,14 +37,12 @@ var activeRun = function(element) {
         var moveButton = jQuery(".button-move", matchedObject);
         var continueButton = jQuery(".button-continue", matchedObject);
         var killButton = jQuery(".button-kill", matchedObject);
-        console.log("NEW");
 
         /** Timers **/
         var sations = jQuery(".stations", element);
         var stationsNum = sations.attr("data-stations_num");
         var runTimerElement = jQuery(".run-timer", element);
         var stationTimersElement = jQuery(".stations-container", element);
-        console.log(stationTimersElement);
         var taktTimerElement = jQuery(".takt-time-desc", element);
         var runTimer = new Timer();
         var taktTimer = new Timer();
@@ -61,7 +59,6 @@ var activeRun = function(element) {
         taktTimer.addEventListener('secondsUpdated', function () {
             taktTimerElement.html(taktTimer.getTimeValues().toString());
         });
-        console.log(stationTimersElement);
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
             let timerIndex = t;
@@ -70,9 +67,6 @@ var activeRun = function(element) {
             stationTimers[timerIndex].addEventListener('secondsUpdated', function () {
                 var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
                 let currentTimer = stationTimers[timerIndex];
-                console.log(stationTimersElement);
-                console.log(element);
-                console.log(currentTimer.getTimeValues().toString());
 
                 element.html(currentTimer.getTimeValues().toString());
             });
