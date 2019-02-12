@@ -6,4 +6,14 @@
         </a>
     </div>
 {% endif %}
-<div class="side-content">Last/current project</div>
+<div class="side-content">
+    {% if isHomepage %}
+        <div id="homepage-side" class="homepage-side">
+            homepage
+        </div>
+    {% elif title in ("Session Details") %}
+        <div class="session-detail-side">
+            session details
+        </div>
+    {% endif %}
+</div>

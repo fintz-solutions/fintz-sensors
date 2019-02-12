@@ -60,7 +60,7 @@
     font-weight: 800;
     height: 30px;
     vertical-align: middle;
-    width: 85px;
+    width: 80px;
 }
 
 /* List sessions container */
@@ -165,17 +165,22 @@
 
 .body .landing .element-session .date {
     display: inline-block;
+    min-width: 75px;
     width: 15%;
 }
 
 .body .landing .element-session .name {
     display: inline-block;
-    width: 62%;
+    margin: 0px 2px 0px 2px;
+    min-width: 140px;
 }
 
 .body .landing .element-session .button-actions {
     display: inline-block;
-    min-width: 20%;
+    min-width: 150px;
+    position: absolute;
+    right: 0px;
+    width: 20%;
 }
 
 .body .landing .element-session .button-actions .button-open {

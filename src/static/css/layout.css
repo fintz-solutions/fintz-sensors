@@ -49,8 +49,9 @@ html {
     font-weight: 600;
     padding-left: 20px;
     box-sizing: border-box;
-    min-width: 200px;
-    width: 220px;
+    /* min-width: 200px; */
+    /* width: 220px; */
+    width: 60%;
     color: #000000;
 }
 
@@ -70,10 +71,10 @@ html {
 .body .app .content {
     height: 100%;
     display: inline-block;
-    position: fixed;
+    position: absolute;
     width: 80%;
     right: 0px;
-    padding: 4.5% 3% 4.5% 3%;
+    padding: 4% 3% 4% 3%;
     box-sizing: border-box;
 }
 
@@ -89,7 +90,7 @@ body .app .content .container {
 .body .app .footer .logo {
     width: 70px;
     box-sizing: border-box;
-    position: fixed;
+    position: absolute;
     bottom: 2%;
     right: 3%;
 }

@@ -8,7 +8,7 @@ module.exports = {
         projectService.getProjects().then(function(data) {
             res.render("pages/landing.html.tpl", {
                 title: global.appTitle,
-                projects: data,
+                sessions: data,
                 isHomepage: true
             });
         }).catch(function(error) {

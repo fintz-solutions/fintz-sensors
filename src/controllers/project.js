@@ -19,8 +19,8 @@ module.exports = {
             } else {
                 data = JSON.parse(JSON.stringify(data));
                 res.render("pages/session_show.html.tpl", {
-                    title: "Project Details",
-                    project: data
+                    title: "Session Details",
+                    session: data
                 });
             }
         }).catch(function(error) {
@@ -33,9 +33,9 @@ module.exports = {
             if (req.get("Content-Type") === "application/json") {
                 responseUtil.sendSuccessResponse("Projects retrieved successfully", 200, data, res);
             } else {
-                res.render("pages/projects.html.tpl", {
-                    title: "List Projects",
-                    projects: data
+                res.render("pages/sessions.html.tpl", {
+                    title: "Sessions List",
+                    sessions: data
                 });
             }
         }).catch(function(error) {

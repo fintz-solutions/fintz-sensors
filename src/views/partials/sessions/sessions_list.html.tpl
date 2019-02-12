@@ -4,14 +4,14 @@
     </div>
     <div class="sessions-content">
         <ul class="list list-sessions">
-            {% for project in projects | sort(true, false, "createdAt") %}
-                <li class="element element-session" data-number="{{ project.number }}">
+            {% for session in sessions | sort(true, false, "createdAt") %}
+                <li class="element element-session" data-number="{{ session.number }}">
                     <span class="row">
-                        <span class="info date" data-timestamp="{{ project.createdAt }}"></span>
-                        <span class="info name">{{ project.name }}</span>
+                        <span class="info date" data-timestamp="{{ session.createdAt }}"></span>
+                        <span class="info name">{{ session.name }}</span>
                         <span class="buttons button-actions">
-                            <a class="button button-blue button-open show-session" href="/projects/{{ project.number }}">Open</a>
-                            <a class="button button-delete delete-session" href="/projects/{{ project.number }}" data-number="{{ project.number }}"><span><img class="icon" src="/images/trash_bin.svg"/></span>Delete</a>
+                            <a class="button button-blue button-open show-session" href="/projects/{{ session.number }}">Open</a>
+                            <a class="button button-delete delete-session" href="/projects/{{ session.number }}" data-number="{{ session.number }}"><span><img class="icon" src="/images/trash_bin.svg"/></span>Delete</a>
                         </span>
                     </span>
                 </li>

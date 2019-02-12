@@ -7,6 +7,8 @@
             {% block head %}
                 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
                 <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, minimum-scale=1, maximum-scale=1" />
+                <meta name="mobile-web-app-capable" content="yes">
+                <meta name="apple-mobile-web-app-capable" content="yes" />
                 <meta name="theme-color" content="#2d2d2d" />
                 {% block title %}
                     <meta name="title" content="{{ htitle }}" />
