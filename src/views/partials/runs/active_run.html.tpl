@@ -1,11 +1,10 @@
 {% set stations = project.numStations %}
 {% set duration = run.totalTime %}
 {% set run_timer = "00:" + duration + ":00" %}
-{% set takt_time = run.totalTime / project.productionTarget %}
+
 <div class="container active-run-container">
     <div class="container run-timer-container header-run">
-        <div class="takt-time" id="takt-time"> takt time: {{ takt_time }} min </div>
-        <div class="takt-time-desc hidden" id="takt-time-desc" data-duration="{{ takt_time }}">00:{{ takt_time }}:00 </div>
+
         <div class="run-timer" id="run-timer" data-duration="{{ duration }}">{{ run_timer }}</div>
         <div class="logo">
             <a href="https://jmaceurope.com/">
