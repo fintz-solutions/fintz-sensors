@@ -42,7 +42,7 @@ var activeRun = function(element) {
         var sations = jQuery(".stations", element);
         var stationsNum = sations.attr("data-stations_num");
         var runTimerElement = jQuery(".run-timer", element);
-        var stationTimersElement = jQuery(".station-timer", element);
+        var stationTimersElement = jQuery(".stations-container", element);
         var taktTimerElement = jQuery(".takt-time-desc", element);
         var runTimer = new Timer();
         var taktTimer = new Timer();
@@ -61,21 +61,25 @@ var activeRun = function(element) {
         });
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
+            let timerIndex = t;
             var timerNum = t + 1;
-            stationTimers[t].addEventListener('secondsUpdated', function () {
+
+            stationTimers[timerIndex].addEventListener('secondsUpdated', function () {
                 var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[t].getTimeValues().toString());
+                let currentTimer = stationTimers[timerIndex];
+
+                element.html(currentTimer.getTimeValues().toString());
             });
 
-            stationTimers[t].addEventListener('started', function (e) {
+            stationTimers[timerIndex].addEventListener('started', function (e) {
                 var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[t].getTimeValues().toString());
+                element.html(stationTimers[timerIndex].getTimeValues().toString());
             });
         };
 
         var socket = io.connect();
         socket.on('toggleTimer', function(data){
-            if (!data || data.length === 0 || data.station <= stationTimers.length ) {
+            if (!data || data.station > stationTimers.length ) {
                 return;
             }
 
