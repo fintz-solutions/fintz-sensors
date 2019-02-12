@@ -20,6 +20,7 @@ Object.freeze(TIMER_EVENT);
 
 var activeRun = function(element) {
     var matchedObject = jQuery(element);
+    var _body = jQuery("body", document);
 
     var init = function() {
         if (!matchedObject || matchedObject.length === 0) {
@@ -33,10 +34,11 @@ var activeRun = function(element) {
         }
 
         /** Action buttons **/
-        var startButton = jQuery(".button-start", matchedObject);
-        var moveButton = jQuery(".button-move", matchedObject);
-        var continueButton = jQuery(".button-continue", matchedObject);
-        var killButton = jQuery(".button-kill", matchedObject);
+        var sideMenu = jQuery(".side-menu", _body);
+        var startButton = jQuery(".button-start", sideMenu);
+        var moveButton = jQuery(".button-move", sideMenu);
+        var continueButton = jQuery(".button-continue", sideMenu);
+        var killButton = jQuery(".button-kill", sideMenu);
 
         /** Timers **/
         var sations = jQuery(".stations", element);
@@ -90,28 +92,32 @@ var activeRun = function(element) {
         startButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_start");
         });
 
         moveButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
-            activeRunContainer.triggerHandler("pre_move");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
+            matchedObject.triggerHandler("pre_move");
         });
 
         continueButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_continue");
         });
 
         killButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_kill");
         });
 
@@ -156,7 +162,10 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("kill_action", function(event){
-            var buttons = jQuery(".button" ,matchedObject);
+            var element = jQuery(this);
+            var _body = element.parents(".body");
+            var sideMenu = jQuery(".side-menu", _body);
+            var buttons = jQuery(".button", sideMenu);
             buttons.addClass("disabled");
             // TODO: redirects to where?
             //TODO: improve this
@@ -165,7 +174,9 @@ var activeRun = function(element) {
     };
 
     var _sendActionType = function(element, actionType) {
-        var startButton = jQuery(".button-start", element);
+        var _body = element.parents(".body");
+        var sideMenu = jQuery(".side-menu", _body);
+        var startButton = jQuery(".button-start", sideMenu);
         var url = startButton.attr("href");
 
         jQuery.ajax({

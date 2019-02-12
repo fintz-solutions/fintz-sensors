@@ -1,3 +1,15 @@
+.body .side-menu .active-run-tab {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    padding: 50px 0px 50px 0px;
+}
+
+/* refactor */
 .body .header-run {
     background-color: #3584b5;
     border: 2px solid black;
@@ -55,16 +67,7 @@
     position: relative;
 }
 
-.body .button-actions-run .button {
-    background-color: whitesmoke;
-    border: 2px solid black;
-    border-top: 1px solid black;
-    float: left;
-    height: 30px;
-    margin-top: 1%;
-    position: center;
-    text-align: center;
-    width: 15%;
+.body .active-run-tab .button-actions-run .button {
 }
 
 .body .stations .station.active {

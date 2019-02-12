@@ -1,7 +1,7 @@
-{% set stations = project.numStations %}
+{% set stations = session.numStations %}
 {% set duration = run.totalTime %}
 {% set run_timer = "00:" + duration + ":00" %}
-{% set takt_time = run.totalTime / project.productionTarget %}
+{% set takt_time = run.totalTime / session.productionTarget %}
 <div class="container active-run-container">
     <div class="container run-timer-container header-run">
         <div class="takt-time" id="takt-time"> takt time: {{ takt_time }} min </div>
@@ -33,10 +33,10 @@
             {% endif %}
         {% endfor %}
     </div>
-    <div class="buttons button-actions button-actions-run">
-        <a class="button button-start" href="/projects/{{ project.number }}/runs/{{ run.number }}">start run</a>
-        <a class="button button-move disabled" href="/projects/{{ project.number }}/runs/{{ run.number }}">move kart</a>
-        <a class="button button-continue disabled" href="/projects/{{ project.number }}/runs/{{ run.number }}">continue working</a>
-        <a class="button button-kill disabled" href="/projects/{{ project.number }}/runs/{{ run.number }}">kill project</a>
-    </div>
+    {# <div class="buttons button-actions button-actions-run">
+        <a class="button button-start" href="/projects/{{ session.number }}/runs/{{ run.number }}">start run</a>
+        <a class="button button-move disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">move kart</a>
+        <a class="button button-continue disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">continue working</a>
+        <a class="button button-kill disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">kill</a>
+    </div> #}
 </div>

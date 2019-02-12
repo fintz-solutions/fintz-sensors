@@ -2,14 +2,26 @@
     background: #ffffff;
     display: inline-block;
     height: 100%;
+    margin: auto auto auto auto;
     width: 20%;
 }
 
 .body .side-menu .side-bar {
     background-color: #4298c0;
-    display: inline-block;
+    float: left;
     height: 100%;
     width: 50px;
+}
+
+.body .side-menu .side-content {
+    height: 100%;
+    margin: 0px auto 0px auto;
+    margin-left: 50px;
+    position: relative;
+}
+
+.body .side-menu .side-content .header{
+    margin: 0px auto 20px auto;
 }
 
 .body .side-menu .side-bar .label {
@@ -26,11 +38,6 @@
     padding: 6px 0px 6px 0px;
     text-align: center;
     width: 100%;
-}
-
-.body .side-menu .side-content {
-    display: inline-block;
-    position: absolute;
 }
 
 .body .side-menu .side-bar link-homepage,
@@ -50,4 +57,60 @@
     cursor: pointer;
     display: block;
     margin-top: 50px;
+}
+
+.body .side-menu .button-actions {
+    bottom: 50px;
+    display: block;
+    position: absolute;
+    width: 100%;
+}
+
+.body .side-menu .button-actions .button {
+    display: block;
+    margin: 0px auto 0px auto;
+    position: relative;
+    width: 80%;
+}
+
+.body .side-menu .side-title {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 23px;
+    font-weight: 500;
+    margin: 0px auto 0px auto;
+    padding: 0px 8% 0px 8%;
+    text-transform: uppercase;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.body .side-menu .side-title .hash{
+    font-size: 20px;
+}
+
+.body .side-menu .side-subtitle {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #4298c0;
+    font-size: 23px;
+    font-weight: 800;
+    margin: 5px auto 5px auto;
+    padding: 0px 8% 0px 8%;
+    text-transform: uppercase;
+    word-break: break-word;
+    word-wrap: break-word;
+}
+
+.body .side-menu .side-subtitle .label {
+    border-bottom: 2px solid #4298c0;
+    padding: 0px 6px 10px 0px;
 }

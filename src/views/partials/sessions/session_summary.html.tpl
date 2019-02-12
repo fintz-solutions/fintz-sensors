@@ -27,7 +27,8 @@
                     {% endif %}
                     <span class="buttons button-actions">
                         <a class="button button-run button-start {% if completed_run %}hidden{% endif %}" href="/projects/{{ session.number }}/runs/{{ run.number }}">start</a>
-                        <a class="button button-run button-charts {% if not completed_run %}hidden{% endif %}" href="/projects/{{ session.number }}/runs/{{ run.number }}/charts">charts</a>
+                        {# TODO: change charts by /run_summary page #}
+                        <a class="button button-run button-run-details {% if not completed_run %}hidden{% endif %}" href="/projects/{{ session.number }}/runs/{{ run.number }}">open</a>
                     </span>
                 </li>
             {% endfor %}

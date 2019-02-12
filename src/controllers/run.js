@@ -11,7 +11,7 @@ module.exports = {
             } else {
                 res.render("pages/run_show.html.tpl", {
                     title: "Run Details",
-                    project: data.project,
+                    session: data.project,
                     run: data.run,
                     iteration: data.iteration,
                     measurements: data.measurements
