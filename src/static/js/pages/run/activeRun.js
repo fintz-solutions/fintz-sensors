@@ -54,6 +54,10 @@ var activeRun = function(element) {
             runTimerElement.html(runTimer.getTimeValues().toString());
         });
 
+        runTimer.addEventListener('targetAchieved', function (e) {
+            _endRun(stationTimers);
+        });
+
         for (var t = 0, length = stationTimers.length; t < length; t++) {
             let timerIndex = t;
             let timerNum = t + 1;
@@ -84,7 +88,6 @@ var activeRun = function(element) {
             data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
 
             updateMoveButton();
-
         });
 
         var updateMoveButton = function(){
@@ -173,6 +176,16 @@ var activeRun = function(element) {
             //TODO: improve this
             window.location.href = '/';
         });
+
+        matchedObject.bind("pre_end_run", function(event){
+            var element = jQuery(this);
+            _sendActionType(element, ACTION_TYPES.END_RUN);
+        });
+
+        matchedObject.bind("end_action", function(event){
+            //TODO add popup! and redirect to project page
+            alert("RUN ENDED!");
+        });
     };
 
     var _sendActionType = function(element, actionType) {
@@ -232,6 +245,18 @@ var activeRun = function(element) {
             let stationTimerElement = jQuery(".station-timer-" + timerNum);
             stationTimerElement.html("00:00:00");
         }
+    };
+
+    var _endRun = function(timers) {
+        for(let i = 0, length = timers.length; i < length; i++) {
+            let timerToUpdate = timers[i];
+            let stationToToggle = i+1;
+            let station = jQuery(".station-" + stationToToggle);
+            _stopStationTimer(station, timerToUpdate);
+        }
+
+        let activeRunContainer = jQuery(".active-run-container");
+        activeRunContainer.triggerHandler("pre_end_run");
     };
 
     init();
