@@ -56,18 +56,17 @@ var activeRun = function(element) {
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
             let timerIndex = t;
-            var timerNum = t + 1;
+            let timerNum = t + 1;
+            let currentTimer = stationTimers[timerIndex];
 
-            stationTimers[timerIndex].addEventListener('secondsUpdated', function () {
-                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                let currentTimer = stationTimers[timerIndex];
-
-                element.html(currentTimer.getTimeValues().toString());
+            currentTimer.addEventListener('secondsUpdated', function (e) {
+                let timerElement = jQuery('.station-timer-' + timerNum, stationTimersElement);
+                timerElement.html(currentTimer.getTimeValues().toString());
             });
 
-            stationTimers[timerIndex].addEventListener('started', function (e) {
-                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[timerIndex].getTimeValues().toString());
+            currentTimer.addEventListener('started', function (e) {
+                let timerElement = jQuery('.station-timer-' + timerNum, stationTimersElement);
+                timerElement.html(currentTimer.getTimeValues().toString());
             });
         };
 
