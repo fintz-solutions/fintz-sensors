@@ -59,14 +59,22 @@ const acceptedActionsTypes = {
     CONTINUE: {
         key: "CONTINUE",
         canExecute: function (project, run, iteration, measurements) {
-            return (project.status === "RUNNING" &&
+            let baseCheck = (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
                 iteration &&
                 !iteration.startTime &&
                 !iteration.stopTime &&
                 Array.isArray(measurements) &&
                 measurements.length === project.numStations);
-            // TODO validate measurements start and stop time == null
+
+            if(baseCheck) {
+                let result = measurements.every(function (measurement) {
+                    return !measurement.startTime && !measurement.stopTime
+                });
+                return result;
+            } else {
+                return false;
+            }
         }
     },
     //TODO NELSON -> destroy the project and info associated to it(runs, iterations, measurements and events)
