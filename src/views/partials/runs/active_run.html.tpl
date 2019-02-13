@@ -26,25 +26,21 @@
         <div class="header">
             <h2 class="title">Stations</h2>
         </div>
-        <div class"stations-content">
+        <div class="stations-content">
             {% for station in range(0, stations) %}
                 {% set station_num = loop.index %}
-                {% if (station_num <= stations) %}
-                    <div class="station station-{{ station_num }}">
-                        <div class="info">
-                            <span class="station-num">{{ station_num }}</span>
-                            <span class="name">Station {{ station_num }}</span>
-                            <span class="station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">00:00:00</span>
+                    <div class="station station-{{ station_num }} stopped">
+                        <div class="info-container">
+                            <span class="info station-num">{{ station_num }}</span>
+                            <span class="info station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">
+                                <span class="hours">00</span>
+                                <span class="separator">:</span>
+                                <span class="mins">00</span>
+                                <span class="separator">:</span>
+                                <span class="secs">00</span>
+                            </span>
                         </div>
                     </div>
-                {% else %}
-                    <div class="station off disabled station-{{ station_num }}">
-                        <div class="info">
-                            <span class="name">Station {{ station_num }}</span>
-                            <span class="station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">00:00:00</span>
-                        </div>
-                    </div>
-                {% endif %}
             {% endfor %}
         </div>
     </div>

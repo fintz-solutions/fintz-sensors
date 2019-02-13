@@ -26,7 +26,7 @@
 
 .body .landing .create-session-container .button-submit {
     bottom: 25px;
-    font-size: 10pt;
+    font-size: 13px;
     font-weight: 400;
     position: absolute;
     right: 25px;
@@ -108,7 +108,7 @@
     -khtml-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     cursor: pointer;
-    font-size: 10pt;
+    font-size: 13px;
     font-weight: 700;
     height: 50px;
     margin: 0px auto 0px auto;
@@ -177,7 +177,7 @@
 
 .body .landing .element-session .button-actions .button-open {
     display: inline-block;
-    font-size: 10pt;
+    font-size: 13px;
     height: 22px;
     line-height: 20px;
     width: 65px;
