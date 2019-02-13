@@ -5,7 +5,7 @@ const io = require('socket.io-client')
 
 const ACTION_TYPES = {
     START_RUN: "START",
-    MOVE_ITER: "MOVE",
+    MOVE_ITER: "MOVE_ITER",
     CONTINUE_RUN: "CONTINUE",
     KILL: "KILL",
     END_RUN: "END" //TODO: call this action when the run total time reached zero
@@ -43,9 +43,7 @@ var activeRun = function(element) {
         var stationsNum = sations.attr("data-stations_num");
         var runTimerElement = jQuery(".run-timer", element);
         var stationTimersElement = jQuery(".stations-container", element);
-        var taktTimerElement = jQuery(".takt-time-desc", element);
         var runTimer = new Timer();
-        var taktTimer = new Timer();
         var stationTimers = [];
 
         while (stationsNum > stationTimers.length) {
@@ -54,10 +52,6 @@ var activeRun = function(element) {
 
         runTimer.addEventListener('secondsUpdated', function () {
             runTimerElement.html(runTimer.getTimeValues().toString());
-        });
-
-        taktTimer.addEventListener('secondsUpdated', function () {
-            taktTimerElement.html(taktTimer.getTimeValues().toString());
         });
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
@@ -89,7 +83,23 @@ var activeRun = function(element) {
             var station = jQuery(".station-" + stationToToggle);
             data.operation === TIMER_EVENT.START && _startStationTimer(station, timerToUpdate, seconds);
             data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
+
+            updateMoveButton();
+
         });
+
+        var updateMoveButton = function(){
+            let stations = jQuery(".station").toArray();
+            let result = stations.every(function(station){
+                return station.classList.value.includes("stop");
+            });
+
+            if(result === true) {
+                moveButton.removeClass("disabled");
+            } else {
+                moveButton.addClass("disabled");
+            }
+        };
 
         startButton.click(function(event){
             event.preventDefault();
@@ -127,9 +137,7 @@ var activeRun = function(element) {
         matchedObject.bind("start_action", function(event){
             var element = jQuery(this);
             var runTimerElement = jQuery(".run-timer", element);
-            var taktTimerElement = jQuery(".takt-time-desc", element);
             _startRunTimer(runTimerElement, runTimer);
-            _startTaktTimer(taktTimerElement, taktTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -139,7 +147,7 @@ var activeRun = function(element) {
             _sendActionType(element, ACTION_TYPES.MOVE_ITER);
         });
 
-        matchedObject.bind("move_action", function(event){
+        matchedObject.bind("move_iter_action", function(event){
             moveButton.addClass("disabled");
             continueButton.removeClass("disabled");
             _clearStationTimers(stationTimers);
@@ -201,18 +209,6 @@ var activeRun = function(element) {
         });
     };
 
-    var _startTaktTimer = function(element, timer) {
-        element.removeClass("hidden");
-        var minutes = element.attr("data-duration");
-        minutes = parseFloat(minutes);
-        timer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-
     var _startStationTimer = function(element, timer, seconds) {
         timer.stop();
         timer.start({ startValues: { seconds: seconds }});
@@ -227,11 +223,16 @@ var activeRun = function(element) {
     };
 
     var _clearStationTimers = function(timers) {
-        for(var i = 0, length = timers.length; i < length; i++) {
-            timers[i].reset();
+        for(let i = 0, length = timers.length; i < length; i++) {
+
+            let timerNum = i+1;
+
+            let stationElement = jQuery(".station-" + timerNum);
+            stationElement.removeClass("stop");
+
+            let stationTimerElement = jQuery(".station-timer-" + timerNum);
+            stationTimerElement.html("00:00:00");
         }
-        element.removeClass("stop")
-        // TODO:review this: add reset class?
     };
 
     init();
