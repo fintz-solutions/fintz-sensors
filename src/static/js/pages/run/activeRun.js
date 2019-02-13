@@ -43,9 +43,7 @@ var activeRun = function(element) {
         var stationsNum = sations.attr("data-stations_num");
         var runTimerElement = jQuery(".run-timer", element);
         var stationTimersElement = jQuery(".stations-container", element);
-        var taktTimerElement = jQuery(".takt-time-desc", element);
         var runTimer = new Timer();
-        var taktTimer = new Timer();
         var stationTimers = [];
 
         while (stationsNum > stationTimers.length) {
@@ -54,10 +52,6 @@ var activeRun = function(element) {
 
         runTimer.addEventListener('secondsUpdated', function () {
             runTimerElement.html(runTimer.getTimeValues().toString());
-        });
-
-        taktTimer.addEventListener('secondsUpdated', function () {
-            taktTimerElement.html(taktTimer.getTimeValues().toString());
         });
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
@@ -143,9 +137,7 @@ var activeRun = function(element) {
         matchedObject.bind("start_action", function(event){
             var element = jQuery(this);
             var runTimerElement = jQuery(".run-timer", element);
-            var taktTimerElement = jQuery(".takt-time-desc", element);
             _startRunTimer(runTimerElement, runTimer);
-            //_startTaktTimer(taktTimerElement, taktTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -200,7 +192,7 @@ var activeRun = function(element) {
                 element.triggerHandler(event, data);
             },
             error: function(data) {
-                var message = data && data.responseJSON && data.responseJSON.message || "§";
+                var message = data && data.responseJSON && data.responseJSON.message || "Error sending action";
                 matchedObject.triggerHandler("error", message);
             }
         });
@@ -216,20 +208,6 @@ var activeRun = function(element) {
             }
         });
     };
-
-    /*
-    var _startTaktTimer = function(element, timer) {
-        element.removeClass("hidden");
-        var minutes = element.attr("data-duration");
-        minutes = parseFloat(minutes);
-        timer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-    */
 
     var _startStationTimer = function(element, timer, seconds) {
         timer.stop();
@@ -255,7 +233,6 @@ var activeRun = function(element) {
             let stationTimerElement = jQuery(".station-timer-" + timerNum);
             stationTimerElement.html("00:00:00");
         }
-        // TODO:review this: add reset class?
     };
 
     init();
