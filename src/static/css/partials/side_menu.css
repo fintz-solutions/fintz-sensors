@@ -1,6 +1,6 @@
 .body .side-menu {
     background: #ffffff;
-    display: inline-block;
+    float: left;
     height: 100%;
     margin: auto auto auto auto;
     width: 20%;
@@ -18,6 +18,17 @@
     margin: 0px auto 0px auto;
     margin-left: 50px;
     position: relative;
+}
+
+.body .side-menu .side-content .tab {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    padding: 50px 0px 50px 0px;
 }
 
 .body .side-menu .side-content .header{
@@ -68,6 +79,8 @@
 
 .body .side-menu .button-actions .button {
     display: block;
+    font-size: 16px;
+    line-height: 28px;
     margin: 0px auto 0px auto;
     position: relative;
     width: 80%;

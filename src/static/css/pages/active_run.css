@@ -1,3 +1,8 @@
+.body .run-show,
+.body .active-run-container {
+    height: 100%;
+}
+
 .body .side-menu .active-run-tab {
     box-sizing: border-box;
     -o-box-sizing: border-box;
@@ -9,96 +14,119 @@
     padding: 50px 0px 50px 0px;
 }
 
-/* refactor */
-.body .header-run {
-    background-color: #3584b5;
-    border: 2px solid black;
-    height: 15%;
+.body .active-run-tab .button-actions-run .button {
+    margin-top: 15px;
 }
 
-.body .header-run .logo .image {
-    height: 50px;
-    position: absolute;
-    right: 3%;
-    text-align: right;
-    top: 4%;
-    width: auto;
+/* run-timer-container */
+.body .run-timer-container {
+    height: 20%;
 }
 
-.body .header-run .run-timer {
-    color: #ffffff;
-    font-size: 60px;
-    height: 50px;
-    line-height: 50px;
-    margin: auto auto auto auto;
-    margin-bottom: 1%;
-    margin-top: 3%;
-    position: relative;
+.body .run-timer-container .run-timer {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    padding: 10px 0px 10px 0px;
     text-align: center;
 }
 
-.body .header-run .takt-time {
-    color: #ffffff;
-    font-size: 20px;
-    left: 3%;
-    position: absolute;
-    text-align: left;
-    top: 4%;
-    width: auto;
-}
-.body .header-run .takt-time-desc {
-    color: #ffffff;
-    font-size: 20px;
-    left: 3%;
-    position: absolute;
-    text-align: left;
-    top: 7%;
-    width: auto;
+.body .run-timer-container .run-timer .timer-values {
+    font-size: 0px;
 }
 
-.body .stations .station {
-    background-color: #ffffff;
-    border: 2px solid black;
-    border-top: 1px solid black;
-    display: block;
-    height: 100px;
-    padding-left: 15%;
-    padding-right: 15%;
-    position: relative;
+.body .run-timer-container .run-timer .timer-values .value,
+.body .run-timer-container .run-timer .timer-values .separator {
+    font-size: 50px;
+    font-weight: 300;
 }
 
-.body .active-run-tab .button-actions-run .button {
+.body .run-timer-container .run-timer .timer-labels {
+    font-size: 0px;
 }
 
-.body .stations .station.active {
-    background-color: green;
+.body .run-timer-container .run-timer .timer-labels .separator,
+.body .run-timer-container .run-timer .timer-labels .label {
+    font-size: 16px;
+    font-weight: 900;
 }
 
-.body .stations .station.stop {
-    background-color: red;
-}
-
-.body .stations .station.off {
-    background-color: lightgrey;
-}
-
-.body .stations .stationsRow {
-    float: left;
-    width: 50%;
-}
-
-.body .stations .station .info p {
+.body .run-timer-container .run-timer .hours,
+.body .run-timer-container .run-timer .mins,
+.body .run-timer-container .run-timer .secs {
     display: inline-block;
-    font-size: 35px;
+    text-align: center;
+    width: 10%;
 }
 
-.body .stations .station .info .name {
-    margin-top: 35px;
-    text-align: left;
-    width: 30%;
+.body .run-timer-container .run-timer .separator {
+    display: inline-block;
+    text-align: center;
+    width: 1%;
 }
 
-.body .stations .station .info .timer {
-    text-align: right;
-    width: 65%;
+/* stations-container */
+.body .stations-container {
+    height: 76%;
+    margin-top: 3%;
 }
+
+.body .stations-container .header {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 20%;
+    padding: 25px 25px 25px 25px;
+    width: 100%;
+}
+
+/* .body .stations-container .station {
+background-color: #ffffff;
+border: 2px solid black;
+border-top: 1px solid black;
+display: block;
+height: 100px;
+padding-left: 15%;
+padding-right: 15%;
+position: relative;
+}
+
+.body .stations-container .station.active {
+background-color: green;
+}
+
+.body .stations-container .station.stop {
+background-color: red;
+}
+
+.body .stations-container .station.off {
+background-color: lightgrey;
+}
+
+.body .stations-container .stationsRow {
+float: left;
+width: 50%;
+}
+
+.body .stations-container .station .info p {
+display: inline-block;
+font-size: 35px;
+}
+
+.body .stations-container .station .info .name {
+margin-top: 35px;
+text-align: left;
+width: 30%;
+}
+
+.body .stations-container .station .info .timer {
+text-align: right;
+width: 65%;
+} */

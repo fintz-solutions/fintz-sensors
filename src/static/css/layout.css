@@ -1,9 +1,11 @@
-html {
+html,
+.body,
+.body .app {
     height: 100%;
+    width: 100%;
 }
 .body {
     display: block;
-    height: 100%;
     margin: 0px 0px 0px 0px;
     font-family: 'Lato', sans-serif;
     font-size: 15pt;
@@ -14,7 +16,9 @@ html {
 }
 
 .body .button.disabled {
+    background-color: #ededed;
     color: #a7a9ac;
+    border: #fcfcfc;
     pointer-events: none;
     text-decoration: none;
 }
@@ -31,6 +35,14 @@ html {
     background-color: #4298c0;
     color: #ffffff;
     border: #fcfcfc;
+}
+
+.body .button.button-blue.disabled  {
+    background-color: #ededed;
+    color: #a7a9ac;
+    border: #fcfcfc;
+    pointer-events: none;
+    text-decoration: none;
 }
 
 .body .button.button-white  {
@@ -84,14 +96,16 @@ body .app .content .container {
 }
 
 .body .app .footer {
-    position: relative;
+    position: absolute;
+    bottom: 4%;
+    width: 100%;
 }
 
 .body .app .footer .logo {
     width: 70px;
     box-sizing: border-box;
     position: absolute;
-    bottom: 2%;
+    /* bottom: 3%; */
     right: 3%;
 }
 

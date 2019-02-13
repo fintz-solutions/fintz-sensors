@@ -102,7 +102,7 @@ var activeRun = function(element) {
             var element = jQuery(this);
             var body = element.parents(".body");
             var activeRunContainer = jQuery(".active-run-container", body);
-            matchedObject.triggerHandler("pre_move");
+            activeRunContainer.triggerHandler("pre_move");
         });
 
         continueButton.click(function(event){

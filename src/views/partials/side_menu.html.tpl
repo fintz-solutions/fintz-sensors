@@ -9,13 +9,10 @@
 <div class="side-content">
     {% if isHomepage %}
         <div id="homepage-tab" class="homepage-tab">
-            <div class="header">
-                <h1></h1>
-            </div>
             {# TODO: #}
             {# show last finnished project #}
             {# total iterations implemented #}
-            <div class="iterations-stats"></div>
+            {# or info about selected project #}
         </div>
     {% elif title in ("Session Details") %}
         <div id="session-details-tab" class="tab session-details-tab">
