@@ -55,7 +55,13 @@ var activeRun = function(element) {
         }
 
         runTimer.addEventListener('secondsUpdated', function () {
-            runTimerElement.html(runTimer.getTimeValues().toString());
+            var values = jQuery(".timer-values", runTimerElement);
+            var hours = jQuery(".hours", values);
+            var mins = jQuery(".mins", values);
+            var secs = jQuery(".secs", values);
+            hours.html(runTimer.getTimeValues().toString(["hours"]));
+            mins.html(runTimer.getTimeValues().toString(["minutes"]));
+            secs.html(runTimer.getTimeValues().toString(["seconds"]));
         });
 
         taktTimer.addEventListener('secondsUpdated', function () {
@@ -66,12 +72,22 @@ var activeRun = function(element) {
             var timerNum = t + 1;
             stationTimers[t].addEventListener('secondsUpdated', function () {
                 var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[t].getTimeValues().toString());
+                var hours = jQuery(".hours", element);
+                var mins = jQuery(".mins", element);
+                var secs = jQuery(".secs", element);
+                hours.html(stationTimers[t].getTimeValues().toString(["hours"]));
+                mins.html(stationTimers[t].getTimeValues().toString(["minutes"]));
+                secs.html(stationTimers[t].getTimeValues().toString(["seconds"]));
             });
 
             stationTimers[t].addEventListener('started', function (e) {
                 var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[t].getTimeValues().toString());
+                var hours = jQuery(".hours", element);
+                var mins = jQuery(".mins", element);
+                var secs = jQuery(".secs", element);
+                hours.html(stationTimers[t].getTimeValues().toString(["hours"]));
+                mins.html(stationTimers[t].getTimeValues().toString(["minutes"]));
+                secs.html(stationTimers[t].getTimeValues().toString(["seconds"]));
             });
         };
 

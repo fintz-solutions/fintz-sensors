@@ -31,14 +31,14 @@
                 {% set station_num = loop.index %}
                     <div class="station station-{{ station_num }} stopped">
                         <div class="info-container">
-                            <span class="info station-num">{{ station_num }}</span>
-                            <span class="info station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">
+                            <div class="info station-num">{{ station_num }}</div>
+                            <div class="info station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">
                                 <span class="hours">00</span>
                                 <span class="separator">:</span>
                                 <span class="mins">00</span>
                                 <span class="separator">:</span>
                                 <span class="secs">00</span>
-                            </span>
+                            </div>
                         </div>
                     </div>
             {% endfor %}

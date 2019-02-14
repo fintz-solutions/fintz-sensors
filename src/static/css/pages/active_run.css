@@ -23,6 +23,11 @@
     height: 20%;
 }
 
+.body .run-timer-container .takt-time,
+.body .run-timer-container .takt-time-desc {
+    display: none;
+}
+
 .body .run-timer-container .run-timer {
     box-sizing: border-box;
     -o-box-sizing: border-box;
@@ -128,13 +133,15 @@
 }
 
 .body .stations-container .stations-content .station .info-container {
+    font-size: 0px;
     height: 100%;
 }
 
 .body .stations-container .stations-content .station .info {
-    /* height: 100%; */
     display: inline-block;
     font-size: 26px;
+    height: 100%;
+    line-height: 150%;
     vertical-align: middle;
 }
 
