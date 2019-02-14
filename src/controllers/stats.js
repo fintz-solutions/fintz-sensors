@@ -10,7 +10,9 @@ module.exports = {
         if (req.get("Content-Type") === "application/json") {
             responseUtil.sendSuccessResponse("Run stats retrieved successfully", 200, data, res);
         } else {
-            data = JSON.stringify(data);
+            data = data.map(function(element){
+                return JSON.stringify(element);
+            });
             res.render("pages/run_stats.html.tpl", {
                 title: "Run Stats",
                 stats: data

@@ -3,7 +3,7 @@
 
 {{ super() }}
 
-DEBUG: {{stats}}
+DEBUG: {{ stats }}
 
 	<style>
 	canvas{
@@ -12,14 +12,18 @@ DEBUG: {{stats}}
 		-ms-user-select: none;
 	}
 	</style>
-	<div style="width:80%;">
+
+	{% for stat in stats %}
+	<div id="statsContainerX" style="width:80%;" chartJson="{{stat}}">
 		<canvas id="myChart"></canvas>
 	</div>
-	<script>
-    //let chartjson = JSON.parse({{ chart }});
-    //var ctx = document.getElementById("myChart");
+	{% endfor %}
 
-    //var myChart = new Chart(ctx, jsonchart);
+	<script>
+    var ctx = document.getElementById("myChart");
+    var data = $('#statsContainerX').attr("chartJson");
+
+    var myChart = new Chart(ctx, JSON.parse(data));
     </script>
 {% endblock %}
 <!-- TODO on hover, show time in minutes?-->
