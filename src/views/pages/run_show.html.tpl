@@ -2,8 +2,8 @@
 {% block content %}
 {{ super() }}
     {% set active_run = true %}
+    {# TODO: {% set active_run = run.status in ('RUNNING') %} #}
     <div class="run-show">
-        {# TODO: {% set active_run = run.status in ('RUNNING') %} #}
         {% if active_run %}
             {% include "../partials/runs/active_run.html.tpl" %}
         {% else %}
