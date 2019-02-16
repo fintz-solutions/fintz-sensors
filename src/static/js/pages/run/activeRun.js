@@ -5,10 +5,10 @@ const io = require('socket.io-client')
 
 const ACTION_TYPES = {
     START_RUN: "START",
-    MOVE_ITER: "MOVE",
+    MOVE_ITER: "MOVE_ITER",
     CONTINUE_RUN: "CONTINUE",
     KILL: "KILL",
-    END_RUN: "END" //TODO: call this action when the run total time reached zero
+    END_RUN: "END_RUN" //TODO: call this action when the run total time reached zero
   };
 Object.freeze(ACTION_TYPES);
 
@@ -41,13 +41,11 @@ var activeRun = function(element) {
         var killButton = jQuery(".button-kill", sideMenu);
 
         /** Timers **/
-        var sations = jQuery(".stations", element);
-        var stationsNum = sations.attr("data-stations_num");
+        var stationsElem = jQuery(".stations", element);
+        var stationsNum = stationsElem.attr("data-stations_num");
         var runTimerElement = jQuery(".run-timer", element);
         var stationTimersElement = jQuery(".stations-container", element);
-        var taktTimerElement = jQuery(".takt-time-desc", element);
         var runTimer = new Timer();
-        var taktTimer = new Timer();
         var stationTimers = [];
 
         while (stationsNum > stationTimers.length) {
@@ -64,27 +62,29 @@ var activeRun = function(element) {
             secs.html(runTimer.getTimeValues().toString(["seconds"]));
         });
 
-        taktTimer.addEventListener('secondsUpdated', function () {
-            taktTimerElement.html(taktTimer.getTimeValues().toString());
+        runTimer.addEventListener('targetAchieved', function (e) {
+            _endRun(stationTimers);
         });
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
-            var timerNum = t + 1;
-            stationTimers[t].addEventListener('secondsUpdated', function () {
-                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                var hours = jQuery(".hours", element);
-                var mins = jQuery(".mins", element);
-                var secs = jQuery(".secs", element);
+            let timerIndex = t;
+            let timerNum = t + 1;
+            let currentTimer = stationTimers[timerIndex];
+            currentTimer.addEventListener('secondsUpdated', function () {
+                let element = jQuery('.station-timer-' + timerNum, stationTimersElement);
+                let hours = jQuery(".hours", element);
+                let mins = jQuery(".mins", element);
+                let secs = jQuery(".secs", element);
                 hours.html(stationTimers[t].getTimeValues().toString(["hours"]));
                 mins.html(stationTimers[t].getTimeValues().toString(["minutes"]));
                 secs.html(stationTimers[t].getTimeValues().toString(["seconds"]));
             });
 
-            stationTimers[t].addEventListener('started', function (e) {
-                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                var hours = jQuery(".hours", element);
-                var mins = jQuery(".mins", element);
-                var secs = jQuery(".secs", element);
+            currentTimer.addEventListener('started', function (e) {
+                let element = jQuery('.station-timer-' + timerNum, stationTimersElement);
+                let hours = jQuery(".hours", element);
+                let mins = jQuery(".mins", element);
+                let secs = jQuery(".secs", element);
                 hours.html(stationTimers[t].getTimeValues().toString(["hours"]));
                 mins.html(stationTimers[t].getTimeValues().toString(["minutes"]));
                 secs.html(stationTimers[t].getTimeValues().toString(["seconds"]));
@@ -93,7 +93,7 @@ var activeRun = function(element) {
 
         var socket = io.connect();
         socket.on('toggleTimer', function(data){
-            if (!data || data.length === 0 || data.station <= stationTimers.length ) {
+            if (!data || data.station > stationTimers.length ) {
                 return;
             }
 
@@ -103,6 +103,14 @@ var activeRun = function(element) {
             var station = jQuery(".station-" + stationToToggle);
             data.operation === TIMER_EVENT.START && _startStationTimer(station, timerToUpdate, seconds);
             data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
+        });
+
+        stationsElem.bind("station_stopped", function (event) {
+            var element = jQuery(this);
+            var stationsList = jQuery(".station", element);
+            var stoppedStations = stationsList.filter(".stopped");
+            var allStopped = stationsList.length === stoppedStations.length;
+            moveButton.toggleClass("disabled", !allStopped);
         });
 
         startButton.click(function(event){
@@ -145,9 +153,7 @@ var activeRun = function(element) {
         matchedObject.bind("start_action", function(event){
             var element = jQuery(this);
             var runTimerElement = jQuery(".run-timer", element);
-            var taktTimerElement = jQuery(".takt-time-desc", element);
             _startRunTimer(runTimerElement, runTimer);
-            _startTaktTimer(taktTimerElement, taktTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -157,7 +163,7 @@ var activeRun = function(element) {
             _sendActionType(element, ACTION_TYPES.MOVE_ITER);
         });
 
-        matchedObject.bind("move_action", function(event){
+        matchedObject.bind("move_iter_action", function(event){
             moveButton.addClass("disabled");
             continueButton.removeClass("disabled");
             _clearStationTimers(stationTimers);
@@ -186,6 +192,16 @@ var activeRun = function(element) {
             // TODO: redirects to where?
             //TODO: improve this
             window.location.href = '/';
+        });
+
+        matchedObject.bind("pre_end_run", function(event){
+            var element = jQuery(this);
+            _sendActionType(element, ACTION_TYPES.END_RUN);
+        });
+
+        matchedObject.bind("end_run_action", function(event){
+            //TODO: add popup! and redirect to project page
+            alert("RUN ENDED!");
         });
     };
 
@@ -224,37 +240,45 @@ var activeRun = function(element) {
         });
     };
 
-    var _startTaktTimer = function(element, timer) {
-        element.removeClass("hidden");
-        var minutes = element.attr("data-duration");
-        minutes = parseFloat(minutes);
-        timer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-
     var _startStationTimer = function(element, timer, seconds) {
         timer.stop();
         timer.start({ startValues: { seconds: seconds }});
         element.addClass("active");
-        element.removeClass("stop");
+        element.removeClass("idle");
     };
 
     var _stopStationTimer = function(element, timer) {
         timer.pause();
         element.removeClass("active");
-        element.addClass("stop");
+        element.addClass("stopped");
+        let stationsElement = element.parents(".stations");
+        stationsElement.triggerHandler("station_stopped");
     };
 
     var _clearStationTimers = function(timers) {
-        for(var i = 0, length = timers.length; i < length; i++) {
-            timers[i].reset();
+        for(let i = 0, length = timers.length; i < length; i++) {
+
+            let timerNum = i+1;
+
+            let stationElement = jQuery(".station-" + timerNum);
+            stationElement.removeClass("stopped");
+
+            let stationTimerElement = jQuery(".station-timer-" + timerNum);
+            stationTimerElement.html("00:00:00");
         }
-        element.removeClass("stop")
-        // TODO:review this: add reset class?
+        //TODO: set all to idle state
+    };
+
+    var _endRun = function(timers) {
+        for(let i = 0, length = timers.length; i < length; i++) {
+            let timerToUpdate = timers[i];
+            let stationToToggle = i+1;
+            let station = jQuery(".station-" + stationToToggle);
+            _stopStationTimer(station, timerToUpdate);
+        }
+
+        let activeRunContainer = jQuery(".active-run-container");
+        activeRunContainer.triggerHandler("pre_end_run");
     };
 
     init();

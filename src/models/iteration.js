@@ -64,7 +64,7 @@ Iteration.statics.createAndInitializeIteration = function(iteration, numStations
             };
             measurementsArray.push(measurementData);
         }
-        return measurementModel.insertMany(measurementsArray).then(function (_) {
+        return measurementModel.insertMany(measurementsArray).then(function (results) {
             return newIteration;
         });
     });

@@ -1,5 +1,5 @@
 {% block html %}
-    {% set htitle = "Fintz Sensors" %}
+    {% set htitle = "Kart Factory" %}
     {% set hauthor = "Fintz Solutions" %}
     <!DOCTYPE html>
     <html lang="en">

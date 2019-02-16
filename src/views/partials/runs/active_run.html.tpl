@@ -1,10 +1,7 @@
 {% set stations = session.numStations %}
 {% set duration = run.totalTime %}
-{% set takt_time = run.totalTime / session.productionTarget %}
 <div class="active-run-container">
     <div class="container run-timer-container header-run">
-        <div id="takt-time" class="takt-time hidden"> takt time: {{ takt_time }} min </div>
-        <div id="takt-time-desc" class="takt-time-desc hidden" data-duration="{{ takt_time }}">00:{{ takt_time }}:00 </div>
         <div id="run-timer" class="run-timer" data-duration="{{ duration }}">
             <p class="timer-values">
                 <span class="value hours">00</span>
@@ -29,7 +26,7 @@
         <div class="stations-content">
             {% for station in range(0, stations) %}
                 {% set station_num = loop.index %}
-                    <div class="station station-{{ station_num }} stopped">
+                    <div class="station station-{{ station_num }} idle">
                         <div class="info-container">
                             <div class="info station-num">{{ station_num }}</div>
                             <div class="info station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">

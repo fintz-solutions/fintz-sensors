@@ -23,11 +23,6 @@
     height: 20%;
 }
 
-.body .run-timer-container .takt-time,
-.body .run-timer-container .takt-time-desc {
-    display: none;
-}
-
 .body .run-timer-container .run-timer {
     box-sizing: border-box;
     -o-box-sizing: border-box;
@@ -118,14 +113,14 @@
     margin: 0% 0% 2% 0%;
 }
 
-.body .stations-container .stations-content .station.completed {
+.body .stations-container .stations-content .station.stopped {
     background-color: #03e28c;
     border: 1px solid #ffffff;
     border-width: thin;
     color: #ffffff;
 }
 
-.body .stations-container .stations-content .station.running {
+.body .stations-container .stations-content .station.active {
     background-color: #4298c0;
     border: 1px solid #ffffff;
     border-width: thin;
@@ -152,8 +147,8 @@
     width: 8%;
 }
 
-.body .stations-container .stations-content .station.running .station-num,
-.body .stations-container .stations-content .station.completed .station-num {
+.body .stations-container .stations-content .station.active .station-num,
+.body .stations-container .stations-content .station.stopped .station-num {
     color: #ffffff;
 }
 
@@ -164,7 +159,7 @@
     width: 90%;
 }
 
-.body .stations-container .stations-content .station.stopped .station-timer {
+.body .stations-container .stations-content .station.idle .station-timer {
     color: #000000;
 }
 
