@@ -84,8 +84,8 @@
 }
 
 .body .landing .list-sessions-container .sessions-content .list-sessions {
-    overflow: scroll; /* TODO: while we have no pagination */
-    height: 90%;
+    height: 100%;
+    overflow: scroll;
     position: relative;
 }
 
