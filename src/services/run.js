@@ -87,7 +87,7 @@ const acceptedActionsTypes = {
     },
     //TODO NELSON -> Frontend needs to call this action when the run total time reached zero
     END: {
-        key: "END_RUN",
+        key: "END",
         canExecute: function (project, run, iteration, measurements) {
             return (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&

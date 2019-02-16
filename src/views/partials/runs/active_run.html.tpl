@@ -1,12 +1,12 @@
 {% set stations = session.numStations %}
-{% set duration = run.totalTime %}
+{% set duration = run.totalTime | string %}
 <div class="active-run-container">
     <div class="container run-timer-container header-run">
         <div id="run-timer" class="run-timer" data-duration="{{ duration }}">
             <p class="timer-values">
                 <span class="value hours">00</span>
                 <span class="separator">:</span>
-                <span class="value mins">{{ duration }}</span>
+                <span class="value mins">{{ duration if duration.length > 1 else ("0" + duration) }}</span>
                 <span class="separator">:</span>
                 <span class="value secs">00</span>
             </p>
@@ -30,11 +30,11 @@
                         <div class="info-container">
                             <div class="info station-num">{{ station_num }}</div>
                             <div class="info station-timer station-timer-{{ station_num }}" id="station-timer-{{ station_num }}">
-                                <span class="hours">00</span>
+                                <span class="value hours">00</span>
                                 <span class="separator">:</span>
-                                <span class="mins">00</span>
+                                <span class="value mins">00</span>
                                 <span class="separator">:</span>
-                                <span class="secs">00</span>
+                                <span class="value secs">00</span>
                             </div>
                         </div>
                     </div>

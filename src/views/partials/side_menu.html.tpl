@@ -25,13 +25,14 @@
         </div>
         {# TODO: if Active Run / Run Details #}
     {% elif title in ("Run Details") %}
+        {% set completed_run = run.status in ('FINISHED') %}
         <div id="active-run-tab" class="tab active-run-tab">
             <div class="header">
                 <h1 class="side-title">Session <span class="hash">#</span>{{ session.number }}</h1>
                 <h2 class="side-subtitle"><span class="label">Run</span><span class="value">{{ run.number }}</span></h2>
             </div>
             <div class="buttons button-actions button-actions-run">
-                <a class="button button-blue button-start" href="/projects/{{ session.number }}/runs/{{ run.number }}">Start</a>
+                <a class="button button-blue button-start {% if completed_run %}disabled{% endif%}" href="/projects/{{ session.number }}/runs/{{ run.number }}">Start</a>
                 <a class="button button-blue button-move disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">Move</a>
                 <a class="button button-blue button-continue disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">Continue</a>
                 <a class="button button-blue button-kill disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">Kill</a>
