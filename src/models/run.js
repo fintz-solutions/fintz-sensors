@@ -5,6 +5,7 @@ const modelsFolder = global.modelsFolder;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 const iterationModel = require(path.resolve(modelsFolder, "iteration")).Iteration;
+const eventModel = require(path.resolve(modelsFolder, "event")).Event;
 
 let Run = new Schema({
     number: {
@@ -32,19 +33,16 @@ let Run = new Schema({
 });
 
 Run.statics.deleteRunById = function (runId) {
-    //TODO NELSON don't forget to also delete related iterations and events
     return this.findById(runId).then(function (run) {
         if (run && run._doc) {
             return run.remove().then(function (deletedRun) {
                 if (deletedRun && deletedRun._doc) {
-                    //TODO NELSON will have to be a promise.all here
                     let promises = [];
                     promises.push(deletedRun.deleteAssociatedIterationsForRun());
-                    //TODO NELSON DELETE ASSOCIATED Events here deletedRun.deleteAssociatedEventsForRun()
-                    return Promise.all(promises, function (results) {
+                    promises.push(deletedRun.deleteAssociatedEventsForRun());
+                    return Promise.all(promises).then(function (results) {
                         return deletedRun._doc;
                     });
-                    //return deletedRun._doc;
                 } else {
                     return null;
                 }
@@ -129,12 +127,35 @@ Run.methods.findAllIterationsForRun = function () {
     });
 };
 
+Run.methods.findAllEventsForRun = function () {
+    let runObj = this;
+    return eventModel.find({run: runObj._id}).then(function (events) {
+        return events;
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not find all events for run with number ${runObj.number} for project with id ${runObj.project}`, 404);
+    });
+};
+
 Run.methods.deleteAssociatedIterationsForRun = function () {
     let deletedRun = this;
     return deletedRun.findAllIterationsForRun().then(function (iterationsToDelete) {
         let promises = [];
         iterationsToDelete.forEach(function (iterationToDelete, index) {
             promises.push(iterationModel.deleteIterationById(iterationToDelete.id));
+        });
+        return Promise.all(promises).then(function (results) {
+            return deletedRun._doc;
+        });
+    });
+};
+
+Run.methods.deleteAssociatedEventsForRun = function () {
+    let deletedRun = this;
+    return deletedRun.findAllEventsForRun().then(function (eventsToDelete) {
+        let promises = [];
+        eventsToDelete.forEach(function (eventToDelete, index) {
+            promises.push(eventModel.deleteEventById(eventToDelete.id));
         });
         return Promise.all(promises).then(function (results) {
             return deletedRun._doc;

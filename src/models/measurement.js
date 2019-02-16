@@ -1,5 +1,7 @@
 let mongoose = require('mongoose');
+const path = require("path");
 let Schema = mongoose.Schema;
+const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 let Measurement = new Schema({
     stationNumber: {
@@ -37,6 +39,15 @@ Measurement.statics.findByIterationIdAndStation = function (iterationId, station
     }).catch(function(error) {
         console.error(error);
         errorUtil.createAndThrowGenericError("Invalid Measurement", 404);
+    });
+};
+
+Measurement.statics.deleteMeasurementById = function (measurementId) {
+    return this.findById(measurementId).then(function(measurement) {
+        return measurement.remove();
+    }).catch(function(error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError(`Could not delete measurement with id: ${measurementId}`, 404);
     });
 };
 
