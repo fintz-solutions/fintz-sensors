@@ -24,11 +24,34 @@ let Event = new Schema({
     }
 });
 
-Event.statics.createNew = function(eventData) {
+// Static methods
+
+Event.statics.createNew = function (eventData) {
     let event = this;
-    return event.create(eventData).then(function(newEvent) {
+    return event.create(eventData).then(function (newEvent) {
         return newEvent._doc;
     });
 };
+
+Event.statics.deleteEventById = function (eventId) {
+    return this.findById(eventId).then(function (event) {
+        if (event && event._doc) {
+            return event.remove().then(function (deletedEvent) {
+                if (deletedEvent && deletedEvent._doc) {
+                    return deletedEvent._doc;
+                } else {
+                    return null;
+                }
+            });
+        } else {
+            errorUtil.createAndThrowGenericError("Invalid Event", 404);
+        }
+    }).catch(function (error) {
+        console.error(error);
+        errorUtil.createAndThrowGenericError("Invalid Event", 404);
+    });
+};
+
+//Instance methods
 
 module.exports.Event = mongoose.model("Event", Event);
