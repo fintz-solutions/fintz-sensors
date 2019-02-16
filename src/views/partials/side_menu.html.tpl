@@ -20,7 +20,7 @@
                 <h1 class="side-title">Session <span class="hash">#</span>{{ session.number }}</h1>
             </div>
             <div class="buttons button-actions">
-                <a class="button button-blue button-session button-charts" href="/projects/{{ session.number }}/charts">Stats</a>
+                <a class="button button-blue button-session button-charts" href="/projects/{{ session.number }}/stats">Stats</a>
             </div>
         </div>
         {# TODO: if Active Run / Run Details #}

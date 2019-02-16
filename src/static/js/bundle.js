@@ -1,87 +1,87 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/     // The module cache
-/******/     var installedModules = {};
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
 /******/
-/******/     // The require function
-/******/     function __webpack_require__(moduleId) {
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
 /******/
-/******/         // Check if module is in cache
-/******/         if(installedModules[moduleId]) {
-/******/             return installedModules[moduleId].exports;
-/******/         }
-/******/         // Create a new module (and put it into the cache)
-/******/         var module = installedModules[moduleId] = {
-/******/             i: moduleId,
-/******/             l: false,
-/******/             exports: {}
-/******/         };
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
 /******/
-/******/         // Execute the module function
-/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/         // Flag the module as loaded
-/******/         module.l = true;
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
 /******/
-/******/         // Return the exports of the module
-/******/         return module.exports;
-/******/     }
-/******/
-/******/
-/******/     // expose the modules object (__webpack_modules__)
-/******/     __webpack_require__.m = modules;
-/******/
-/******/     // expose the module cache
-/******/     __webpack_require__.c = installedModules;
-/******/
-/******/     // define getter function for harmony exports
-/******/     __webpack_require__.d = function(exports, name, getter) {
-/******/         if(!__webpack_require__.o(exports, name)) {
-/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/         }
-/******/     };
-/******/
-/******/     // define __esModule on exports
-/******/     __webpack_require__.r = function(exports) {
-/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/         }
-/******/         Object.defineProperty(exports, '__esModule', { value: true });
-/******/     };
-/******/
-/******/     // create a fake namespace object
-/******/     // mode & 1: value is a module id, require it
-/******/     // mode & 2: merge all properties of value into the ns
-/******/     // mode & 4: return value when already ns object
-/******/     // mode & 8|1: behave like require
-/******/     __webpack_require__.t = function(value, mode) {
-/******/         if(mode & 1) value = __webpack_require__(value);
-/******/         if(mode & 8) return value;
-/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/         var ns = Object.create(null);
-/******/         __webpack_require__.r(ns);
-/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/         return ns;
-/******/     };
-/******/
-/******/     // getDefaultExport function for compatibility with non-harmony modules
-/******/     __webpack_require__.n = function(module) {
-/******/         var getter = module && module.__esModule ?
-/******/             function getDefault() { return module['default']; } :
-/******/             function getModuleExports() { return module; };
-/******/         __webpack_require__.d(getter, 'a', getter);
-/******/         return getter;
-/******/     };
-/******/
-/******/     // Object.prototype.hasOwnProperty.call
-/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/     // __webpack_public_path__
-/******/     __webpack_require__.p = "";
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/
 /******/
-/******/     // Load entry module and return exports
-/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -2265,7 +2265,7 @@ eval("var jQuery = $ = __webpack_require__(/*! jquery */ \"./node_modules/jquery
 /*! no static exports found */
 /***/ (function(module, exports) {
 
-eval("var createSession = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        matchedObject.submit(event, function () {\r\n            if(!event || event.length === 0) {\r\n                return;\r\n            }\r\n\r\n            //prevents default form behaviour, on submit\r\n            event.preventDefault();\r\n\r\n            var element = jQuery(this);\r\n            element.triggerHandler(\"pre_submit\");\r\n            var url = event.currentTarget && event.currentTarget.action;\r\n            var name = jQuery(\".name-field\", element);\r\n            var numStations = jQuery(\".stations-num-field\", element);\r\n            var numRuns = jQuery(\".runs-num-field\", element);\r\n            var timePerRun = jQuery(\".time-run-field\", element);\r\n            var productionTarget = jQuery(\".production-target-field\", element);\r\n\r\n            name = name && name.val() || \"New session\";\r\n            numStations = numStations && parseInt(numStations.val()) || 8;\r\n            numRuns = numRuns && parseInt(numRuns.val()) || 3;\r\n            timePerRun = timePerRun && parseInt(timePerRun.val()) || 30;\r\n            productionTarget = productionTarget && parseInt(productionTarget.val()) || 1;\r\n            jQuery.ajax({\r\n                url: url,\r\n                type: 'POST',\r\n                contentType: 'application/json',\r\n                data: JSON.stringify({\r\n                    \"name\": name,\r\n                    \"numStations\": numStations,\r\n                    \"numRuns\": numRuns,\r\n                    \"timePerRun\": timePerRun,\r\n                    \"productionTarget\": productionTarget,\r\n                    \"status\": \"CREATED\"\r\n                }),\r\n                success: function(data, status) {\r\n                    element.triggerHandler(\"success\", data);\r\n                },\r\n                error: function(data) {\r\n                    var message = data && data.responseJSON && data.responseJSON.message || \"Form error\";\r\n                    matchedObject.triggerHandler(\"error\", message);\r\n                }\r\n              });\r\n        });\r\n\r\n        matchedObject.bind(\"pre_submit\", function() {\r\n            var element = jQuery(this);\r\n            element.addClass(\"loading\");\r\n            element.removeClass(\"success\");\r\n            element.removeClass(\"error\");\r\n        });\r\n\r\n        matchedObject.bind(\"success\", function() {\r\n            var element = jQuery(this);\r\n            element.removeClass(\"loading\");\r\n            element.addClass(\"success\");\r\n        });\r\n\r\n        matchedObject.bind(\"error\", function(event, message) {\r\n            var element = jQuery(this);\r\n            var errorMessage = jQuery(\".error-message\", element);\r\n            errorMessage.text(message);\r\n            element.removeClass(\"loading\");\r\n            element.addClass(\"error\");\r\n        });\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = createSession;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/landing/createSession.js?");
+eval("var createSession = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        matchedObject.submit(event, function () {\r\n            if(!event || event.length === 0) {\r\n                return;\r\n            }\r\n\r\n            //prevents default form behaviour, on submit\r\n            event.preventDefault();\r\n\r\n            var element = jQuery(this);\r\n            element.triggerHandler(\"pre_submit\");\r\n            var url = event.currentTarget && event.currentTarget.action;\r\n            var name = jQuery(\".name-field\", element);\r\n            var numStations = jQuery(\".stations-num-field\", element);\r\n            var numRuns = jQuery(\".runs-num-field\", element);\r\n            var timePerRun = jQuery(\".time-run-field\", element);\r\n            var productionTarget = jQuery(\".production-target-field\", element);\r\n\r\n            name = name && name.val() || \"New session\";\r\n            numStations = numStations && parseInt(numStations.val()) || 8;\r\n            numRuns = numRuns && parseInt(numRuns.val()) || 3;\r\n            timePerRun = timePerRun && parseInt(timePerRun.val()) || 30;\r\n            productionTarget = productionTarget && parseInt(productionTarget.val()) || 1;\r\n            jQuery.ajax({\r\n                url: url,\r\n                type: 'POST',\r\n                contentType: 'application/json',\r\n                data: JSON.stringify({\r\n                    \"name\": name,\r\n                    \"numStations\": numStations,\r\n                    \"numRuns\": numRuns,\r\n                    \"timePerRun\": timePerRun,\r\n                    \"productionTarget\": productionTarget,\r\n                    \"status\": \"CREATED\"\r\n                }),\r\n                success: function(data, status) {\r\n                    element.triggerHandler(\"success\", data);\r\n                },\r\n                error: function(data) {\r\n                    var message = data && data.responseJSON && data.responseJSON.message || \"Form error\";\r\n                    matchedObject.triggerHandler(\"error\", message);\r\n                }\r\n              });\r\n        });\r\n\r\n        matchedObject.bind(\"pre_submit\", function() {\r\n            var element = jQuery(this);\r\n            element.addClass(\"loading\");\r\n            element.removeClass(\"success\");\r\n            element.removeClass(\"error\");\r\n        });\r\n\r\n        matchedObject.bind(\"success\", function(event, data) {\r\n            if(!data || data.length === 0) {\r\n                return;\r\n            }\r\n\r\n            var element = jQuery(this);\r\n            element.removeClass(\"loading\");\r\n            element.addClass(\"success\");\r\n            var baseUrl = element.attr(\"action\");\r\n            window.location.href = baseUrl ? baseUrl + \"/\" + data.data.number : \"/\";\r\n        });\r\n\r\n        matchedObject.bind(\"error\", function(event, message) {\r\n            var element = jQuery(this);\r\n            var errorMessage = jQuery(\".error-message\", element);\r\n            errorMessage.text(message);\r\n            element.removeClass(\"loading\");\r\n            element.addClass(\"error\");\r\n        });\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = createSession;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/landing/createSession.js?");
 
 /***/ }),
 
