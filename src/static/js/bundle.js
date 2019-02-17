@@ -1,87 +1,87 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/     // The module cache
-/******/     var installedModules = {};
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
 /******/
-/******/     // The require function
-/******/     function __webpack_require__(moduleId) {
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
 /******/
-/******/         // Check if module is in cache
-/******/         if(installedModules[moduleId]) {
-/******/             return installedModules[moduleId].exports;
-/******/         }
-/******/         // Create a new module (and put it into the cache)
-/******/         var module = installedModules[moduleId] = {
-/******/             i: moduleId,
-/******/             l: false,
-/******/             exports: {}
-/******/         };
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
 /******/
-/******/         // Execute the module function
-/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/         // Flag the module as loaded
-/******/         module.l = true;
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
 /******/
-/******/         // Return the exports of the module
-/******/         return module.exports;
-/******/     }
-/******/
-/******/
-/******/     // expose the modules object (__webpack_modules__)
-/******/     __webpack_require__.m = modules;
-/******/
-/******/     // expose the module cache
-/******/     __webpack_require__.c = installedModules;
-/******/
-/******/     // define getter function for harmony exports
-/******/     __webpack_require__.d = function(exports, name, getter) {
-/******/         if(!__webpack_require__.o(exports, name)) {
-/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/         }
-/******/     };
-/******/
-/******/     // define __esModule on exports
-/******/     __webpack_require__.r = function(exports) {
-/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/         }
-/******/         Object.defineProperty(exports, '__esModule', { value: true });
-/******/     };
-/******/
-/******/     // create a fake namespace object
-/******/     // mode & 1: value is a module id, require it
-/******/     // mode & 2: merge all properties of value into the ns
-/******/     // mode & 4: return value when already ns object
-/******/     // mode & 8|1: behave like require
-/******/     __webpack_require__.t = function(value, mode) {
-/******/         if(mode & 1) value = __webpack_require__(value);
-/******/         if(mode & 8) return value;
-/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/         var ns = Object.create(null);
-/******/         __webpack_require__.r(ns);
-/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/         return ns;
-/******/     };
-/******/
-/******/     // getDefaultExport function for compatibility with non-harmony modules
-/******/     __webpack_require__.n = function(module) {
-/******/         var getter = module && module.__esModule ?
-/******/             function getDefault() { return module['default']; } :
-/******/             function getModuleExports() { return module; };
-/******/         __webpack_require__.d(getter, 'a', getter);
-/******/         return getter;
-/******/     };
-/******/
-/******/     // Object.prototype.hasOwnProperty.call
-/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/     // __webpack_public_path__
-/******/     __webpack_require__.p = "";
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/
 /******/
-/******/     // Load entry module and return exports
-/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -813,7 +813,7 @@ eval("var deleteProject = function(element) {\r\n    var matchedObject = jQuery(
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ../../../css/pages/active_run.css */ \"./src/static/css/pages/active_run.css\");\r\n\r\nconst Timer = __webpack_require__(/*! easytimer.js */ \"./node_modules/easytimer.js/dist/easytimer.js\").Timer;\r\nconst io = __webpack_require__(/*! socket.io-client */ \"./node_modules/socket.io-client/lib/index.js\")\r\n\r\nconst ACTION_TYPES = {\r\n    START_RUN: \"START\",\r\n    MOVE_ITER: \"MOVE\",\r\n    CONTINUE_RUN: \"CONTINUE\",\r\n    KILL: \"KILL\",\r\n    END_RUN: \"END\" //TODO: call this action when the run total time reached zero\r\n  };\r\nObject.freeze(ACTION_TYPES);\r\n\r\nconst TIMER_EVENT = {\r\n    START: \"START\",\r\n    STOP: \"STOP\"\r\n  };\r\nObject.freeze(TIMER_EVENT);\r\n\r\nvar activeRun = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        /** Action buttons **/ \r\n        var startButton = jQuery(\".button-start\", matchedObject);\r\n        var moveButton = jQuery(\".button-move\", matchedObject);\r\n        var continueButton = jQuery(\".button-continue\", matchedObject);\r\n        var killButton = jQuery(\".button-kill\", matchedObject);\r\n        \r\n        /** Timers **/ \r\n        var sations = jQuery(\".stations\", element);\r\n        var stationsNum = sations.attr(\"data-stations_num\");\r\n        var runTimerElement = jQuery(\".run-timer\", element);\r\n        var stationTimersElement = jQuery(\".station-timer\", element);\r\n        var taktTimerElement = jQuery(\".takt-time-desc\", element);\r\n        var runTimer = new Timer();\r\n        var taktTimer = new Timer();\r\n        var stationTimers = [];\r\n\r\n        while (stationsNum > stationTimers.length) {\r\n            stationTimers.push(new Timer());\r\n        }\r\n\r\n        runTimer.addEventListener('secondsUpdated', function () {\r\n            runTimerElement.html(runTimer.getTimeValues().toString());\r\n        });\r\n        \r\n        taktTimer.addEventListener('secondsUpdated', function () {\r\n            taktTimerElement.html(taktTimer.getTimeValues().toString());\r\n        });\r\n        \r\n        for (var t = 0, length = stationTimers.length; t < length; t++) {\r\n            var timerNum = t + 1;\r\n            stationTimers[t].addEventListener('secondsUpdated', function () {\r\n                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);\r\n                element.html(stationTimers[t].getTimeValues().toString());\r\n            });\r\n\r\n            stationTimers[t].addEventListener('started', function (e) {\r\n                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);\r\n                element.html(stationTimers[t].getTimeValues().toString());\r\n            });\r\n        };\r\n\r\n        var socket = io.connect();\r\n        socket.on('toggleTimer', function(data){\r\n            if (!data || data.length === 0 || data.station <= stationTimers.length ) {\r\n                return;\r\n            }\r\n            \r\n            var stationToToggle = data.station;\r\n            var seconds = data.currentTime || 0;\r\n            var timerToUpdate = stationTimers[stationToToggle - 1];\r\n            var station = jQuery(\".station-\" + stationToToggle);\r\n            data.operation === TIMER_EVENT.START && _startStationTimer(station, timerToUpdate, seconds);\r\n            data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);\r\n        });\r\n\r\n        startButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_start\");\r\n        });\r\n\r\n        moveButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_move\");\r\n        });\r\n\r\n        continueButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_continue\");\r\n        });\r\n\r\n        killButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_kill\");\r\n        });\r\n\r\n        matchedObject.bind(\"pre_start\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.START_RUN);\r\n        });\r\n\r\n        matchedObject.bind(\"start_action\", function(event){\r\n            var element = jQuery(this);\r\n            var runTimerElement = jQuery(\".run-timer\", element);\r\n            var taktTimerElement = jQuery(\".takt-time-desc\", element);\r\n            _startRunTimer(runTimerElement, runTimer);\r\n            _startTaktTimer(taktTimerElement, taktTimer);\r\n            startButton.addClass(\"disabled\");\r\n            killButton.removeClass(\"disabled\");\r\n        });\r\n\r\n        matchedObject.bind(\"pre_move\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.MOVE_ITER);\r\n        });\r\n\r\n        matchedObject.bind(\"move_action\", function(event){\r\n            moveButton.addClass(\"disabled\");\r\n            continueButton.removeClass(\"disabled\");\r\n            _clearStationTimers(stationTimers);\r\n        });\r\n\r\n        matchedObject.bind(\"pre_continue\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.CONTINUE_RUN);\r\n        });\r\n\r\n        matchedObject.bind(\"continue_action\", function(event){\r\n            continueButton.addClass(\"disabled\");\r\n        });\r\n\r\n        matchedObject.bind(\"pre_kill\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.KILL);\r\n        });\r\n\r\n        matchedObject.bind(\"kill_action\", function(event){\r\n            var buttons = jQuery(\".button\" ,matchedObject);\r\n            buttons.addClass(\"disabled\");\r\n            // TODO: redirects to where?\r\n            //TODO: improve this\r\n            window.location.href = '/'; \r\n        });\r\n    };\r\n\r\n    var _sendActionType = function(element, actionType) {\r\n        var startButton = jQuery(\".button-start\", element);\r\n        var url = startButton.attr(\"href\");\r\n\r\n        jQuery.ajax({\r\n            url: url,\r\n            type: 'POST',\r\n            contentType: 'application/json',\r\n            data: JSON.stringify({\r\n                \"actionType\": actionType,\r\n            }),\r\n            success: function(data, status) {\r\n                var event = actionType.toLowerCase() + \"_action\";\r\n                element.triggerHandler(event, data);\r\n            },\r\n            error: function(data) {\r\n                var message = data && data.responseJSON && data.responseJSON.message || \"Error sending action\";\r\n                matchedObject.triggerHandler(\"error\", message);\r\n            }\r\n        });\r\n    };\r\n\r\n    var _startRunTimer = function(element, timer) {\r\n        var minutes = element.attr(\"data-duration\");\r\n        minutes = parseFloat(minutes);\r\n        timer.start({\r\n            countdown: true,\r\n            startValues: {\r\n                minutes: minutes\r\n            }\r\n        });\r\n    };\r\n\r\n    var _startTaktTimer = function(element, timer) {\r\n        element.removeClass(\"hidden\");\r\n        var minutes = element.attr(\"data-duration\");\r\n        minutes = parseFloat(minutes);\r\n        timer.start({\r\n            countdown: true,\r\n            startValues: {\r\n                minutes: minutes\r\n            }\r\n        });\r\n    };\r\n\r\n    var _startStationTimer = function(element, timer, seconds) {\r\n        timer.stop();\r\n        timer.start({ startValues: { seconds: seconds }});\r\n        element.addClass(\"active\");\r\n        element.removeClass(\"stop\");\r\n    };\r\n    \r\n    var _stopStationTimer = function(element, timer) {\r\n        timer.pause();\r\n        element.removeClass(\"active\");\r\n        element.addClass(\"stop\");\r\n    };\r\n\r\n    var _clearStationTimers = function(timers) {\r\n        for(var i = 0, length = timers.length; i < length; i++) {\r\n            timers[i].reset();\r\n        }\r\n        element.removeClass(\"stop\")\r\n        // TODO:review this: add reset class?\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = activeRun;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/run/activeRun.js?");
+eval("__webpack_require__(/*! ../../../css/pages/active_run.css */ \"./src/static/css/pages/active_run.css\");\r\n\r\nconst Timer = __webpack_require__(/*! easytimer.js */ \"./node_modules/easytimer.js/dist/easytimer.js\").Timer;\r\nconst io = __webpack_require__(/*! socket.io-client */ \"./node_modules/socket.io-client/lib/index.js\")\r\n\r\nconst ACTION_TYPES = {\r\n    START_RUN: \"START\",\r\n    MOVE_ITER: \"MOVE\",\r\n    CONTINUE_RUN: \"CONTINUE\",\r\n    KILL: \"KILL\",\r\n    END_RUN: \"END\" //TODO: call this action when the run total time reached zero\r\n  };\r\nObject.freeze(ACTION_TYPES);\r\n\r\nconst TIMER_EVENT = {\r\n    START: \"START\",\r\n    STOP: \"STOP\"\r\n  };\r\nObject.freeze(TIMER_EVENT);\r\n\r\nvar activeRun = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        /** Action buttons **/\r\n        var startButton = jQuery(\".button-start\", matchedObject);\r\n        var moveButton = jQuery(\".button-move\", matchedObject);\r\n        var continueButton = jQuery(\".button-continue\", matchedObject);\r\n        var killButton = jQuery(\".button-kill\", matchedObject);\r\n\r\n        /** Timers **/\r\n        var sations = jQuery(\".stations\", element);\r\n        var stationsNum = sations.attr(\"data-stations_num\");\r\n        var runTimerElement = jQuery(\".run-timer\", element);\r\n        var stationTimersElement = jQuery(\".station-timer\", element);\r\n        var taktTimerElement = jQuery(\".takt-time-desc\", element);\r\n        var runTimer = new Timer();\r\n        var taktTimer = new Timer();\r\n        var stationTimers = [];\r\n\r\n        while (stationsNum > stationTimers.length) {\r\n            stationTimers.push(new Timer());\r\n        }\r\n\r\n        runTimer.addEventListener('secondsUpdated', function () {\r\n            runTimerElement.html(runTimer.getTimeValues().toString());\r\n        });\r\n\r\n        taktTimer.addEventListener('secondsUpdated', function () {\r\n            taktTimerElement.html(taktTimer.getTimeValues().toString());\r\n        });\r\n\r\n        for (var t = 0, length = stationTimers.length; t < length; t++) {\r\n            var timerNum = t + 1;\r\n            stationTimers[t].addEventListener('secondsUpdated', function () {\r\n                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);\r\n                element.html(stationTimers[t].getTimeValues().toString());\r\n            });\r\n\r\n            stationTimers[t].addEventListener('started', function (e) {\r\n                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);\r\n                element.html(stationTimers[t].getTimeValues().toString());\r\n            });\r\n        };\r\n\r\n        var socket = io.connect();\r\n        socket.on('toggleTimer', function(data){\r\n            if (!data || data.length === 0 || data.station <= stationTimers.length ) {\r\n                return;\r\n            }\r\n\r\n            var stationToToggle = data.station;\r\n            var seconds = data.currentTime || 0;\r\n            var timerToUpdate = stationTimers[stationToToggle - 1];\r\n            var station = jQuery(\".station-\" + stationToToggle);\r\n            data.operation === TIMER_EVENT.START && _startStationTimer(station, timerToUpdate, seconds);\r\n            data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);\r\n        });\r\n\r\n        startButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_start\");\r\n        });\r\n\r\n        moveButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_move\");\r\n        });\r\n\r\n        continueButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_continue\");\r\n        });\r\n\r\n        killButton.click(function(event){\r\n            event.preventDefault();\r\n            var element = jQuery(this);\r\n            var activeRunContainer = element.parents(\".active-run-container\");\r\n            activeRunContainer.triggerHandler(\"pre_kill\");\r\n        });\r\n\r\n        matchedObject.bind(\"pre_start\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.START_RUN);\r\n        });\r\n\r\n        matchedObject.bind(\"start_action\", function(event){\r\n            var element = jQuery(this);\r\n            var runTimerElement = jQuery(\".run-timer\", element);\r\n            var taktTimerElement = jQuery(\".takt-time-desc\", element);\r\n            _startRunTimer(runTimerElement, runTimer);\r\n            _startTaktTimer(taktTimerElement, taktTimer);\r\n            startButton.addClass(\"disabled\");\r\n            killButton.removeClass(\"disabled\");\r\n        });\r\n\r\n        matchedObject.bind(\"pre_move\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.MOVE_ITER);\r\n        });\r\n\r\n        matchedObject.bind(\"move_action\", function(event){\r\n            moveButton.addClass(\"disabled\");\r\n            continueButton.removeClass(\"disabled\");\r\n            _clearStationTimers(stationTimers);\r\n        });\r\n\r\n        matchedObject.bind(\"pre_continue\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.CONTINUE_RUN);\r\n        });\r\n\r\n        matchedObject.bind(\"continue_action\", function(event){\r\n            continueButton.addClass(\"disabled\");\r\n        });\r\n\r\n        matchedObject.bind(\"pre_kill\", function(event) {\r\n            var element = jQuery(this);\r\n            _sendActionType(element, ACTION_TYPES.KILL);\r\n        });\r\n\r\n        matchedObject.bind(\"kill_action\", function(event){\r\n            var buttons = jQuery(\".button\" ,matchedObject);\r\n            buttons.addClass(\"disabled\");\r\n            // TODO: redirects to where?\r\n            //TODO: improve this\r\n            window.location.href = '/';\r\n        });\r\n    };\r\n\r\n    var _sendActionType = function(element, actionType) {\r\n        var startButton = jQuery(\".button-start\", element);\r\n        var url = startButton.attr(\"href\");\r\n\r\n        jQuery.ajax({\r\n            url: url,\r\n            type: 'POST',\r\n            contentType: 'application/json',\r\n            data: JSON.stringify({\r\n                \"actionType\": actionType,\r\n            }),\r\n            success: function(data, status) {\r\n                var event = actionType.toLowerCase() + \"_action\";\r\n                element.triggerHandler(event, data);\r\n            },\r\n            error: function(data) {\r\n                var message = data && data.responseJSON && data.responseJSON.message || \"Error sending action\";\r\n                matchedObject.triggerHandler(\"error\", message);\r\n            }\r\n        });\r\n    };\r\n\r\n    var _startRunTimer = function(element, timer) {\r\n        var minutes = element.attr(\"data-duration\");\r\n        minutes = parseFloat(minutes);\r\n        timer.start({\r\n            countdown: true,\r\n            startValues: {\r\n                minutes: minutes\r\n            }\r\n        });\r\n    };\r\n\r\n    var _startTaktTimer = function(element, timer) {\r\n        element.removeClass(\"hidden\");\r\n        var minutes = element.attr(\"data-duration\");\r\n        minutes = parseFloat(minutes);\r\n        timer.start({\r\n            countdown: true,\r\n            startValues: {\r\n                minutes: minutes\r\n            }\r\n        });\r\n    };\r\n\r\n    var _startStationTimer = function(element, timer, seconds) {\r\n        timer.stop();\r\n        timer.start({ startValues: { seconds: seconds }});\r\n        element.addClass(\"active\");\r\n        element.removeClass(\"stop\");\r\n    };\r\n\r\n    var _stopStationTimer = function(element, timer) {\r\n        timer.pause();\r\n        element.removeClass(\"active\");\r\n        element.addClass(\"stop\");\r\n    };\r\n\r\n    var _clearStationTimers = function(timers) {\r\n        for(var i = 0, length = timers.length; i < length; i++) {\r\n            timers[i].reset();\r\n        }\r\n        element.removeClass(\"stop\")\r\n        // TODO:review this: add reset class?\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = activeRun;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/run/activeRun.js?");
 
 /***/ }),
 
