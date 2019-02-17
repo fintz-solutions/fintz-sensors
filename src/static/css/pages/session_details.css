@@ -1,0 +1,78 @@
+.body .main-content .session-show {
+    height: 100%;
+}
+
+.body .session-show .header {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 20%;
+    padding: 25px 25px 25px 25px;
+    width: 100%;
+}
+
+.body .session-show .session-details-container {
+    height: 36%;
+}
+
+.body .session-show .session-details-container .details {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 80%;
+    padding: 0% 0% 0% 6%;
+}
+
+.body .session-show .session-details-container .details .column{
+    display: inline-block;
+    margin-right: 20%;
+    text-align: center;
+}
+
+.body .session-show .list-runs-container {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 60%;
+    margin-top: 3%;
+}
+
+.body .session-show .header .title {
+    display: inline-block;
+}
+
+.body .session-show .header .subtitle {
+    color: #4298c0;
+    display: inline-block;
+    font-size: 15px;
+    margin-left: 3px;
+}
+
+.body .session-show .list-runs-container .runs-content {
+    font-size: 16px;
+    font-weight: 500;
+    height: 80%;
+    margin: 0px auto 0px auto;
+    position: relative;
+}
+
+.body .session-show .list-runs-container .runs-content .column {
+    display: inline-block;
+    text-align: center;
+    width: 20%;
+}
+
+.body .session-show .list-runs-container .runs-content .list-runs {
+    height: 90%;
+    overflow: scroll;
+    position: relative;
+}

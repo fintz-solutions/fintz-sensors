@@ -1,13 +1,15 @@
-html {
+html,
+.body,
+.body .app {
     height: 100%;
+    width: 100%;
 }
 .body {
-    background-color: #ffffff;
     display: block;
-    font-family: Arial, "Open Sans", "Helvetica Neue", Helvetica, sans-serif;
-    font-size: 20px;
-    height: 100%;
     margin: 0px 0px 0px 0px;
+    font-family: 'Lato', sans-serif;
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased;
 }
 
 .body .hidden {
@@ -15,20 +17,149 @@ html {
 }
 
 .body .button.disabled {
-    opacity: 0.5;
-    -o-opacity: 0.5;
-    -ms-opacity: 0.5;
-    -moz-opacity: 0.5;
-    -khtml-opacity: 0.5;
-    -webkit-opacity: 0.5;
+    background-color: #ededed;
+    color: #a7a9ac;
+    border: #fcfcfc;
     pointer-events: none;
     text-decoration: none;
 }
 
-.content{
-    background-color: #f4f6f9;
+.body .button  {
+    border-radius: 25px;
+    text-align: center;
+    height: 30px;
+    cursor: pointer;
+    outline: none;
+}
+
+.body .button.button-blue  {
+    background-color: #4298c0;
+    color: #ffffff;
+    border: #fcfcfc;
+}
+
+.body .button.button-blue.disabled  {
+    background-color: #ededed;
+    color: #a7a9ac;
+    border: #fcfcfc;
+    pointer-events: none;
+    text-decoration: none;
+}
+
+.body .button.button-white  {
+    background-color: #ffffff;
+    color: #000000;
+    border: #fcfcfc 1px solid;
+}
+
+.body select,
+.body input[type=text] {
+    background: #fcfcfc;
+    border: 1px solid #ededed;
+    border-radius: 25px;
+    height: 30px;
+    font-size: 13px;
+    font-weight: 600;
+    padding-left: 20px;
+    box-sizing: border-box;
+    width: 60%;
+    color: #000000;
+}
+
+.body select:focus,
+.body input[type=text]:focus {
+    border: 3px solid #a7a9ac;
+    outline: none;
+}
+
+.body .app {
+    background-color: #ededed;
+    margin: 0px 0px 0px 0px;
     height: 100%;
-    margin: 0px auto 0px auto;
-    padding: 5px 5px 5px 5px;
+    color: #000000;
+}
+
+.body .app .content {
+    height: 100%;
+    display: inline-block;
+    position: absolute;
+    width: 80%;
+    right: 0px;
+    padding: 4% 3% 4% 3%;
+    box-sizing: border-box;
+}
+
+body .app .content .container {
+    background: #ffffff;
+    border-radius: 8px;
+    /* box-shadow: #a7a9ac 0px 1px 20px 1px */
+}
+
+.body .app .footer {
+    position: absolute;
+    bottom: 4%;
     width: 100%;
+}
+
+.body .app .footer .logo {
+    width: 70px;
+    box-sizing: border-box;
+    position: absolute;
+    /* bottom: 3%; */
+    right: 3%;
+}
+
+h1, h2, h3, p, ul, li {
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+}
+
+h2 {
+    text-transform: uppercase;
+    font-size: 16px;
+    font-weight: 800;
+    letter-spacing: 1px;
+}
+
+ul {
+    list-style: none;
+}
+
+a {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+a:visited {
+    text-decoration: inherit;
+    color: inherit;
+    cursor: auto;
+}
+
+::-webkit-input-placeholder { /* Chrome */
+    color: #a7a9ac;
+}
+:-ms-input-placeholder { /* IE 10+ */
+    color: #a7a9ac;
+}
+::-moz-placeholder { /* Firefox 19+ */
+    color: #a7a9ac;
+    opacity: 1;
+}
+:-moz-placeholder { /* Firefox 4 - 18 */
+    color: #a7a9ac;
+    opacity: 1;
+}
+
+::-webkit-scrollbar {
+    -webkit-appearance: none;
+    width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+    border-radius: 25px;
+    border: 1px solid #ffffff;
+    background-color: #ededed;
+    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);
 }

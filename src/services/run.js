@@ -29,7 +29,7 @@ const acceptedActionsTypes = {
     //TODO then mark iteration as done(add a stop time)
     //TODO NELSON block socket events for project(meaning it does not exist an iteration with a start time only)
     MOVE_ITER: {
-        key: "MOVE",
+        key: "MOVE_ITER",
         canExecute: function (project, run, iteration, measurements) {
             let baseCheck = (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
@@ -59,13 +59,22 @@ const acceptedActionsTypes = {
     CONTINUE: {
         key: "CONTINUE",
         canExecute: function (project, run, iteration, measurements) {
-            return (project.status === "RUNNING" &&
+            let baseCheck = (project.status === "RUNNING" &&
                 run.status === "RUNNING" &&
                 iteration &&
                 !iteration.startTime &&
                 !iteration.stopTime &&
                 Array.isArray(measurements) &&
-                measurements.length === 0);
+                measurements.length === project.numStations);
+
+            if(baseCheck) {
+                let result = measurements.every(function (measurement) {
+                    return !measurement.startTime && !measurement.stopTime
+                });
+                return result;
+            } else {
+                return false;
+            }
         }
     },
     //TODO NELSON -> destroy the project and info associated to it(runs, iterations, measurements and events)
@@ -130,7 +139,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
                 return Promise.all(promises).then(function (results) {
                     let previousIterationNumber = iteration.number;
                     let createWithAStartTime = false;
-                    return run.createNewIterationForRun(previousIterationNumber, createWithAStartTime).then(function (createdIteration) {
+                    return run.createNewIterationForRun(previousIterationNumber, createWithAStartTime, project.numStations).then(function (createdIteration) {
                         return {
                             project: project,
                             run: run,
@@ -210,8 +219,7 @@ const executeRunAction = async function (project, run, iteration, measurements, 
             }
             break;
         default:
-            return null;
-        //TODO NELSON think how to handle the default case(throw an error or simply return as null)
+            errorUtil.createAndThrowGenericError(`Invalid action: ${actionType}`, 400);
     }
 };
 

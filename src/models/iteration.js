@@ -30,15 +30,11 @@ Iteration.statics.deleteIterationById = function (iterationId) {
         if (iteration && iteration._doc) {
             return iteration.remove().then(function (deletedIteration) {
                 if (deletedIteration && deletedIteration._doc) {
-                    return deletedIteration._doc;
-                    /*
                     let promises = [];
                     promises.push(deletedIteration.deleteAssociatedMeasurementsForIteration());
-                    //TODO NELSON delete associated measurements here deletedIteration.deleteAssociatedMeasurementsForIteration()
-                    return Promise.all(promises, function (results) {
+                    return Promise.all(promises).then(function (results) {
                         return deletedIteration._doc;
                     });
-                     */
                 } else {
                     return null;
                 }
@@ -64,7 +60,7 @@ Iteration.statics.createAndInitializeIteration = function(iteration, numStations
             };
             measurementsArray.push(measurementData);
         }
-        return measurementModel.insertMany(measurementsArray).then(function (_) {
+        return measurementModel.insertMany(measurementsArray).then(function (results) {
             return newIteration;
         });
     });
@@ -75,6 +71,19 @@ Iteration.methods.findMeasurementsForIteration = function() {
     let iterationObj = this;
     return measurementModel.findAllByIterationId(iterationObj._doc._id).then(function(measurements){
         return measurements;
+    });
+};
+
+Iteration.methods.deleteAssociatedMeasurementsForIteration = function() {
+    let deletedIteration = this;
+    return deletedIteration.findMeasurementsForIteration().then(function(measurementsToDelete) {
+        let promises = [];
+        measurementsToDelete.forEach(function(measurementToDelete, index) {
+            promises.push(measurementModel.deleteMeasurementById(measurementToDelete.id));
+        });
+        return Promise.all(promises).then(function(results) {
+            return deletedIteration._doc;
+        });
     });
 };
 

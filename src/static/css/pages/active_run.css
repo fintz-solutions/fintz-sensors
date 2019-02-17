@@ -1,101 +1,168 @@
-.body .header-run {
-    background-color: #3584b5;
-    border: 2px solid black;
-    height: 15%;
+.body .run-show,
+.body .active-run-container {
+    height: 100%;
 }
 
-.body .header-run .logo .image {
-    height: 50px;
-    position: absolute;
-    right: 3%;
-    text-align: right;
-    top: 4%;
-    width: auto;
+.body .side-menu .active-run-tab {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    padding: 50px 0px 50px 0px;
 }
 
-.body .header-run .run-timer {
-    color: #ffffff;
-    font-size: 60px;
-    height: 50px;
-    line-height: 50px;
-    margin: auto auto auto auto;
-    margin-bottom: 1%;
-    margin-top: 3%;
-    position: relative;
+.body .active-run-tab .button-actions-run .button {
+    margin-top: 15px;
+}
+
+/* run-timer-container */
+.body .run-timer-container {
+    height: 20%;
+}
+
+.body .run-timer-container .run-timer {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 100%;
+    padding: 10px 0px 10px 0px;
     text-align: center;
 }
 
-.body .header-run .takt-time {
-    color: #ffffff;
-    font-size: 20px;
-    left: 3%;
-    position: absolute;
-    text-align: left;
-    top: 4%;
-    width: auto;
-}
-.body .header-run .takt-time-desc {
-    color: #ffffff;
-    font-size: 20px;
-    left: 3%;
-    position: absolute;
-    text-align: left;
-    top: 7%;
-    width: auto;
+.body .run-timer-container .run-timer .timer-values {
+    font-size: 0px;
 }
 
-.body .stations .station {
-    background-color: #ffffff;
-    border: 2px solid black;
-    border-top: 1px solid black;
-    display: block;
-    height: 100px;
-    padding-left: 15%;
-    padding-right: 15%;
-    position: relative;
+.body .run-timer-container .run-timer .timer-values .value,
+.body .run-timer-container .run-timer .timer-values .separator {
+    font-size: 50px;
+    font-weight: 300;
 }
 
-.body .button-actions-run .button {
-    background-color: whitesmoke;
-    border: 2px solid black;
-    border-top: 1px solid black;
-    float: left;
-    height: 30px;
-    margin-top: 1%;
-    position: center;
-    text-align: center;
-    width: 15%;
+.body .run-timer-container .run-timer .timer-labels {
+    font-size: 0px;
 }
 
-.body .stations .station.active {
-    background-color: green;
+.body .run-timer-container .run-timer .timer-labels .separator,
+.body .run-timer-container .run-timer .timer-labels .label {
+    font-size: 16px;
+    font-weight: 900;
 }
 
-.body .stations .station.stop {
-    background-color: red;
-}
-
-.body .stations .station.off {
-    background-color: lightgrey;
-}
-
-.body .stations .stationsRow {
-    float: left;
-    width: 50%;
-}
-
-.body .stations .station .info p {
+.body .run-timer-container .run-timer .hours,
+.body .run-timer-container .run-timer .mins,
+.body .run-timer-container .run-timer .secs {
     display: inline-block;
-    font-size: 35px;
+    text-align: center;
+    width: 10%;
 }
 
-.body .stations .station .info .name {
-    margin-top: 35px;
-    text-align: left;
-    width: 30%;
+.body .run-timer-container .run-timer .separator {
+    display: inline-block;
+    text-align: center;
+    width: 10px;
 }
 
-.body .stations .station .info .timer {
+/* stations-container */
+.body .stations-container {
+    height: 76%;
+    margin-top: 3%;
+}
+
+.body .stations-container .header {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 15%;
+    padding: 25px 25px 25px 25px;
+    width: 100%;
+}
+
+.body .stations-container .stations-content {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 85%;
+    padding: 0px 25px 25px 25px;
+}
+
+.body .stations-container .stations-content .station {
+    background-color: #ededed;
+    border: 1px solid #a7a9ac;
+    border-radius: 25px 25px 25px 25px;
+    -o-border-radius: 25px 25px 25px 25px;
+    -ms-border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -khtml-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    border-width: thin;
+    color: #000000;
+    height: 10%;
+    margin: 0% 0% 1% 0%;
+}
+
+.body .stations-container .stations-content .station.stopped {
+    background-color: #03e28c;
+    border: 1px solid #ffffff;
+    border-width: thin;
+    color: #ffffff;
+}
+
+.body .stations-container .stations-content .station.active {
+    background-color: #4298c0;
+    border: 1px solid #ffffff;
+    border-width: thin;
+    color: #ffffff;
+}
+
+.body .stations-container .stations-content .station .info-container {
+    font-size: 0px;
+    height: 100%;
+}
+
+.body .stations-container .stations-content .station .info {
+    display: inline-block;
+    font-size: 26px;
+    height: 100%;
+    line-height: 150%;
+    vertical-align: middle;
+}
+
+.body .stations-container .stations-content .station .station-num {
+    color: #a7a9ac;
+    font-weight: 900;
     text-align: right;
-    width: 65%;
+    width: 8%;
+}
+
+.body .stations-container .stations-content .station.active .station-num,
+.body .stations-container .stations-content .station.stopped .station-num {
+    color: #ffffff;
+}
+
+.body .stations-container .stations-content .station .station-timer {
+    display: inline-block;
+    font-weight: 300;
+    text-align: center;
+    width: 90%;
+}
+
+.body .stations-container .stations-content .station.idle .station-timer {
+    color: #000000;
+}
+
+.body .stations-container .stations-content .station .station-timer .separator {
+    margin: 0px 8px 0px 8px;
 }

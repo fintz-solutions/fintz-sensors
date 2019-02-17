@@ -5,21 +5,22 @@ const io = require('socket.io-client')
 
 const ACTION_TYPES = {
     START_RUN: "START",
-    MOVE_ITER: "MOVE",
+    MOVE_ITER: "MOVE_ITER",
     CONTINUE_RUN: "CONTINUE",
     KILL: "KILL",
-    END_RUN: "END" //TODO: call this action when the run total time reached zero
-  };
+    END: "END"
+};
 Object.freeze(ACTION_TYPES);
 
 const TIMER_EVENT = {
     START: "START",
     STOP: "STOP"
-  };
+};
 Object.freeze(TIMER_EVENT);
 
 var activeRun = function(element) {
     var matchedObject = jQuery(element);
+    var _body = jQuery("body", document);
 
     var init = function() {
         if (!matchedObject || matchedObject.length === 0) {
@@ -33,19 +34,17 @@ var activeRun = function(element) {
         }
 
         /** Action buttons **/
-        var startButton = jQuery(".button-start", matchedObject);
-        var moveButton = jQuery(".button-move", matchedObject);
-        var continueButton = jQuery(".button-continue", matchedObject);
-        var killButton = jQuery(".button-kill", matchedObject);
+        var sideMenu = jQuery(".side-menu", _body);
+        var startButton = jQuery(".button-start", sideMenu);
+        var moveButton = jQuery(".button-move", sideMenu);
+        var continueButton = jQuery(".button-continue", sideMenu);
+        var killButton = jQuery(".button-kill", sideMenu);
 
         /** Timers **/
-        var sations = jQuery(".stations", element);
-        var stationsNum = sations.attr("data-stations_num");
+        var stationsElement = jQuery(".stations", element);
+        var stationsNum = stationsElement.attr("data-stations_num");
         var runTimerElement = jQuery(".run-timer", element);
-        var stationTimersElement = jQuery(".station-timer", element);
-        var taktTimerElement = jQuery(".takt-time-desc", element);
         var runTimer = new Timer();
-        var taktTimer = new Timer();
         var stationTimers = [];
 
         while (stationsNum > stationTimers.length) {
@@ -53,29 +52,48 @@ var activeRun = function(element) {
         }
 
         runTimer.addEventListener('secondsUpdated', function () {
-            runTimerElement.html(runTimer.getTimeValues().toString());
+            var values = jQuery(".timer-values", runTimerElement);
+            var hours = jQuery(".hours", values);
+            var mins = jQuery(".mins", values);
+            var secs = jQuery(".secs", values);
+            hours.html(runTimer.getTimeValues().toString(["hours"]));
+            mins.html(runTimer.getTimeValues().toString(["minutes"]));
+            secs.html(runTimer.getTimeValues().toString(["seconds"]));
         });
 
-        taktTimer.addEventListener('secondsUpdated', function () {
-            taktTimerElement.html(taktTimer.getTimeValues().toString());
+        runTimer.addEventListener('targetAchieved', function (e) {
+            _endRun(stationTimers);
+            matchedObject.triggerHandler("pre_end");
         });
 
         for (var t = 0, length = stationTimers.length; t < length; t++) {
-            var timerNum = t + 1;
-            stationTimers[t].addEventListener('secondsUpdated', function () {
-                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[t].getTimeValues().toString());
+            let timerIndex = t;
+            let timerNum = t + 1;
+            let currentTimer = stationTimers[timerIndex];
+            currentTimer.addEventListener('secondsUpdated', function () {
+                let element = jQuery('.station-timer-' + timerNum, stationsElement);
+                let hours = jQuery(".hours", element);
+                let mins = jQuery(".mins", element);
+                let secs = jQuery(".secs", element);
+                hours.html(currentTimer.getTimeValues().toString(["hours"]));
+                mins.html(currentTimer.getTimeValues().toString(["minutes"]));
+                secs.html(currentTimer.getTimeValues().toString(["seconds"]));
             });
 
-            stationTimers[t].addEventListener('started', function (e) {
-                var element = jQuery('.station-timer-' + timerNum, stationTimersElement);
-                element.html(stationTimers[t].getTimeValues().toString());
+            currentTimer.addEventListener('started', function (e) {
+                let element = jQuery('.station-timer-' + timerNum, stationsElement);
+                let hours = jQuery(".hours", element);
+                let mins = jQuery(".mins", element);
+                let secs = jQuery(".secs", element);
+                hours.html(currentTimer.getTimeValues().toString(["hours"]));
+                mins.html(currentTimer.getTimeValues().toString(["minutes"]));
+                secs.html(currentTimer.getTimeValues().toString(["seconds"]));
             });
         };
 
         var socket = io.connect();
         socket.on('toggleTimer', function(data){
-            if (!data || data.length === 0 || data.station <= stationTimers.length ) {
+            if (!data || data.station > stationTimers.length ) {
                 return;
             }
 
@@ -87,31 +105,43 @@ var activeRun = function(element) {
             data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
         });
 
+        stationsElement.bind("station_stopped", function (event) {
+            var element = jQuery(this);
+            var stationsList = jQuery(".station", element);
+            var stoppedStations = stationsList.filter(".stopped");
+            var allStopped = stationsList.length === stoppedStations.length;
+            moveButton.toggleClass("disabled", !allStopped);
+        });
+
         startButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_start");
         });
 
         moveButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_move");
         });
 
         continueButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_continue");
         });
 
         killButton.click(function(event){
             event.preventDefault();
             var element = jQuery(this);
-            var activeRunContainer = element.parents(".active-run-container");
+            var body = element.parents(".body");
+            var activeRunContainer = jQuery(".active-run-container", body);
             activeRunContainer.triggerHandler("pre_kill");
         });
 
@@ -123,9 +153,7 @@ var activeRun = function(element) {
         matchedObject.bind("start_action", function(event){
             var element = jQuery(this);
             var runTimerElement = jQuery(".run-timer", element);
-            var taktTimerElement = jQuery(".takt-time-desc", element);
             _startRunTimer(runTimerElement, runTimer);
-            _startTaktTimer(taktTimerElement, taktTimer);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -135,10 +163,13 @@ var activeRun = function(element) {
             _sendActionType(element, ACTION_TYPES.MOVE_ITER);
         });
 
-        matchedObject.bind("move_action", function(event){
+        matchedObject.bind("move_iter_action", function(event){
+            var element = jQuery(this);
             moveButton.addClass("disabled");
             continueButton.removeClass("disabled");
-            _clearStationTimers(stationTimers);
+            var stationsList = jQuery(".station", element);
+            _clearStationTimers(stationsList);
+            // TODO: retrieve iteration number from data
         });
 
         matchedObject.bind("pre_continue", function(event) {
@@ -156,16 +187,35 @@ var activeRun = function(element) {
         });
 
         matchedObject.bind("kill_action", function(event){
-            var buttons = jQuery(".button" ,matchedObject);
+            var element = jQuery(this);
+            var _body = element.parents(".body");
+            var sideMenu = jQuery(".side-menu", _body);
+            var buttons = jQuery(".button", sideMenu);
             buttons.addClass("disabled");
             // TODO: redirects to where?
             //TODO: improve this
             window.location.href = '/';
         });
+
+        matchedObject.bind("pre_end", function(event){
+            var element = jQuery(this);
+            _sendActionType(element, ACTION_TYPES.END);
+        });
+
+        matchedObject.bind("end_action", function(event){
+            var element = jQuery(this);
+            var _body = element.parents(".body");
+            var sideMenu = jQuery(".side-menu", _body);
+            var buttons = jQuery(".button", sideMenu);
+            buttons.addClass("disabled");
+            //TODO: add popup! and redirect to project page
+        });
     };
 
     var _sendActionType = function(element, actionType) {
-        var startButton = jQuery(".button-start", element);
+        var _body = element.parents(".body");
+        var sideMenu = jQuery(".side-menu", _body);
+        var startButton = jQuery(".button-start", sideMenu);
         var url = startButton.attr("href");
 
         jQuery.ajax({
@@ -197,37 +247,42 @@ var activeRun = function(element) {
         });
     };
 
-    var _startTaktTimer = function(element, timer) {
-        element.removeClass("hidden");
-        var minutes = element.attr("data-duration");
-        minutes = parseFloat(minutes);
-        timer.start({
-            countdown: true,
-            startValues: {
-                minutes: minutes
-            }
-        });
-    };
-
     var _startStationTimer = function(element, timer, seconds) {
         timer.stop();
         timer.start({ startValues: { seconds: seconds }});
         element.addClass("active");
-        element.removeClass("stop");
+        element.removeClass("idle stopped");
     };
 
     var _stopStationTimer = function(element, timer) {
         timer.pause();
-        element.removeClass("active");
-        element.addClass("stop");
+        element.removeClass("active idle");
+        element.addClass("stopped");
+        let stationsElement = element.parents(".stations");
+        stationsElement.triggerHandler("station_stopped");
     };
 
-    var _clearStationTimers = function(timers) {
-        for(var i = 0, length = timers.length; i < length; i++) {
-            timers[i].reset();
+    var _clearStationTimers = function(stationsList) {
+        stationsList.each(function(){
+            let element = jQuery(this);
+            let hours = jQuery(".hours", element);
+            let mins = jQuery(".mins", element);
+            let secs = jQuery(".secs", element);
+            hours.html("00");
+            mins.html("00");
+            secs.html("00");
+            element.removeClass("stopped");
+            element.addClass("idle");
+        });
+    };
+
+    var _endRun = function(timers) {
+        for(let i = 0, length = timers.length; i < length; i++) {
+            let timerToUpdate = timers[i];
+            let stationToToggle = i + 1;
+            let station = jQuery(".station-" + stationToToggle);
+            _stopStationTimer(station, timerToUpdate);
         }
-        element.removeClass("stop")
-        // TODO:review this: add reset class?
     };
 
     init();

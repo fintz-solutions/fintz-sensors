@@ -1,28 +1,25 @@
-require("../css/layout.css");
-require("../css/partials/form.css");
-// require("../css/pages/landing.css");
-// require("../css/pages/project_details.css");
-// require("../css/pages/run_details.css");
-
 var jQuery = $ = require('jquery');
 window.$ = window.jQuery = jQuery;
 
 (function(jQuery) {
     jQuery.fn.fintzsensors = function() {
-        var createProjectPlugin = require("./pages/landing/createProject");
-        var deleteProjectPlugin = require("./pages/landing/deleteProject");
+        var uiPlugin = require("./ui/fintzSensorsUI.js");
+        var createSessionPlugin = require("./pages/landing/createSession");
+        var deleteSessionPlugin = require("./pages/landing/deleteSession");
         var activeRunPlugin = require("./pages/run/activeRun");
 
 
         // retrieves the current context as the matched object, this
         // is considered to be the default/expected behaviour
         var matchedObject = this;
-        var addProjectForm = jQuery(".form.add-project", matchedObject);
-        var deleteProjectButton = jQuery(".button.delete-project", matchedObject);
+        var fintzSensorsApp = jQuery(".fintz-sensors", matchedObject);
+        var addSessionForm = jQuery(".form.add-session", matchedObject);
+        var deleteSessionButton = jQuery(".button.delete-session", matchedObject);
         var activeRunContainer = jQuery(".active-run-container", matchedObject);
 
-        createProjectPlugin(addProjectForm);
-        deleteProjectPlugin(deleteProjectButton);
+        uiPlugin(fintzSensorsApp);
+        createSessionPlugin(addSessionForm);
+        deleteSessionPlugin(deleteSessionButton);
         activeRunPlugin(activeRunContainer);
 
         // returns the current context to the caller function/method
