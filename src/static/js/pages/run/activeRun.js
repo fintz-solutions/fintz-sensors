@@ -208,7 +208,7 @@ var activeRun = function(element) {
             var sideMenu = jQuery(".side-menu", _body);
             var buttons = jQuery(".button", sideMenu);
             buttons.addClass("disabled");
-            //TODO: add popup! and redirect to project page
+            //TODO: add popup! and redirect to session page
         });
     };
 

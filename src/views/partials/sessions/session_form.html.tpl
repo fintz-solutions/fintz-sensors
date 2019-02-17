@@ -2,7 +2,7 @@
     <div class="header">
         <h2 class="title">Create Session</h2>
     </div>
-    <form class="form form-ajax add-session" action="/projects" method="post">
+    <form class="form form-ajax add-session" action="/sessions" method="post">
         <div class="group left">
             <div class="field">
                 <label class="label" for="session_name"><span>Name</span></label>

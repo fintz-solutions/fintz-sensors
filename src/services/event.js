@@ -5,7 +5,7 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
-module.exports.createEvent = async function(project, run, eventData) {
+module.exports.createEvent = async function(session, run, eventData) {
     let result = requestValidation.isValidBody(["type", "subtype"], eventData);
     if (result.status === true) {
         eventData.run = run._id;

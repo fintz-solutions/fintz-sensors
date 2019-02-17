@@ -10,8 +10,8 @@
                         <span class="info date" data-timestamp="{{ session.createdAt }}"></span>
                         <span class="info name">{{ session.name }}</span>
                         <span class="buttons button-actions">
-                            <a class="button button-blue button-open show-session" href="/projects/{{ session.number }}">Open</a>
-                            <a class="button button-delete delete-session" href="/projects/{{ session.number }}" data-number="{{ session.number }}"><span><img class="icon" src="/images/trash_bin.svg"/></span>Delete</a>
+                            <a class="button button-blue button-open show-session" href="/sessions/{{ session.number }}">Open</a>
+                            <a class="button button-delete delete-session" href="/sessions/{{ session.number }}" data-number="{{ session.number }}"><span><img class="icon" src="/images/trash_bin.svg"/></span>Delete</a>
                         </span>
                     </span>
                 </li>

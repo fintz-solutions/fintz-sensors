@@ -2,7 +2,7 @@ const path = require("path");
 const modelsFolder = global.modelsFolder;
 const measurementModel = require(path.resolve(modelsFolder, "measurement")).Measurement;
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
-const iterationModel = require(path.resolve(modelsFolder, "iteration")).Project;
+const iterationModel = require(path.resolve(modelsFolder, "iteration")).Iteration;
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 const requestValidation = require(path.resolve(global.utilsFolder, "requestValidation"));
 
