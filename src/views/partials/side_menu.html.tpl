@@ -8,11 +8,29 @@
 {% endif %}
 <div class="side-content">
     {% if isHomepage %}
-        <div id="homepage-tab" class="homepage-tab">
-            {# TODO: #}
-            {# show last finnished project #}
-            {# total iterations implemented #}
-            {# or info about selected project #}
+        <div id="homepage-tab" class="tab homepage-tab">
+            <div class="header">
+                <h1 class="side-title">Kart Factory</h1>
+                <h2 class="side-subtitle"><span class="label">Program</span></h2>
+            </div>
+            <div class="preview-session info hidden">
+                <p class="preview-header">Session Preview</p>
+                <div class="group-number">
+                    <p class="info">Session #<span class="value number"></span></p>
+                </div>
+                <div class="group-status">
+                    <p class="info">Status: <span class="value status"></span></p>
+                </div>
+                <div class="group-stations">
+                    <p class="info">Stations: <span class="value num-stations"></span></p>
+                </div>
+                <div class="group-runs">
+                    <p class="info">Runs: <span class="value num-runs"></span></p>
+                </div>
+                <div class="group-target">
+                    <p class="info">Target: <span class="value target"></span></p>
+                </div>
+            </div>
         </div>
     {% elif title in ("Session Details") %}
         <div id="session-details-tab" class="tab session-details-tab">
@@ -23,7 +41,6 @@
                 <a class="button button-blue button-session button-charts" href="/projects/{{ session.number }}/stats">Stats</a>
             </div>
         </div>
-        {# TODO: if Active Run / Run Details #}
     {% elif title in ("Run Details") %}
         {% set completed_run = run.status in ('FINISHED') %}
         <div id="active-run-tab" class="tab active-run-tab">

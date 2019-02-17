@@ -1,87 +1,87 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/     // The module cache
+/******/     var installedModules = {};
 /******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/     // The require function
+/******/     function __webpack_require__(moduleId) {
 /******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
+/******/         // Check if module is in cache
+/******/         if(installedModules[moduleId]) {
+/******/             return installedModules[moduleId].exports;
+/******/         }
+/******/         // Create a new module (and put it into the cache)
+/******/         var module = installedModules[moduleId] = {
+/******/             i: moduleId,
+/******/             l: false,
+/******/             exports: {}
+/******/         };
 /******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/         // Execute the module function
+/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
+/******/         // Flag the module as loaded
+/******/         module.l = true;
 /******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/         // Return the exports of the module
+/******/         return module.exports;
+/******/     }
 /******/
 /******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/     // expose the modules object (__webpack_modules__)
+/******/     __webpack_require__.m = modules;
+/******/
+/******/     // expose the module cache
+/******/     __webpack_require__.c = installedModules;
+/******/
+/******/     // define getter function for harmony exports
+/******/     __webpack_require__.d = function(exports, name, getter) {
+/******/         if(!__webpack_require__.o(exports, name)) {
+/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/         }
+/******/     };
+/******/
+/******/     // define __esModule on exports
+/******/     __webpack_require__.r = function(exports) {
+/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/         }
+/******/         Object.defineProperty(exports, '__esModule', { value: true });
+/******/     };
+/******/
+/******/     // create a fake namespace object
+/******/     // mode & 1: value is a module id, require it
+/******/     // mode & 2: merge all properties of value into the ns
+/******/     // mode & 4: return value when already ns object
+/******/     // mode & 8|1: behave like require
+/******/     __webpack_require__.t = function(value, mode) {
+/******/         if(mode & 1) value = __webpack_require__(value);
+/******/         if(mode & 8) return value;
+/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/         var ns = Object.create(null);
+/******/         __webpack_require__.r(ns);
+/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/         return ns;
+/******/     };
+/******/
+/******/     // getDefaultExport function for compatibility with non-harmony modules
+/******/     __webpack_require__.n = function(module) {
+/******/         var getter = module && module.__esModule ?
+/******/             function getDefault() { return module['default']; } :
+/******/             function getModuleExports() { return module; };
+/******/         __webpack_require__.d(getter, 'a', getter);
+/******/         return getter;
+/******/     };
+/******/
+/******/     // Object.prototype.hasOwnProperty.call
+/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/     // __webpack_public_path__
+/******/     __webpack_require__.p = "";
+/******/
+/******/
+/******/     // Load entry module and return exports
+/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -205,7 +205,7 @@ eval("\nmodule.exports = function(a, b){\n  var fn = function(){};\n  fn.prototy
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"html,\\r\\n.body,\\r\\n.body .app {\\r\\n    height: 100%;\\r\\n    width: 100%;\\r\\n}\\r\\n.body {\\r\\n    display: block;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    font-family: 'Lato', sans-serif;\\r\\n    font-size: 16px;\\r\\n}\\r\\n\\r\\n.body .hidden {\\r\\n    display: none;\\r\\n}\\r\\n\\r\\n.body .button.disabled {\\r\\n    background-color: #ededed;\\r\\n    color: #a7a9ac;\\r\\n    border: #fcfcfc;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.body .button  {\\r\\n    border-radius: 25px;\\r\\n    text-align: center;\\r\\n    height: 30px;\\r\\n    cursor: pointer;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .button.button-blue  {\\r\\n    background-color: #4298c0;\\r\\n    color: #ffffff;\\r\\n    border: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .button.button-blue.disabled  {\\r\\n    background-color: #ededed;\\r\\n    color: #a7a9ac;\\r\\n    border: #fcfcfc;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.body .button.button-white  {\\r\\n    background-color: #ffffff;\\r\\n    color: #000000;\\r\\n    border: #fcfcfc 1px solid;\\r\\n}\\r\\n\\r\\n.body select,\\r\\n.body input[type=text] {\\r\\n    background: #fcfcfc;\\r\\n    border: 1px solid #ededed;\\r\\n    border-radius: 25px;\\r\\n    height: 30px;\\r\\n    font-size: 13px;\\r\\n    font-weight: 600;\\r\\n    padding-left: 20px;\\r\\n    box-sizing: border-box;\\r\\n    width: 60%;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body select:focus,\\r\\n.body input[type=text]:focus {\\r\\n    border: 3px solid #a7a9ac;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .app {\\r\\n    background-color: #ededed;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    height: 100%;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .app .content {\\r\\n    height: 100%;\\r\\n    display: inline-block;\\r\\n    position: absolute;\\r\\n    width: 80%;\\r\\n    right: 0px;\\r\\n    padding: 4% 3% 4% 3%;\\r\\n    box-sizing: border-box;\\r\\n}\\r\\n\\r\\nbody .app .content .container {\\r\\n    background: #ffffff;\\r\\n    border-radius: 8px;\\r\\n}\\r\\n\\r\\n.body .app .footer {\\r\\n    position: absolute;\\r\\n    bottom: 4%;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .app .footer .logo {\\r\\n    width: 70px;\\r\\n    box-sizing: border-box;\\r\\n    position: absolute;\\r\\n    /* bottom: 3%; */\\r\\n    right: 3%;\\r\\n}\\r\\n\\r\\nh1, h2, h3, p, ul, li {\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    padding: 0px 0px 0px 0px;\\r\\n}\\r\\n\\r\\nh2 {\\r\\n    text-transform: uppercase;\\r\\n    font-size: 16px;\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\nul {\\r\\n    list-style: none;\\r\\n}\\r\\n\\r\\na {\\r\\n    text-decoration: inherit;\\r\\n    color: inherit;\\r\\n    cursor: auto;\\r\\n}\\r\\n\\r\\na:visited {\\r\\n    text-decoration: inherit;\\r\\n    color: inherit;\\r\\n    cursor: auto;\\r\\n}\\r\\n\\r\\n::-webkit-input-placeholder { /* Chrome */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n:-ms-input-placeholder { /* IE 10+ */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n::-moz-placeholder { /* Firefox 19+ */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n:-moz-placeholder { /* Firefox 4 - 18 */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar {\\r\\n    -webkit-appearance: none;\\r\\n    width: 10px;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar-thumb {\\r\\n    border-radius: 25px;\\r\\n    border: 1px solid #ffffff;\\r\\n    background-color: #ededed;\\r\\n    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/layout.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \"html,\\r\\n.body,\\r\\n.body .app {\\r\\n    height: 100%;\\r\\n    width: 100%;\\r\\n}\\r\\n.body {\\r\\n    display: block;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    font-family: 'Lato', sans-serif;\\r\\n    font-size: 16px;\\r\\n    -webkit-font-smoothing: antialiased;\\r\\n}\\r\\n\\r\\n.body .hidden {\\r\\n    display: none;\\r\\n}\\r\\n\\r\\n.body .button.disabled {\\r\\n    background-color: #ededed;\\r\\n    color: #a7a9ac;\\r\\n    border: #fcfcfc;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.body .button  {\\r\\n    border-radius: 25px;\\r\\n    text-align: center;\\r\\n    height: 30px;\\r\\n    cursor: pointer;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .button.button-blue  {\\r\\n    background-color: #4298c0;\\r\\n    color: #ffffff;\\r\\n    border: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .button.button-blue.disabled  {\\r\\n    background-color: #ededed;\\r\\n    color: #a7a9ac;\\r\\n    border: #fcfcfc;\\r\\n    pointer-events: none;\\r\\n    text-decoration: none;\\r\\n}\\r\\n\\r\\n.body .button.button-white  {\\r\\n    background-color: #ffffff;\\r\\n    color: #000000;\\r\\n    border: #fcfcfc 1px solid;\\r\\n}\\r\\n\\r\\n.body select,\\r\\n.body input[type=text] {\\r\\n    background: #fcfcfc;\\r\\n    border: 1px solid #ededed;\\r\\n    border-radius: 25px;\\r\\n    height: 30px;\\r\\n    font-size: 13px;\\r\\n    font-weight: 600;\\r\\n    padding-left: 20px;\\r\\n    box-sizing: border-box;\\r\\n    width: 60%;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body select:focus,\\r\\n.body input[type=text]:focus {\\r\\n    border: 3px solid #a7a9ac;\\r\\n    outline: none;\\r\\n}\\r\\n\\r\\n.body .app {\\r\\n    background-color: #ededed;\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    height: 100%;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .app .content {\\r\\n    height: 100%;\\r\\n    display: inline-block;\\r\\n    position: absolute;\\r\\n    width: 80%;\\r\\n    right: 0px;\\r\\n    padding: 4% 3% 4% 3%;\\r\\n    box-sizing: border-box;\\r\\n}\\r\\n\\r\\nbody .app .content .container {\\r\\n    background: #ffffff;\\r\\n    border-radius: 8px;\\r\\n}\\r\\n\\r\\n.body .app .footer {\\r\\n    position: absolute;\\r\\n    bottom: 4%;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .app .footer .logo {\\r\\n    width: 70px;\\r\\n    box-sizing: border-box;\\r\\n    position: absolute;\\r\\n    /* bottom: 3%; */\\r\\n    right: 3%;\\r\\n}\\r\\n\\r\\nh1, h2, h3, p, ul, li {\\r\\n    margin: 0px 0px 0px 0px;\\r\\n    padding: 0px 0px 0px 0px;\\r\\n}\\r\\n\\r\\nh2 {\\r\\n    text-transform: uppercase;\\r\\n    font-size: 16px;\\r\\n    font-weight: 800;\\r\\n    letter-spacing: 2px;\\r\\n}\\r\\n\\r\\nul {\\r\\n    list-style: none;\\r\\n}\\r\\n\\r\\na {\\r\\n    text-decoration: inherit;\\r\\n    color: inherit;\\r\\n    cursor: auto;\\r\\n}\\r\\n\\r\\na:visited {\\r\\n    text-decoration: inherit;\\r\\n    color: inherit;\\r\\n    cursor: auto;\\r\\n}\\r\\n\\r\\n::-webkit-input-placeholder { /* Chrome */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n:-ms-input-placeholder { /* IE 10+ */\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n::-moz-placeholder { /* Firefox 19+ */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n:-moz-placeholder { /* Firefox 4 - 18 */\\r\\n    color: #a7a9ac;\\r\\n    opacity: 1;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar {\\r\\n    -webkit-appearance: none;\\r\\n    width: 10px;\\r\\n}\\r\\n\\r\\n::-webkit-scrollbar-thumb {\\r\\n    border-radius: 25px;\\r\\n    border: 1px solid #ffffff;\\r\\n    background-color: #ededed;\\r\\n    -webkit-box-shadow: 0 0 1px rgba(255,255,255,.5);\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/layout.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -249,7 +249,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .side-menu {\\r\\n    background: #ffffff;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    margin: auto auto auto auto;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar {\\r\\n    background-color: #4298c0;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    width: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content {\\r\\n    height: 100%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    margin-left: 50px;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .tab {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 100%;\\r\\n    padding: 50px 0px 50px 0px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .header{\\r\\n    margin: 0px auto 20px auto;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .label {\\r\\n    color: #ffffff;\\r\\n    display: block;\\r\\n    font-size: 10px;\\r\\n    font-weight: 400;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    padding: 6px 0px 6px 0px;\\r\\n    text-align: center;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar link-homepage,\\r\\n.body .side-menu .side-bar .icon {\\r\\n    display: block;\\r\\n    margin: 0px auto 0px auto;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    width: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .link {\\r\\n    cursor: pointer;\\r\\n    display: block;\\r\\n    margin-top: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions {\\r\\n    bottom: 50px;\\r\\n    display: block;\\r\\n    position: absolute;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions .button {\\r\\n    display: block;\\r\\n    font-size: 16px;\\r\\n    line-height: 28px;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n    width: 80%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 23px;\\r\\n    font-weight: 500;\\r\\n    margin: 0px auto 0px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title .hash{\\r\\n    font-size: 20px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    color: #4298c0;\\r\\n    font-size: 23px;\\r\\n    font-weight: 800;\\r\\n    margin: 5px auto 5px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle .label {\\r\\n    border-bottom: 2px solid #4298c0;\\r\\n    padding: 0px 6px 10px 0px;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/partials/side_menu.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .side-menu {\\r\\n    background: #ffffff;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    margin: auto auto auto auto;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar {\\r\\n    background-color: #4298c0;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    width: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content {\\r\\n    height: 100%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    margin-left: 50px;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .tab {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 100%;\\r\\n    padding: 50px 0px 50px 0px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .side-title {\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .header {\\r\\n    height: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .side-subtitle .label {\\r\\n    border: none;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .preview-header {\\r\\n    color: #a7a9ac;\\r\\n    font-weight: 800;\\r\\n    text-align: center;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group-number {\\r\\n    font-weight: 800;\\r\\n    margin-bottom: 20px;\\r\\n    text-align: center;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group-number .info {\\r\\n    font-size: 15px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .info {\\r\\n    font-size: 13px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .info .value {\\r\\n    font-size: 13px;\\r\\n    font-weight: bold;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .header{\\r\\n    margin: 0px auto 20px auto;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .label {\\r\\n    color: #ffffff;\\r\\n    display: block;\\r\\n    font-size: 10px;\\r\\n    font-weight: 400;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    padding: 6px 0px 6px 0px;\\r\\n    text-align: center;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar link-homepage,\\r\\n.body .side-menu .side-bar .icon {\\r\\n    display: block;\\r\\n    margin: 0px auto 0px auto;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    width: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .link {\\r\\n    cursor: pointer;\\r\\n    display: block;\\r\\n    margin-top: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions {\\r\\n    bottom: 50px;\\r\\n    display: block;\\r\\n    position: absolute;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions .button {\\r\\n    display: block;\\r\\n    font-size: 16px;\\r\\n    line-height: 28px;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n    width: 80%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 23px;\\r\\n    font-weight: 500;\\r\\n    margin: 0px auto 0px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title .hash{\\r\\n    font-size: 20px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    color: #4298c0;\\r\\n    font-size: 23px;\\r\\n    font-weight: 800;\\r\\n    margin: 5px auto 5px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle .label {\\r\\n    border-bottom: 2px solid #4298c0;\\r\\n    padding: 0px 6px 10px 0px;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/partials/side_menu.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -2298,7 +2298,7 @@ eval("__webpack_require__(/*! ../../../css/pages/active_run.css */ \"./src/stati
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ../../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n__webpack_require__(/*! ../../css/partials/side_menu.css */ \"./src/static/css/partials/side_menu.css\");\r\n__webpack_require__(/*! ../../css/pages/landing.css */ \"./src/static/css/pages/landing.css\");\r\n\r\nconst moment = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\")\r\n\r\nvar fintzSensorsUI = function(element) {\r\n    var matchedObject = jQuery(element);\r\n    var listSessions = jQuery(\".list-sessions\", element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _updateDateFormats(listSessions);\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        var sessions = jQuery(\".element-session\", listSessions);\r\n\r\n        sessions.each(function(){\r\n            var session = jQuery(this);\r\n            session.click(function(){\r\n                var element = jQuery(this);\r\n                sessions.removeClass(\"selected\");\r\n                element.addClass(\"selected\");\r\n\r\n            });\r\n        });\r\n    };\r\n\r\n    var _updateDateFormats = function (element) {\r\n        var dates = jQuery(\".date\", element);\r\n        dates.each(function(){\r\n            var _element = jQuery(this);\r\n            var timestamp = _element.attr(\"data-timestamp\");\r\n            _element.text(moment.unix(timestamp).format(\"DD/MM/YYYY\"));\r\n        });\r\n    }\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = fintzSensorsUI;\r\n\n\n//# sourceURL=webpack:///./src/static/js/ui/fintzSensorsUI.js?");
+eval("__webpack_require__(/*! ../../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n__webpack_require__(/*! ../../css/partials/side_menu.css */ \"./src/static/css/partials/side_menu.css\");\r\n__webpack_require__(/*! ../../css/pages/landing.css */ \"./src/static/css/pages/landing.css\");\r\n\r\nconst moment = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\")\r\n\r\nvar fintzSensorsUI = function(element) {\r\n    var _body = jQuery(\"body\", document);\r\n    var matchedObject = jQuery(element);\r\n    var listSessions = jQuery(\".list-sessions\", element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _updateDateFormats(listSessions);\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        var sessions = jQuery(\".element-session\", listSessions);\r\n        var sideMenu = jQuery(\".side-menu\", matchedObject);\r\n        var homePageTab = jQuery(\".homepage-tab\", sideMenu);\r\n\r\n        sessions.each(function(){\r\n            var session = jQuery(this);\r\n            session.click(function(){\r\n                var element = jQuery(this);\r\n                sessions.removeClass(\"selected\");\r\n                element.addClass(\"selected\");\r\n                homePageTab.triggerHandler(\"session_selected\");\r\n            });\r\n        });\r\n\r\n        homePageTab.bind(\"session_selected\", function() {\r\n            var element = jQuery(this);\r\n            var sessionPreview = jQuery(\".preview-session\", element)\r\n            var listSessions = jQuery(\".list-sessions\", _body);\r\n            var sessions = jQuery(\".element-session\", listSessions);\r\n            var selected = sessions.filter(\".selected\");\r\n            var number = jQuery(\".number\", sessionPreview);\r\n            var status = jQuery(\".status\", sessionPreview);\r\n            var numStations = jQuery(\".num-stations\", sessionPreview);\r\n            var numRuns = jQuery(\".num-runs\", sessionPreview);\r\n            var target = jQuery(\".target\", sessionPreview);\r\n\r\n            sessionPreview.removeClass(\"hidden\");\r\n            number.html(selected.attr(\"data-number\"));\r\n            status.html(selected.attr(\"data-status\"));\r\n            numStations.html(selected.attr(\"data-stations\"));\r\n            numRuns.html(selected.attr(\"data-runs\"));\r\n            target.html(selected.attr(\"data-target\"));\r\n        });\r\n    };\r\n\r\n    var _updateDateFormats = function (element) {\r\n        var dates = jQuery(\".date\", element);\r\n        dates.each(function(){\r\n            var _element = jQuery(this);\r\n            var timestamp = _element.attr(\"data-timestamp\");\r\n            _element.text(moment.unix(timestamp).format(\"DD/MM/YYYY\"));\r\n        });\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = fintzSensorsUI;\r\n\n\n//# sourceURL=webpack:///./src/static/js/ui/fintzSensorsUI.js?");
 
 /***/ }),
 
