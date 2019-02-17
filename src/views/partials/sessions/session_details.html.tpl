@@ -21,7 +21,9 @@
     </div>
     <div class="runs-content">
         <div class="columns">
-            <div class="column">number</div><div class="column">duration</div><div class="column">status</div>
+            <div class="column">number</div>
+            <div class="column">duration</div>
+            <div class="column">status</div>
         </div>
         <ul class="list list-runs">
             {% for run in session.runs | sort(false, false, "number") %}
@@ -31,9 +33,9 @@
                     <div class="column">{{ run.number }}</div>
                     <div class="column">{{ run.totalTime }}</div>
                     <div class="column">{{ run.status }}</div>
-                    {% if completed_run %}
-                        <div class="column">iterations: {{ run.iterations | length }} |</div>
-                    {% endif %}
+                    {# {% if completed_run %}
+                        <div class="column">{{ run.iterations | length }}</div>
+                    {% endif %} #}
                     <span class="buttons button-actions">
                         <a class="button button-run button-start {% if completed_run %}hidden{% endif %}" href="/projects/{{ session.number }}/runs/{{ run.number }}">start</a>
                         {# TODO: change charts by /run_summary page #}
