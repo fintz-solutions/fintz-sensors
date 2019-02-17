@@ -5,7 +5,13 @@
     <div class="sessions-content">
         <ul class="list list-sessions">
             {% for session in sessions | sort(true, false, "createdAt") %}
-                <li class="element element-session" data-number="{{ session.number }}">
+                <li class="element element-session"
+                    data-number="{{ session.number }}"
+                    data-name="{{ session.name }}"
+                    data-status="{{ session.status }}"
+                    data-runs="{{ session.numRuns  }}"
+                    data-stations="{{ session.numStations }}"
+                    data-target="{{ session.productionTarget }}">
                     <span class="row">
                         <span class="info date" data-timestamp="{{ session.createdAt }}"></span>
                         <span class="info name">{{ session.name }}</span>

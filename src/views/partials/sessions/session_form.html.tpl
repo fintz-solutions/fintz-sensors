@@ -44,7 +44,7 @@
             </div>
             <div class="field">
                 <label class="label" for="production_target">Target</label>
-                <input type="text" class="production-target-field" name="production_target" pattern=".{1,3}" maxlength="3" placeholder="production target">
+                <input type="text" class="production-target-field" name="production_target" pattern=".{1,3}" maxlength="3" placeholder="production per run">
             </div>
         </div>
         <input class="button button-blue button-submit" type="submit" value="Create Session">

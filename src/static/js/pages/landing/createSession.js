@@ -63,10 +63,16 @@ var createSession = function(element) {
             element.removeClass("error");
         });
 
-        matchedObject.bind("success", function() {
+        matchedObject.bind("success", function(event, data) {
+            if(!data || data.length === 0) {
+                return;
+            }
+
             var element = jQuery(this);
             element.removeClass("loading");
             element.addClass("success");
+            var baseUrl = element.attr("action");
+            window.location.href = baseUrl ? baseUrl + "/" + data.data.number : "/";
         });
 
         matchedObject.bind("error", function(event, message) {
