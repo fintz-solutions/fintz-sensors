@@ -31,6 +31,43 @@
     padding: 50px 0px 50px 0px;
 }
 
+.body .side-menu .side-content .homepage-tab .side-title {
+    font-weight: 800;
+}
+
+.body .side-menu .side-content .homepage-tab .header {
+    height: 40%;
+}
+
+.body .side-menu .side-content .homepage-tab .side-subtitle .label {
+    border: none;
+}
+
+.body .side-menu .side-content .homepage-tab .preview-session .preview-header {
+    color: #a7a9ac;
+    font-weight: 800;
+    text-align: center;
+}
+
+.body .side-menu .side-content .homepage-tab .preview-session .group-number {
+    font-weight: 800;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.body .side-menu .side-content .homepage-tab .preview-session .group-number .info {
+    font-size: 15px;
+}
+
+.body .side-menu .side-content .homepage-tab .preview-session .info {
+    font-size: 13px;
+}
+
+.body .side-menu .side-content .homepage-tab .preview-session .info .value {
+    font-size: 13px;
+    font-weight: bold;
+}
+
 .body .side-menu .side-content .header{
     margin: 0px auto 20px auto;
 }
