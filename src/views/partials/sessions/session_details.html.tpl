@@ -1,20 +1,24 @@
-<div class="session-summary">
-    <h2>{{ title }}</h2>
-    <p class="name">#{{ session.number }} | {{ session.name }}</p>
-    <p class="status">status: {{ session.status }}</p>
-    <p class="date">created at: {{ session.createdAt }}</p>
-    <p class="stations">stations: {{ session.numStations }}</p>
-    <p class="production-target">production target: {{ session.productionTarget }}</p>
-    <div class="runs">
-        <p class="total-runs">total runs: {{ session.numRuns }}</p>
-        <p class="time-run">time per run: {{ session.timePerRun }}</p>
-        <p class="header" style="font-weight:bold;">
-            <span>number |</span>
-            <span>status |</span>
-            <span>duration |</span>
-            <span>iterations |</span>
-        </p>
-        <ul class="list list-runs" style="list-style-type:none">
+
+{# <p class="name">#{{ session.number }} | {{ session.name }}</p>
+<p class="status">status: {{ session.status }}</p>
+<p class="date">created at: {{ session.createdAt }}</p>
+<p class="stations">stations: {{ session.numStations }}</p>
+<p class="production-target">production target: {{ session.productionTarget }}</p> #}
+<div class="container session-details-container">
+    <div class="header">
+        <h2 class="title">Session</h2>
+        <h2 class="subtitle">Details</h2>
+    </div>
+</div>
+<div class="container list-runs-container">
+    {# <p class="total-runs">total runs: {{ session.numRuns }}</p>
+    <p class="time-run">time per run: {{ session.timePerRun }}</p> #}
+    <div class="header">
+        <h2 class="title">Session</h2>
+        <h2 class="subtitle">Runs</h2>
+    </div>
+    <div class="runs-content">
+        <ul class="list list-runs">
             {% for run in session.runs | sort(false, false, "number") %}
                 {% set active_run = run.status in ('RUNNING') %}
                 {% set completed_run = run.status in ('FINISHED') %}
