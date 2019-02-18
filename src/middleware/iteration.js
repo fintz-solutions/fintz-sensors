@@ -1,6 +1,6 @@
 const path = require("path");
 const modelsFolder = global.modelsFolder;
-const projectModel = require(path.resolve(modelsFolder, "project")).Project;
+const sessionModel = require(path.resolve(modelsFolder, "session")).Session;
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 

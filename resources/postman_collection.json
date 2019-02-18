@@ -1,6 +1,6 @@
 {
     "info": {
-        "_postman_id": "633fd819-8b9e-4ed7-a3fa-788fd5c274cd",
+        "_postman_id": "b23c864f-f59b-414a-9f3e-e029d5a39651",
         "name": "meshSensors",
         "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
     },
@@ -37,7 +37,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects/:projectNumber",
+            "name": "http://localhost:3001/sessions/:sessionNumber",
             "protocolProfileBehavior": {
                 "disableBodyPruning": true
             },
@@ -56,14 +56,14 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/1",
+                    "raw": "http://localhost:3001/sessions/1",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "projects",
+                        "sessions",
                         "1"
                     ]
                 }
@@ -84,7 +84,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"number\":  1,\n    \"startTimeStamp\": \"1-11-2018\",\n    \"totalTime\":   20,\n    \"status\": \"CREATED\",\n    \"project\": \"5c0c67a86b7a0e0c87248e5b\",\n    \"currentIteration\": 1\n}"
+                    "raw": "{\n\t\"number\":  1,\n    \"startTimeStamp\": \"1-11-2018\",\n    \"totalTime\":   20,\n    \"status\": \"CREATED\",\n    \"session\": \"5c0c67a86b7a0e0c87248e5b\",\n    \"currentIteration\": 1\n}"
                 },
                 "url": {
                     "raw": "http://localhost:3001/run",
@@ -101,7 +101,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects/:projectNumber",
+            "name": "http://localhost:3001/sessions/:sessionNumber",
             "request": {
                 "method": "DELETE",
                 "header": [],
@@ -110,14 +110,14 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/1",
+                    "raw": "http://localhost:3001/sessions/1",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "projects",
+                        "sessions",
                         "1"
                     ]
                 }
@@ -125,7 +125,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects",
+            "name": "http://localhost:3001/sessions",
             "request": {
                 "method": "POST",
                 "header": [
@@ -138,24 +138,24 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"name\": \"A test project\",\n\t\"numStations\":   2,\n\t\"numRuns\": 2,\n\t\"timePerRun\": 1,\n\t\"productionTarget\": 20\n}"
+                    "raw": "{\n\t\"name\": \"A test session\",\n\t\"numStations\":   2,\n\t\"numRuns\": 2,\n\t\"timePerRun\": 1,\n\t\"productionTarget\": 20\n}"
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects",
+                    "raw": "http://localhost:3001/sessions",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "projects"
+                        "sessions"
                     ]
                 }
             },
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects",
+            "name": "http://localhost:3001/sessions",
             "request": {
                 "method": "GET",
                 "header": [
@@ -171,14 +171,14 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects",
+                    "raw": "http://localhost:3001/sessions",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "projects"
+                        "sessions"
                     ]
                 }
             },
@@ -198,7 +198,7 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\n\t\"type\": \"QUALITY\",\n\t\"run\" : \"5c281134827fd8c72340c601\"\n}"
+                    "raw": "{\n\t\"type\": \"QUALITY\",\n\t\"subtype\" : \"ASSEMBLY_ERROR\"\n}"
                 },
                 "url": {
                     "raw": "http://localhost:3001/events",
@@ -215,7 +215,7 @@
             "response": []
         },
         {
-            "name": "http://localhost:3001/projects/1/runs/1",
+            "name": "http://localhost:3001/sessions/1/runs/1",
             "request": {
                 "method": "POST",
                 "header": [
@@ -231,14 +231,14 @@
                     "raw": "{\n\t\"actionType\": \"END_RUN\"\n}"
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/1/runs/2",
+                    "raw": "http://localhost:3001/sessions/1/runs/2",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "projects",
+                        "sessions",
                         "1",
                         "runs",
                         "2"
@@ -248,7 +248,7 @@
             "response": []
         },
         {
-            "name": "GET http://localhost:3001/projects/:projectNumber/runs/:runNumber",
+            "name": "GET http://localhost:3001/sessions/:sessionNumber/runs/:runNumber",
             "protocolProfileBehavior": {
                 "disableBodyPruning": true
             },
@@ -267,17 +267,53 @@
                     "raw": ""
                 },
                 "url": {
-                    "raw": "http://localhost:3001/projects/1/runs/2",
+                    "raw": "http://localhost:3001/sessions/1/runs/1",
                     "protocol": "http",
                     "host": [
                         "localhost"
                     ],
                     "port": "3001",
                     "path": [
-                        "projects",
+                        "sessions",
                         "1",
                         "runs",
-                        "2"
+                        "1"
+                    ]
+                }
+            },
+            "response": []
+        },
+        {
+            "name": "http://localhost:3001/timers",
+            "request": {
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    },
+                    {
+                        "key": "Postman-Token",
+                        "value": "c7c98f28-d997-4384-9a94-73202ccdcc0c"
+                    },
+                    {
+                        "key": "cache-control",
+                        "value": "no-cache"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\n    \"stationNumber\": 2\n}"
+                },
+                "url": {
+                    "raw": "http://localhost:3001/timers",
+                    "protocol": "http",
+                    "host": [
+                        "localhost"
+                    ],
+                    "port": "3001",
+                    "path": [
+                        "timers"
                     ]
                 }
             },

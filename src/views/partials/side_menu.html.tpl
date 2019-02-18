@@ -38,7 +38,7 @@
                 <h1 class="side-title">Session <span class="hash">#</span>{{ session.number }}</h1>
             </div>
             <div class="buttons button-actions">
-                <a class="button button-blue button-session button-charts" href="/projects/{{ session.number }}/stats">Stats</a>
+                <a class="button button-blue button-session button-charts" href="/sessions/{{ session.number }}/stats">Stats</a>
             </div>
         </div>
     {% elif title in ("Run Details") %}
@@ -50,14 +50,14 @@
             </div>
             {% if not completed_run %}
                 <div class="buttons button-actions button-actions-run">
-                    <a class="button button-blue button-start {% if completed_run %}disabled{% endif%}" href="/projects/{{ session.number }}/runs/{{ run.number }}">Start</a>
-                    <a class="button button-blue button-move disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">Move</a>
-                    <a class="button button-blue button-continue disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">Continue</a>
-                    <a class="button button-blue button-kill disabled" href="/projects/{{ session.number }}/runs/{{ run.number }}">Kill</a>
+                    <a class="button button-blue button-start {% if completed_run %}disabled{% endif%}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Start</a>
+                    <a class="button button-blue button-move disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Move</a>
+                    <a class="button button-blue button-continue disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Continue</a>
+                    <a class="button button-blue button-kill disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Kill</a>
                 </div>
             {% else %}
                 <div class="buttons button-actions">
-                    <a class="button button-blue button-run button-charts" href="/projects/{{ session.number }}/runs/{{ run.number }}/stats">Stats</a>
+                    <a class="button button-blue button-run button-charts" href="/sessions/{{ session.number }}/runs/{{ run.number }}/stats">Stats</a>
                 </div>
             {% endif %}
         </div>

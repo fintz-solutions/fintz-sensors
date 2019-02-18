@@ -25,9 +25,9 @@ let Run = new Schema({
         enum: ['CREATED', 'RUNNING', 'FINISHED'],
         default: 'CREATED'
     },
-    project: {
+    session: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Project',
+        ref: 'Session',
         required: true
     }
 });
@@ -66,10 +66,10 @@ Run.statics.findByRunId = function (runId) {
 };
 
 
-Run.statics.findAllByProjectId = function (projectId, fetchIterations) {
+Run.statics.findAllBySessionId = function (sessionId, fetchIterations) {
     if (fetchIterations === true) {
         return this.find({
-            project: projectId
+            session: sessionId
         }).then(function (runs) {
             let promises = [];
             runs.forEach(function (run) {
@@ -85,7 +85,7 @@ Run.statics.findAllByProjectId = function (projectId, fetchIterations) {
         });
     } else {
         return this.find({
-            project: projectId
+            session: sessionId
         });
     }
 };
@@ -99,7 +99,7 @@ Run.methods.findLatestIterationForRun = function () {
         return activeIteration;
     }).catch(function (error) {
         console.error(error);
-        errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for project with id ${runObj.project}`, 404);
+        errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for session with id ${runObj.session}`, 404);
     });
 };
 
@@ -113,7 +113,7 @@ Run.methods.findActiveIterationForRun = function () {
         return activeIteration;
     }).catch(function (error) {
         console.error(error);
-        errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for project with id ${runObj.project}`, 404);
+        errorUtil.createAndThrowGenericError(`Could not find an active iteration for run with number ${runObj.number} for session with id ${runObj.session}`, 404);
     });
 };
 
@@ -123,7 +123,7 @@ Run.methods.findAllIterationsForRun = function () {
         return iterations;
     }).catch(function (error) {
         console.error(error);
-        errorUtil.createAndThrowGenericError(`Could not find all iterations for run with number ${runObj.number} for project with id ${runObj.project}`, 404);
+        errorUtil.createAndThrowGenericError(`Could not find all iterations for run with number ${runObj.number} for session with id ${runObj.session}`, 404);
     });
 };
 
@@ -133,7 +133,7 @@ Run.methods.findAllEventsForRun = function () {
         return events;
     }).catch(function (error) {
         console.error(error);
-        errorUtil.createAndThrowGenericError(`Could not find all events for run with number ${runObj.number} for project with id ${runObj.project}`, 404);
+        errorUtil.createAndThrowGenericError(`Could not find all events for run with number ${runObj.number} for session with id ${runObj.session}`, 404);
     });
 };
 
