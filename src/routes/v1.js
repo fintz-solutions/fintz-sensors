@@ -10,6 +10,7 @@ const sessionMiddleware = require(path.resolve(middlewareFolder, "session"));
 const runMiddleware = require(path.resolve(middlewareFolder, "run"));
 const iterationMiddleware = require(path.resolve(middlewareFolder, "iteration"));
 const measurementMiddleware = require(path.resolve(middlewareFolder, "measurement"));
+const statsController = require(path.resolve(controllersFolder, "stats"));
 
 module.exports = function (app, io) {
     // ----- Landing page endpoint ----
@@ -82,8 +83,19 @@ module.exports = function (app, io) {
         measurementMiddleware.getIterationMeasurements,
         runController.get);
 
+    app.get("/sessions/:sessionNumber/runs/:runNumber/stats",
+        sessionMiddleware.getSession,
+        runMiddleware.getRun,
+        iterationMiddleware.getAllIterations,
+        measurementMiddleware.getMeasurementsForIterations,
+        statsController.getRunStats);
+
     //TODO NELSON request to GET in HTML or JSON depending on the request header
     app.get("/sessions/:sessionNumber", sessionController.get);
+
+    app.get("/sessions/:sessionNumber/stats",
+        sessionMiddleware.getCompleteSession,
+        statsController.getSessionStats);
 
     //TODO NELSON NEW STUFF TO DO:
     //TODO NELSON -> new action routes for start, move kart, continue working, and kill session -> see mocks file

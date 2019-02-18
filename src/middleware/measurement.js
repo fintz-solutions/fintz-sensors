@@ -41,5 +41,21 @@ module.exports = {
             req.measurements = [];
             next();
         }
+    },
+    getMeasurementsForIterations: function(req, res, next){
+
+        let promises = [];
+
+        req.iterations.forEach(function(iteration) {
+            promises.push(iteration.findMeasurementsForIteration().then(function(measurements){
+                iteration._doc.measurements = measurements;
+                return iteration;
+            }));
+        });
+
+        return Promise.all(promises).then(function(iterationsWithMeasurements){
+            req.iterations = iterationsWithMeasurements;
+            next();
+        });
     }
 };
