@@ -37,9 +37,9 @@
                         <div class="column">{{ run.iterations | length }}</div>
                     {% endif %} #}
                     <span class="buttons button-actions">
-                        <a class="button button-run button-start {% if completed_run %}hidden{% endif %}" href="/projects/{{ session.number }}/runs/{{ run.number }}">start</a>
+                        <a class="button button-run button-start {% if completed_run %}hidden{% endif %}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">start</a>
                         {# TODO: change charts by /run_summary page #}
-                        <a class="button button-run button-run-details {% if not completed_run %}hidden{% endif %}" href="/projects/{{ session.number }}/runs/{{ run.number }}">open</a>
+                        <a class="button button-run button-run-details {% if not completed_run %}hidden{% endif %}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">open</a>
                     </span>
                 </li>
             {% endfor %}

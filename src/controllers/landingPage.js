@@ -1,11 +1,11 @@
 const path = require("path");
 const servicesFolder = global.servicesFolder;
-const projectService = require(path.resolve(servicesFolder, "project"));
+const sessionService = require(path.resolve(servicesFolder, "session"));
 const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 
 module.exports = {
     show: function(req, res) {
-        projectService.getProjects().then(function(data) {
+        sessionService.getSessions().then(function(data) {
             res.render("pages/landing.html.tpl", {
                 title: global.appTitle,
                 sessions: data,

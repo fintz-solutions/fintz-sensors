@@ -1,12 +1,12 @@
 const path = require("path");
 const controllersFolder = global.controllersFolder;
 const middlewareFolder = global.middlewareFolder;
-const projectController = require(path.resolve(controllersFolder, "project"));
+const sessionController = require(path.resolve(controllersFolder, "session"));
 const runController = require(path.resolve(controllersFolder, "run"));
 const eventController = require(path.resolve(controllersFolder, "event"));
 const timerController = require(path.resolve(controllersFolder, "timer"));
 const landingPageController = require(path.resolve(controllersFolder, "landingPage"));
-const projectMiddleware = require(path.resolve(middlewareFolder, "project"));
+const sessionMiddleware = require(path.resolve(middlewareFolder, "session"));
 const runMiddleware = require(path.resolve(middlewareFolder, "run"));
 const iterationMiddleware = require(path.resolve(middlewareFolder, "iteration"));
 const measurementMiddleware = require(path.resolve(middlewareFolder, "measurement"));
@@ -50,7 +50,7 @@ module.exports = function (app, io) {
     */
 
     app.post('/timers',
-        projectMiddleware.getActiveProject,
+        sessionMiddleware.getActiveSession,
         runMiddleware.getActiveRun,
         iterationMiddleware.getActiveIteration,
         measurementMiddleware.getActiveMeasureForStationIteration,
@@ -59,64 +59,53 @@ module.exports = function (app, io) {
         });
 
     /* EVENTS(SAFETY and QUALITY)  endpoints */
-    app.post("/events", projectMiddleware.getActiveProject, runMiddleware.getActiveRun, eventController.create);
+    app.post("/events", sessionMiddleware.getActiveSession, runMiddleware.getActiveRun, eventController.create);
 
 
-    //------- Project endpoints --------
-    //TODO NELSON request to GET new project HTML page
+    //------- Session endpoints --------
+    //TODO NELSON request to GET new session HTML page
     //TODO NELSON request to move kart ???? -> generates new iteration
     //TODO NELSON request to get the graphs
 
 
-    app.post("/projects", projectController.create);
+    app.post("/sessions", sessionController.create);
 
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/projects", projectController.list);
+    app.get("/sessions", sessionController.list);
 
-    app.delete("/projects/:projectNumber", projectController.delete);
+    app.delete("/sessions/:sessionNumber", sessionController.delete);
 
-    /*
-    app.get("/projects/:projectNumber/runs/:runNumber", function(req, res) {
-        //TODO: just for testing purposes
-        //TODO: needs validations and params names may change
-        res.render("pages/run_show.html.tpl", {
-            project_id: req.params["id"],
-            run: req.params["run"],
-        });
-    });
-    */
-
-    app.get("/projects/:projectNumber/runs/:runNumber",
-        projectMiddleware.getProject,
+    app.get("/sessions/:sessionNumber/runs/:runNumber",
+        sessionMiddleware.getSession,
         runMiddleware.getRun,
         iterationMiddleware.getLatestIteration,
         measurementMiddleware.getIterationMeasurements,
         runController.get);
 
-    app.get("/projects/:projectNumber/runs/:runNumber/stats",
-        projectMiddleware.getProject,
+    app.get("/sessions/:sessionNumber/runs/:runNumber/stats",
+        sessionMiddleware.getSession,
         runMiddleware.getRun,
         iterationMiddleware.getAllIterations,
         measurementMiddleware.getMeasurementsForIterations,
         statsController.getRunStats);
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header
-    app.get("/projects/:projectNumber", projectController.get);
+    app.get("/sessions/:sessionNumber", sessionController.get);
 
-    app.get("/projects/:projectNumber/stats",
-        projectMiddleware.getCompleteProject,
-        statsController.getProjectStats);
+    app.get("/sessions/:sessionNumber/stats",
+        sessionMiddleware.getCompleteSession,
+        statsController.getSessionStats);
 
     //TODO NELSON NEW STUFF TO DO:
-    //TODO NELSON -> new action routes for start, move kart, continue working, and kill project -> see mocks file
-    app.post("/projects/:projectNumber/runs/:runNumber",
-        projectMiddleware.getProject,
+    //TODO NELSON -> new action routes for start, move kart, continue working, and kill session -> see mocks file
+    app.post("/sessions/:sessionNumber/runs/:runNumber",
+        sessionMiddleware.getSession,
         runMiddleware.getRun,
         iterationMiddleware.getLatestIteration,
         measurementMiddleware.getIterationMeasurements,
         runController.update);
 
-    //TODO NELSON send run details on project details route
-    //TODO NELSON redirect to project details template after a new project is created if request originated from HTML -> nope
+    //TODO NELSON send run details on session details route
+    //TODO NELSON redirect to session details template after a new session is created if request originated from HTML -> nope
 };

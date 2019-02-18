@@ -4,7 +4,7 @@ const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 module.exports = {
     isValidStationNumber : function (req, res, next) {
         let stationNumber = req.body.stationNumber && parseInt(req.body.stationNumber);
-        if(stationNumber > 0 && stationNumber <= req.project.numStations) {
+        if(stationNumber > 0 && stationNumber <= req.session.numStations) {
             req.stationNumber = stationNumber;
             next();
         } else {

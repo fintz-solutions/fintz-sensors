@@ -3,7 +3,7 @@ const requestValidation = require(path.resolve(global.utilsFolder, "requestValid
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 const dateUtil = require(path.resolve(global.utilsFolder, "date"));
 
-module.exports.processTimerEvent = async function(project, run, iteration, measurement) {
+module.exports.processTimerEvent = async function(session, run, iteration, measurement) {
 
     if(measurement.startTime === null){
         measurement.startTime = dateUtil.getCurrentTimestamp();

@@ -6,7 +6,7 @@ const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 module.exports.processTimerEvent = function(io, req, res) {
     console.log("timer event");
 
-    timerService.processTimerEvent(req.project._doc, req.run._doc, req.iteration._doc, req.measurement).then(function(timerUpdateData) {
+    timerService.processTimerEvent(req.session._doc, req.run._doc, req.iteration._doc, req.measurement).then(function(timerUpdateData) {
 
         //if(io.sockets.connected. ...) { // TODO validate if exists 1+ socket connections?
         io.emit("toggleTimer", timerUpdateData);

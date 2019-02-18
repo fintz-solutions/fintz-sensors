@@ -1,18 +1,19 @@
+const path = require("path");
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 const colors = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#000000"]; // TODO more colors, find another way
 
-module.exports.getProjectStats = function(project){
+module.exports.getSessionStats = function(session){
 
     let stats = [];
 
-    let projectChart = buildProjectChart(project);
-    stats.push(projectChart);
+    let sessionChart = buildSessionChart(session);
+    stats.push(sessionChart);
 
     return stats;
 };
 
-module.exports.getRunStats = function(project, run, iterations) {
+module.exports.getRunStats = function(session, run, iterations) {
 
     let stats = [];
 
@@ -20,13 +21,13 @@ module.exports.getRunStats = function(project, run, iterations) {
         errorUtil.createAndThrowGenericError("Current Run is not finished.", 400);
     }
 
-    let runChart = buildRunChart(project, iterations);
+    let runChart = buildRunChart(session, iterations);
     stats.push(runChart);
 
     return stats;
 };
 
-function buildRunChart(project, iterations){
+function buildRunChart(session, iterations){
     let completedIterations = iterations.filter(function (iteration) {
         return iteration.stopTime !== null;
     });
@@ -38,7 +39,7 @@ function buildRunChart(project, iterations){
 
     let datasets = [];
 
-    for(let stationIndex=0; stationIndex<project.numStations; stationIndex++) {
+    for(let stationIndex=0; stationIndex<session.numStations; stationIndex++) {
         let stationNumber = stationIndex+1;
 
         let stationTimes = [];
@@ -63,16 +64,16 @@ function buildRunChart(project, iterations){
     return runChart;
 }
 
-function buildProjectChart(project){
+function buildSessionChart(session){
 
     // labels = max nr of iterations
-    let maxIterations = Math.max.apply(null, project.runs.map(run => run._doc.iterations.length));
+    let maxIterations = Math.max.apply(null, session.runs.map(run => run._doc.iterations.length));
     let labels = [];
     for (let i=1; i<=maxIterations; i++) {
         labels.push(i);
     }
 
-    let completedRuns = project.runs.filter(function (run) {
+    let completedRuns = session.runs.filter(function (run) {
         return run.status === 'FINISHED';
     });
 
@@ -85,7 +86,7 @@ function buildProjectChart(project){
     for (let runIndex=0; runIndex<completedRuns.length; runIndex++){
 
         let runNumber = runIndex+1;
-        let currentRun = project.runs.find(function(run){
+        let currentRun = session.runs.find(function(run){
             return run.number === runNumber;
         });
 
@@ -110,9 +111,9 @@ function buildProjectChart(project){
         datasets.push(dataset);
     }
 
-    let projectChart = buildLineChart(labels, datasets, 'Iteration Time per Run', 'Iteration', 'Time (in seconds)');
+    let sessionChart = buildLineChart(labels, datasets, 'Iteration Time per Run', 'Iteration', 'Time (in seconds)');
 
-    return projectChart;
+    return sessionChart;
 }
 
 function buildLineChart(labels, datasets, title, xLabel, yLabel){
