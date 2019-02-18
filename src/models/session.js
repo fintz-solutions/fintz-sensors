@@ -32,7 +32,7 @@ let Session = new Schema({
         min: 1,
         max: 10
     },
-    timePerRun: {//minutes??
+    timePerRun: {//minutes
         type: Number,
         required: true
     },
