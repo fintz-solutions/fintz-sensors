@@ -1,4 +1,3 @@
-const path = require("path");
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 
 const colors = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#000000"]; // TODO more colors, find another way
@@ -6,8 +5,6 @@ const colors = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#000000"]; // TODO 
 module.exports.getProjectStats = function(project){
 
     let stats = [];
-
-    // TODO validations
 
     let projectChart = buildProjectChart(project);
     stats.push(projectChart);
@@ -19,8 +16,9 @@ module.exports.getRunStats = function(project, run, iterations) {
 
     let stats = [];
 
-    // TODO validar se project&run estão em estado válido para gerar gráfico
-    //  errorUtil.createAndThrowGenericError(result.message, 400);
+    if(run.status != "FINISHED"){
+        errorUtil.createAndThrowGenericError("Current Run is not finished.", 400);
+    }
 
     let runChart = buildRunChart(project, iterations);
     stats.push(runChart);
@@ -78,9 +76,9 @@ function buildProjectChart(project){
         return run.status === 'FINISHED';
     });
 
-    //if (completedRuns.length === 0){
-        // TODO throw error
-    //}
+    if (completedRuns.length === 0){
+        errorUtil.createAndThrowGenericError("No completed runs available to build chart.", 400);
+    }
 
     let datasets = [];
 
