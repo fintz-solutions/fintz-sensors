@@ -106,7 +106,7 @@ var activeRun = function(element) {
             data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
         });
 
-        jQuery(document).ready(function(event){  
+        jQuery(document).ready(function(event){
             var element = jQuery(this);
             var runTimerElement = jQuery(".run-timer", element);
             var startTimestamp = runTimerElement.attr("data-start_timestamp") || 0;
@@ -117,7 +117,7 @@ var activeRun = function(element) {
             _updateTimers(runTimerElement, stationsElement, stationTimers);
         });
 
-    
+
         stationsElement.bind("station_stopped", function (event) {
             var element = jQuery(this);
             var stationsList = jQuery(".station", element);
@@ -154,8 +154,8 @@ var activeRun = function(element) {
             event.preventDefault();
             if(!confirm("ATTENTION: Do you really want to kill this session?")) {
                 return;
-            } 
-            
+            }
+
             var element = jQuery(this);
             var body = element.parents(".body");
             var activeRunContainer = jQuery(".active-run-container", body);
