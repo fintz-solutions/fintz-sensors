@@ -1,5 +1,6 @@
 require("../../../css/pages/active_run.css");
 
+const moment = require('moment');
 const Timer = require('easytimer.js').Timer;
 const io = require('socket.io-client')
 
@@ -92,9 +93,6 @@ var activeRun = function(element) {
         };
 
         var socket = io.connect();
-        socket.on("connect", function(data) {
-            console.log("connect")    
-        });
 
         socket.on('toggleTimer', function(data){
             if (!data || data.station > stationTimers.length ) {
@@ -116,9 +114,10 @@ var activeRun = function(element) {
                 return;
             }
 
-            _updateRunTimer(runTimerElement);
+            _updateTimers(runTimerElement, stationsElement, stationTimers);
         });
 
+    
         stationsElement.bind("station_stopped", function (event) {
             var element = jQuery(this);
             var stationsList = jQuery(".station", element);
@@ -153,6 +152,10 @@ var activeRun = function(element) {
 
         killButton.click(function(event){
             event.preventDefault();
+            if(!confirm("ATTENTION: Do you really want to kill this session?")) {
+                return;
+            } 
+            
             var element = jQuery(this);
             var body = element.parents(".body");
             var activeRunContainer = jQuery(".active-run-container", body);
@@ -206,8 +209,6 @@ var activeRun = function(element) {
             var sideMenu = jQuery(".side-menu", _body);
             var buttons = jQuery(".button", sideMenu);
             buttons.addClass("disabled");
-            // TODO: redirects to where?
-            //TODO: improve this
             window.location.href = '/';
         });
 
@@ -301,15 +302,49 @@ var activeRun = function(element) {
         }
     };
 
-    var _updateRunTimer = function(element) {
-        var runDuration = element.attr("data-duration") || 0;
-        var startTimestamp = element.attr("data-start_timestamp") || 0;
+    var _updateTimers = function(runTimerElement, stationsElement, stationTimers) {
+        let runDuration = runTimerElement.attr("data-duration") || 0;
+        let startTimestamp = runTimerElement.attr("data-start_timestamp") || 0;
         startTimestamp = parseInt(startTimestamp);
         runDuration = parseFloat(runDuration) * 60;
-        var currentTimestamp = _getCurrentTimestamp();
-        var updatedSeconds = runDuration - (currentTimestamp - startTimestamp);
-        var activeRunContainer = element.parents(".active-run-container");
+        let currentTimestamp = _getCurrentTimestamp();
+        let updatedSeconds = runDuration - (currentTimestamp - startTimestamp);
+        let hours = jQuery(".timer-values .hours", runTimerElement);
+        let mins = jQuery(".timer-values .mins", runTimerElement);
+        let secs = jQuery(".timer-values .secs", runTimerElement);
+        var duration = moment.duration(updatedSeconds,'seconds')
+        hours.html(moment.utc(duration.as('milliseconds')).format('HH'));
+        mins.html(moment.utc(duration.as('milliseconds')).format('mm'));
+        secs.html(moment.utc(duration.as('milliseconds')).format('ss'));
+
+        _updateStationsTimers(stationsElement, currentTimestamp, stationTimers);
+        let activeRunContainer = runTimerElement.parents(".active-run-container");
         activeRunContainer.triggerHandler("start_action", { "seconds": updatedSeconds });
+    };
+
+    var _updateStationsTimers = function(element, currentTimestamp, stationTimers) {
+        let stations = jQuery(".station", element);
+        stations.each(function(){
+            let station = jQuery(this);
+            let startTime = station.attr("data-start_time");
+            let stopTime = station.attr("data-stop_time");
+            let stationToToggle = station.attr("data-station_num");
+            let timerToUpdate = stationTimers[stationToToggle - 1];
+            if(startTime && !stopTime) {
+                let updatedSeconds = currentTimestamp - parseInt(startTime);
+                _startStationTimer(station, timerToUpdate, updatedSeconds);
+            }  else if(startTime && stopTime) {
+                _stopStationTimer(station, timerToUpdate);
+                let updatedSeconds = parseInt(stopTime) - parseInt(startTime);
+                let hours = jQuery(".hours", station);
+                let mins = jQuery(".mins", station);
+                let secs = jQuery(".secs", station);
+                var duration = moment.duration(updatedSeconds,'seconds')
+                hours.html(moment.utc(duration.as('milliseconds')).format('HH'));
+                mins.html(moment.utc(duration.as('milliseconds')).format('mm'));
+                secs.html(moment.utc(duration.as('milliseconds')).format('ss'));
+            }
+        });
     };
 
     var _getCurrentTimestamp = function () {
