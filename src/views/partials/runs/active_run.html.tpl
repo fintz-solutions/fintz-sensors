@@ -2,7 +2,8 @@
 {% set duration = run.totalTime | string %}
 <div class="active-run-container">
     <div class="container run-timer-container header-run">
-        <div id="run-timer" class="run-timer" data-duration="{{ duration }}">
+    {{ run.startTimestamp }}
+        <div id="run-timer" class="run-timer" data-duration="{{ duration }}" data-start_timestamp="{{ run.startTimestamp }}">
             <p class="timer-values">
                 <span class="value hours">00</span>
                 <span class="separator">:</span>

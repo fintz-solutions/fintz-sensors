@@ -5,21 +5,21 @@
 
 DEBUG: {{ stats }}
 
-	<style>
-	canvas{
-		-moz-user-select: none;
-		-webkit-user-select: none;
-		-ms-user-select: none;
-	}
-	</style>
+    <style>
+    canvas{
+        -moz-user-select: none;
+        -webkit-user-select: none;
+        -ms-user-select: none;
+    }
+    </style>
 
-	{% for stat in stats %}
-	<div id="statsContainerX" style="width:80%;" chartJson="{{stat}}">
-		<canvas id="myChart"></canvas>
-	</div>
-	{% endfor %}
+    {% for stat in stats %}
+    <div id="statsContainerX" style="width:80%;" chartJson="{{stat}}">
+        <canvas id="myChart"></canvas>
+    </div>
+    {% endfor %}
 
-	<script>
+    <script>
     var ctx = document.getElementById("myChart");
     var data = $('#statsContainerX').attr("chartJson");
 

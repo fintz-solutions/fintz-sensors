@@ -37,6 +37,8 @@
 
 .body .run-timer-container .run-timer .timer-values {
     font-size: 0px;
+    padding: 0px 10px;
+    box-sizing: border-box;
 }
 
 .body .run-timer-container .run-timer .timer-values .value,

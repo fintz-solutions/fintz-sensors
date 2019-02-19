@@ -92,17 +92,31 @@ var activeRun = function(element) {
         };
 
         var socket = io.connect();
+        socket.on("connect", function(data) {
+            console.log("connect")    
+        });
+
         socket.on('toggleTimer', function(data){
             if (!data || data.station > stationTimers.length ) {
                 return;
             }
-
             var stationToToggle = data.station;
             var seconds = data.currentTime || 0;
             var timerToUpdate = stationTimers[stationToToggle - 1];
             var station = jQuery(".station-" + stationToToggle);
             data.operation === TIMER_EVENT.START && _startStationTimer(station, timerToUpdate, seconds);
             data.operation === TIMER_EVENT.STOP && _stopStationTimer(station, timerToUpdate);
+        });
+
+        jQuery(document).ready(function(event){  
+            var element = jQuery(this);
+            var runTimerElement = jQuery(".run-timer", element);
+            var startTimestamp = runTimerElement.attr("data-start_timestamp") || 0;
+            if(!startTimestamp) {
+                return;
+            }
+
+            _updateRunTimer(runTimerElement);
         });
 
         stationsElement.bind("station_stopped", function (event) {
@@ -150,10 +164,10 @@ var activeRun = function(element) {
             _sendActionType(element, ACTION_TYPES.START_RUN);
         });
 
-        matchedObject.bind("start_action", function(event){
+        matchedObject.bind("start_action", function(event, options){
             var element = jQuery(this);
             var runTimerElement = jQuery(".run-timer", element);
-            _startRunTimer(runTimerElement, runTimer);
+            _startRunTimer(runTimerElement, runTimer, options);
             startButton.addClass("disabled");
             killButton.removeClass("disabled");
         });
@@ -236,13 +250,15 @@ var activeRun = function(element) {
         });
     };
 
-    var _startRunTimer = function(element, timer) {
+    var _startRunTimer = function(element, timer, options) {
+        var options = options || {};
         var minutes = element.attr("data-duration");
         minutes = parseFloat(minutes);
+        var seconds = options.seconds || minutes * 60 || "00";
         timer.start({
             countdown: true,
             startValues: {
-                minutes: minutes
+                seconds: seconds
             }
         });
     };
@@ -284,6 +300,21 @@ var activeRun = function(element) {
             _stopStationTimer(station, timerToUpdate);
         }
     };
+
+    var _updateRunTimer = function(element) {
+        var runDuration = element.attr("data-duration") || 0;
+        var startTimestamp = element.attr("data-start_timestamp") || 0;
+        startTimestamp = parseInt(startTimestamp);
+        runDuration = parseFloat(runDuration) * 60;
+        var currentTimestamp = _getCurrentTimestamp();
+        var updatedSeconds = runDuration - (currentTimestamp - startTimestamp);
+        var activeRunContainer = element.parents(".active-run-container");
+        activeRunContainer.triggerHandler("start_action", { "seconds": updatedSeconds });
+    };
+
+    var _getCurrentTimestamp = function () {
+        return Math.floor(Date.now() /1000);
+    }
 
     init();
     bind();
