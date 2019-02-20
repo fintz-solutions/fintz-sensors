@@ -4,12 +4,15 @@ const errorUtil = require(path.resolve(global.utilsFolder, "error"));
 const colors = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#000000"]; // TODO more colors, find another way
 
 module.exports.getSessionStats = function(session){
-
     let stats = [];
-
-    let sessionChart = buildSessionChart(session);
-    stats.push(sessionChart);
-
+    
+    try {
+        let sessionChart = buildSessionChart(session);
+        stats.push(sessionChart);
+    } catch (error) {
+        console.error(error)
+    }
+    
     return stats;
 };
 
@@ -17,12 +20,16 @@ module.exports.getRunStats = function(session, run, iterations) {
 
     let stats = [];
 
-    if(run.status != "FINISHED"){
-        errorUtil.createAndThrowGenericError("Current Run is not finished.", 400);
+    try {
+        if(run.status != "FINISHED"){
+            errorUtil.createAndThrowGenericError("Current Run is not finished.", 400);
+        }
+    
+        let runChart = buildRunChart(session, iterations);
+        stats.push(runChart);
+    } catch (error) {
+        console.error(error)
     }
-
-    let runChart = buildRunChart(session, iterations);
-    stats.push(runChart);
 
     return stats;
 };
