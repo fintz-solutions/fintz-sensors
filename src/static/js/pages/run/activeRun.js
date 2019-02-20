@@ -118,7 +118,7 @@ var activeRun = function(element) {
         });
 
 
-        stationsElement.bind("station_stopped", function (event) {
+        stationsElement.bind("station_toggled", function (event) {
             var element = jQuery(this);
             var stationsList = jQuery(".station", element);
             var stoppedStations = stationsList.filter(".stopped");
@@ -268,6 +268,8 @@ var activeRun = function(element) {
         timer.start({ startValues: { seconds: seconds }});
         element.addClass("active");
         element.removeClass("idle stopped");
+        let stationsElement = element.parents(".stations");
+        stationsElement.triggerHandler("station_toggled");
     };
 
     var _stopStationTimer = function(element, timer) {
@@ -275,7 +277,7 @@ var activeRun = function(element) {
         element.removeClass("active idle");
         element.addClass("stopped");
         let stationsElement = element.parents(".stations");
-        stationsElement.triggerHandler("station_stopped");
+        stationsElement.triggerHandler("station_toggled");
     };
 
     var _clearStationTimers = function(stationsList) {
