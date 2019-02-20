@@ -26,12 +26,13 @@ var fintzSensorsUI = function(element) {
         if (!matchedObject || matchedObject.length === 0) {
             return;
         }
-        
+
         var listSessions = jQuery(".list-sessions", matchedObject);
+        var listRuns = jQuery(".list-runs", matchedObject);
         var sessions = jQuery(".element-session", listSessions);
+        var runs = jQuery(".element-run", listRuns);
         var sideMenu = jQuery(".side-menu", matchedObject);
         var homePageTab = jQuery(".homepage-tab", sideMenu);
-        _sessionsClickHandlers(sessions, homePageTab);
 
         homePageTab.bind("session_selected", function() {
             var element = jQuery(this);
@@ -53,7 +54,8 @@ var fintzSensorsUI = function(element) {
             target.html(selected.attr("data-target"));
         });
 
-        sessions.length > 1 && sessions[0].click(); 
+        _sessionsClickHandlers(sessions, homePageTab);
+        _runsClickHandlers(runs);
     };
 
     var _updateDateFormats = function (element, options) {
@@ -77,8 +79,19 @@ var fintzSensorsUI = function(element) {
                 homePageTab.triggerHandler("session_selected");
             });
         });
-    
-        sessions.length > 1 && sessions[0].click();    
+
+        sessions.length > 1 && sessions[0].click();
+    };
+
+    var _runsClickHandlers = function(runs) {
+        runs.each(function(){
+            var run = jQuery(this);
+            run.click(function(){
+                runs.removeClass("selected");
+                var element = jQuery(this);
+                element.addClass("selected");
+            });
+        });
     };
 
     init();
