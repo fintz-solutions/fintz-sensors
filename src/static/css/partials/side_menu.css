@@ -46,13 +46,15 @@
 .body .side-menu .side-content .homepage-tab .preview-session .preview-header {
     color: #a7a9ac;
     font-weight: 800;
-    text-align: center;
+}
+
+.body .side-menu .side-content .homepage-tab .preview-session {
+    padding: 0% 0% 0% 8%;
 }
 
 .body .side-menu .side-content .homepage-tab .preview-session .group-number {
     font-weight: 800;
-    margin-bottom: 20px;
-    text-align: center;
+    margin: 5px 0px 20px 0px;
 }
 
 .body .side-menu .side-content .homepage-tab .preview-session .group-number .info {
