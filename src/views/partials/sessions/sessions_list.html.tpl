@@ -22,6 +22,9 @@
                     </span>
                 </li>
             {% endfor %}
+            {% if sessions.length == 0 %}
+                <li class="empty-message">No sessions added.</li>
+            {% endif %}
         </ul>
         <div class="pagination hidden">
             <span class="page active">1</span><span class="page">2</span><span>3</span><span>4</span><span>5</span>
