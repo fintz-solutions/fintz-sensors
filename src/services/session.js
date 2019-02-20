@@ -10,7 +10,13 @@ module.exports.createSession = async function(sessionData) {
     ], sessionData);
 
     if (result.status === true) {
-        return sessionModel.createNew(sessionData);
+        return sessionModel.findOne({name: sessionData.name}).then(function (existingSession) {
+            if(existingSession === null){
+                return sessionModel.createNew(sessionData);
+            } else {
+                errorUtil.createAndThrowGenericError(`Session ${sessionData.name} already exists`, 400);
+            }
+        });
     } else {
         errorUtil.createAndThrowGenericError(result.message, 400);
     }

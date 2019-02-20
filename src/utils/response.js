@@ -11,10 +11,19 @@ module.exports = {
     },
 
     sendErrorResponse: function(error, defaultErrorMessage, data, res) {
-        let errorMessage = error && error.message ? error.message : defaultErrorMessage;
-        let statusCode = error && error.statusCode ? error.statusCode : 500;
+        let errorMessage;
+        let statusCode;
+        if(error.statusCode) {
+            //is a safe error
+            errorMessage = error.message;
+            statusCode = error.statusCode;
+        } else {
+            //Dangerous errors(might have db information we don't want to show to the client
+            errorMessage = defaultErrorMessage;
+            statusCode = 500;
+        }
         data = data === null ? {} : data;
-        console.error(errorMessage, error);
+        console.error(errorMessage, error);//but we always log the original detailed error for bug fixing
         return res.status(statusCode).send({
             message: errorMessage,
             data: data
