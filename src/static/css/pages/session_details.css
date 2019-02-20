@@ -26,15 +26,30 @@
     -khtml-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     height: 80%;
-    padding: 0% 0% 0% 6%;
+    padding: 0% 6% 0% 6%;
 }
 
-.body .session-show .session-details-container .details .column{
+.body .session-show .session-details-container .details .group p {
+    margin: 0px 0px 10px 0px;
+}
+
+.body .session-show .session-details-container .details .group.left {
+    float: left;
+}
+
+.body .session-show .session-details-container .details .group {
     display: inline-block;
-    margin-right: 20%;
-    text-align: center;
+    height: 100%;
+    width: 50%;
 }
 
+.body .session-show .session-details-container .details .group .label {
+    font-weight: 700;
+    margin-right: 10px;
+    text-transform: capitalize;
+}
+
+/* Session's runs */
 .body .session-show .list-runs-container {
     box-sizing: border-box;
     -o-box-sizing: border-box;
@@ -65,14 +80,136 @@
     position: relative;
 }
 
+.body .session-show .list-runs-container .runs-content .columns {
+    color: #a7a9ac;
+    font-size: 14px;
+    margin: 0px auto 10px auto;
+    position: relative;
+    width: 96%;
+}
+
+.body .session-show .list-runs-container .runs-content .columns .row {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    display: block;
+    padding: 0% 2% 0% 4%;
+    width: 100%;
+}
+
 .body .session-show .list-runs-container .runs-content .column {
     display: inline-block;
-    text-align: center;
-    width: 20%;
+    width: 15%;
 }
 
 .body .session-show .list-runs-container .runs-content .list-runs {
     height: 90%;
     overflow: scroll;
     position: relative;
+}
+
+.body .list-runs-container .list-runs .element-run {
+    border-top: 1px solid #ededed ;
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    font-size: 13px;
+    font-weight: 700;
+    height: 50px;
+    margin: 0px auto 0px auto;
+    position: relative;
+    width: 96%;
+}
+
+.body .list-runs-container .list-runs .element.element-run.selected {
+    background: #4298c0;
+    border-radius: 25px 25px 25px 25px;
+    -o-border-radius: 25px 25px 25px 25px;
+    -ms-border-radius: 25px 25px 25px 25px;
+    -moz-border-radius: 25px 25px 25px 25px;
+    -khtml-border-radius: 25px 25px 25px 25px;
+    -webkit-border-radius: 25px 25px 25px 25px;
+    color: #ffffff;
+    outline: 0;
+    -o-outline: 0;
+    -ms-outline: 0;
+    -moz-outline: 0;
+    -khtml-outline: 0;
+    -webkit-outline: 0;
+}
+
+.body .list-runs-container .list-runs .element .row {
+    box-sizing: border-box;
+    -o-box-sizing: border-box;
+    -ms-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -khtml-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    height: 25px;
+    padding: 0% 2% 0% 4%;
+    position: absolute;
+    top: 15px;
+    width: 100%;
+}
+
+.body .list-runs-container .list-runs .element-run:nth-child(even) {
+    background: #fcfcfc;
+}
+
+.body .list-runs-container .list-runs .element-run .info {
+    display: inline-block;
+}
+
+.body .list-runs-container .list-runs .element-run .number {
+    display: inline-block;
+    min-width: 75px;
+    width: 15%;
+}
+
+.body .list-runs-container .list-runs .element-run .duration {
+    display: inline-block;
+    min-width: 75px;
+    width: 15%;
+}
+
+.body .list-runs-container .list-runs .element-run .status {
+    display: inline-block;
+    margin: 0px 2px 0px 2px;
+    width: 15%;
+}
+
+.body .list-runs-container .list-runs .element-run .button-actions {
+    display: inline-block;
+    min-width: 150px;
+    position: absolute;
+    right: 0px;
+    width: 20%;
+}
+
+.body .list-runs-container .list-runs .element-run .button-actions .button-open,
+.body .list-runs-container .list-runs .element-run .button-actions .button-start {
+    display: inline-block;
+    font-size: 13px;
+    height: 22px;
+    line-height: 20px;
+    width: 65px;
+}
+
+.body .list-runs-container .list-runs .element-run.selected .button-open,
+.body .list-runs-container .list-runs .element-run.selected .button-start {
+    background-color: #ffffff;
+    border: #fcfcfc;
+    color: #000000;
+}
+
+.body .list-runs-container .list-runs .element-run.selected .button.disabled {
+    background-color: #ededed;
+    border: #fcfcfc;
+    color: #a7a9ac;
 }

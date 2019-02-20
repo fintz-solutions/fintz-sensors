@@ -52,6 +52,10 @@
     padding: 0% 0% 0% 8%;
 }
 
+.body .side-menu .side-content .homepage-tab .preview-session .group {
+    margin-bottom: 10px;
+}
+
 .body .side-menu .side-content .homepage-tab .preview-session .group-number {
     font-weight: 800;
     margin: 5px 0px 20px 0px;
