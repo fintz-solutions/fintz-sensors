@@ -9,21 +9,25 @@ const moment = require('moment')
 var fintzSensorsUI = function(element) {
     var _body = jQuery("body", document);
     var matchedObject = jQuery(element);
-    var listSessions = jQuery(".list-sessions", element);
 
     var init = function() {
         if (!matchedObject || matchedObject.length === 0) {
             return;
         }
 
-        _updateDateFormats(listSessions);
+        var sessionDetailsContainer = jQuery(".session-details-container", matchedObject);
+        var listSessions = jQuery(".list-sessions", element);
+
+        listSessions.length && _updateDateFormats(listSessions);
+        sessionDetailsContainer &&_updateDateFormats(sessionDetailsContainer, { format: "MMMM Do YYYY, hh:mm a"});
     };
 
     var bind = function() {
         if (!matchedObject || matchedObject.length === 0) {
             return;
         }
-
+        
+        var listSessions = jQuery(".list-sessions", matchedObject);
         var sessions = jQuery(".element-session", listSessions);
         var sideMenu = jQuery(".side-menu", matchedObject);
         var homePageTab = jQuery(".homepage-tab", sideMenu);
@@ -52,12 +56,14 @@ var fintzSensorsUI = function(element) {
         sessions.length > 1 && sessions[0].click(); 
     };
 
-    var _updateDateFormats = function (element) {
+    var _updateDateFormats = function (element, options) {
+        var _options = options || {};
+        var format = _options.format || "DD/MM/YYYY";
         var dates = jQuery(".date", element);
         dates.each(function(){
             var _element = jQuery(this);
             var timestamp = _element.attr("data-timestamp");
-            _element.text(moment.unix(timestamp).format("DD/MM/YYYY"));
+            _element.text(moment.unix(timestamp).format(format));
         });
     };
 
