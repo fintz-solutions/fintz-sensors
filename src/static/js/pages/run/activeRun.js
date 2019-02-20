@@ -186,7 +186,6 @@ var activeRun = function(element) {
             continueButton.removeClass("disabled");
             var stationsList = jQuery(".station", element);
             _clearStationTimers(stationsList);
-            // TODO: retrieve iteration number from data
         });
 
         matchedObject.bind("pre_continue", function(event) {
@@ -223,7 +222,7 @@ var activeRun = function(element) {
             var sideMenu = jQuery(".side-menu", _body);
             var buttons = jQuery(".button", sideMenu);
             buttons.addClass("disabled");
-            //TODO: add popup! and redirect to session page
+            // TODO: change buttons to: "next run" / "run stats"
         });
     };
 

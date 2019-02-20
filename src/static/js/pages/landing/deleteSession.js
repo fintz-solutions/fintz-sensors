@@ -57,7 +57,7 @@ var deleteSession = function(element) {
                 var message = data && data.responseJSON && data.responseJSON.message || "Delete operation error";
                 matchedObject.triggerHandler("error", message);
             }
-          });
+        });
     };
 
     init();
