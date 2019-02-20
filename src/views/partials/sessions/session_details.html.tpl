@@ -5,13 +5,18 @@
         <h2 class="subtitle">Details</h2>
     </div>
     <div class="details">
-        <p class="name">#{{ session.number }} | {{ session.name }}</p>
-        <p class="status">status: {{ session.status }}</p>
-        <p class="date">created at: {{ session.createdAt }}</p>
-        <p class="stations">stations: {{ session.numStations }}</p>
-        <p class="production-target">production target: {{ session.productionTarget }}</p>
-        <p class="total-runs">total runs: {{ session.numRuns }}</p>
-        <p class="time-run">time per run: {{ session.timePerRun }}</p>
+        <div class="group left">
+            <p><span class="label">Session number:</span><span class="value">{{ session.number }}</span></p>
+            <p><span class="label">name:</span><span class="value">{{ session.number }}</span></p>
+            <p><span class="label">Status:</span><span class="value">{{ session.status }}</span></p>
+            <p><span class="label">Date:</span><span class="value">{{ session.createdAt }}</span></p>
+        </div>
+        <div class="group right">        
+            <p><span class="label">Stations:</span><span class="value">{{ session.numStations }}</span></p>
+            <p><span class="label">Production target:</span><span class="value">{{ session.productionTarget }}</span></p>
+            <p><span class="label">Total runs:</span><span class="value">{{ session.numRuns }}</span></p>
+            <p><span class="label">Time per run:</span></span><span class="value">{{ session.timePerRun }}</span></p>
+        </div>
     </div>
 </div>
 <div class="container list-runs-container">

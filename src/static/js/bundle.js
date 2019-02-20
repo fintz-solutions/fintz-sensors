@@ -1,87 +1,87 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/     // The module cache
-/******/     var installedModules = {};
+/******/ 	// The module cache
+/******/ 	var installedModules = {};
 /******/
-/******/     // The require function
-/******/     function __webpack_require__(moduleId) {
+/******/ 	// The require function
+/******/ 	function __webpack_require__(moduleId) {
 /******/
-/******/         // Check if module is in cache
-/******/         if(installedModules[moduleId]) {
-/******/             return installedModules[moduleId].exports;
-/******/         }
-/******/         // Create a new module (and put it into the cache)
-/******/         var module = installedModules[moduleId] = {
-/******/             i: moduleId,
-/******/             l: false,
-/******/             exports: {}
-/******/         };
+/******/ 		// Check if module is in cache
+/******/ 		if(installedModules[moduleId]) {
+/******/ 			return installedModules[moduleId].exports;
+/******/ 		}
+/******/ 		// Create a new module (and put it into the cache)
+/******/ 		var module = installedModules[moduleId] = {
+/******/ 			i: moduleId,
+/******/ 			l: false,
+/******/ 			exports: {}
+/******/ 		};
 /******/
-/******/         // Execute the module function
-/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/ 		// Execute the module function
+/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/         // Flag the module as loaded
-/******/         module.l = true;
+/******/ 		// Flag the module as loaded
+/******/ 		module.l = true;
 /******/
-/******/         // Return the exports of the module
-/******/         return module.exports;
-/******/     }
-/******/
-/******/
-/******/     // expose the modules object (__webpack_modules__)
-/******/     __webpack_require__.m = modules;
-/******/
-/******/     // expose the module cache
-/******/     __webpack_require__.c = installedModules;
-/******/
-/******/     // define getter function for harmony exports
-/******/     __webpack_require__.d = function(exports, name, getter) {
-/******/         if(!__webpack_require__.o(exports, name)) {
-/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/         }
-/******/     };
-/******/
-/******/     // define __esModule on exports
-/******/     __webpack_require__.r = function(exports) {
-/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/         }
-/******/         Object.defineProperty(exports, '__esModule', { value: true });
-/******/     };
-/******/
-/******/     // create a fake namespace object
-/******/     // mode & 1: value is a module id, require it
-/******/     // mode & 2: merge all properties of value into the ns
-/******/     // mode & 4: return value when already ns object
-/******/     // mode & 8|1: behave like require
-/******/     __webpack_require__.t = function(value, mode) {
-/******/         if(mode & 1) value = __webpack_require__(value);
-/******/         if(mode & 8) return value;
-/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/         var ns = Object.create(null);
-/******/         __webpack_require__.r(ns);
-/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/         return ns;
-/******/     };
-/******/
-/******/     // getDefaultExport function for compatibility with non-harmony modules
-/******/     __webpack_require__.n = function(module) {
-/******/         var getter = module && module.__esModule ?
-/******/             function getDefault() { return module['default']; } :
-/******/             function getModuleExports() { return module; };
-/******/         __webpack_require__.d(getter, 'a', getter);
-/******/         return getter;
-/******/     };
-/******/
-/******/     // Object.prototype.hasOwnProperty.call
-/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/     // __webpack_public_path__
-/******/     __webpack_require__.p = "";
+/******/ 		// Return the exports of the module
+/******/ 		return module.exports;
+/******/ 	}
 /******/
 /******/
-/******/     // Load entry module and return exports
-/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/ 	// expose the modules object (__webpack_modules__)
+/******/ 	__webpack_require__.m = modules;
+/******/
+/******/ 	// expose the module cache
+/******/ 	__webpack_require__.c = installedModules;
+/******/
+/******/ 	// define getter function for harmony exports
+/******/ 	__webpack_require__.d = function(exports, name, getter) {
+/******/ 		if(!__webpack_require__.o(exports, name)) {
+/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/ 		}
+/******/ 	};
+/******/
+/******/ 	// define __esModule on exports
+/******/ 	__webpack_require__.r = function(exports) {
+/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/ 		}
+/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
+/******/ 	};
+/******/
+/******/ 	// create a fake namespace object
+/******/ 	// mode & 1: value is a module id, require it
+/******/ 	// mode & 2: merge all properties of value into the ns
+/******/ 	// mode & 4: return value when already ns object
+/******/ 	// mode & 8|1: behave like require
+/******/ 	__webpack_require__.t = function(value, mode) {
+/******/ 		if(mode & 1) value = __webpack_require__(value);
+/******/ 		if(mode & 8) return value;
+/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/ 		var ns = Object.create(null);
+/******/ 		__webpack_require__.r(ns);
+/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/ 		return ns;
+/******/ 	};
+/******/
+/******/ 	// getDefaultExport function for compatibility with non-harmony modules
+/******/ 	__webpack_require__.n = function(module) {
+/******/ 		var getter = module && module.__esModule ?
+/******/ 			function getDefault() { return module['default']; } :
+/******/ 			function getModuleExports() { return module; };
+/******/ 		__webpack_require__.d(getter, 'a', getter);
+/******/ 		return getter;
+/******/ 	};
+/******/
+/******/ 	// Object.prototype.hasOwnProperty.call
+/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/ 	// __webpack_public_path__
+/******/ 	__webpack_require__.p = "";
+/******/
+/******/
+/******/ 	// Load entry module and return exports
+/******/ 	return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -928,7 +928,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .main-content .session-show {\\r\\n    height: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .header {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 20%;\\r\\n    padding: 25px 25px 25px 25px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container {\\r\\n    height: 36%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 80%;\\r\\n    padding: 0% 0% 0% 6%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .column{\\r\\n    display: inline-block;\\r\\n    margin-right: 20%;\\r\\n    text-align: center;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 60%;\\r\\n    margin-top: 3%;\\r\\n}\\r\\n\\r\\n.body .session-show .header .title {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .session-show .header .subtitle {\\r\\n    color: #4298c0;\\r\\n    display: inline-block;\\r\\n    font-size: 15px;\\r\\n    margin-left: 3px;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content {\\r\\n    font-size: 16px;\\r\\n    font-weight: 500;\\r\\n    height: 80%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .column {\\r\\n    display: inline-block;\\r\\n    text-align: center;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .list-runs {\\r\\n    height: 90%;\\r\\n    overflow: scroll;\\r\\n    position: relative;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/session_details.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .main-content .session-show {\\r\\n    height: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .header {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 20%;\\r\\n    padding: 25px 25px 25px 25px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container {\\r\\n    height: 36%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 80%;\\r\\n    padding: 0% 6% 0% 6%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group p {\\r\\n    margin: 0px 0px 10px 0px;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group.left {\\r\\n    float: left;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group {\\r\\n    height: 100%;\\r\\n    width: 50%;\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group .label {\\r\\n    font-weight: 700;\\r\\n    margin-right: 10px; \\r\\n    text-transform: capitalize;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 60%;\\r\\n    margin-top: 3%;\\r\\n}\\r\\n\\r\\n.body .session-show .header .title {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .session-show .header .subtitle {\\r\\n    color: #4298c0;\\r\\n    display: inline-block;\\r\\n    font-size: 15px;\\r\\n    margin-left: 3px;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content {\\r\\n    font-size: 16px;\\r\\n    font-weight: 500;\\r\\n    height: 80%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .column {\\r\\n    display: inline-block;\\r\\n    text-align: center;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .list-runs {\\r\\n    height: 90%;\\r\\n    overflow: scroll;\\r\\n    position: relative;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/session_details.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -950,7 +950,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .side-menu {\\r\\n    background: #ffffff;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    margin: auto auto auto auto;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar {\\r\\n    background-color: #4298c0;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    width: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content {\\r\\n    height: 100%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    margin-left: 50px;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .tab {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 100%;\\r\\n    padding: 50px 0px 50px 0px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .side-title {\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .header {\\r\\n    height: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .side-subtitle .label {\\r\\n    border: none;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .preview-header {\\r\\n    color: #a7a9ac;\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session {\\r\\n    padding: 0% 0% 0% 8%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group-number {\\r\\n    font-weight: 800;\\r\\n    margin: 5px 0px 20px 0px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group-number .info {\\r\\n    font-size: 15px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .info {\\r\\n    font-size: 13px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .info .value {\\r\\n    font-size: 13px;\\r\\n    font-weight: bold;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .header{\\r\\n    margin: 0px auto 20px auto;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .label {\\r\\n    color: #ffffff;\\r\\n    display: block;\\r\\n    font-size: 10px;\\r\\n    font-weight: 400;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    padding: 6px 0px 6px 0px;\\r\\n    text-align: center;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar link-homepage,\\r\\n.body .side-menu .side-bar .icon {\\r\\n    display: block;\\r\\n    margin: 0px auto 0px auto;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    width: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .link {\\r\\n    cursor: pointer;\\r\\n    display: block;\\r\\n    margin-top: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions {\\r\\n    bottom: 50px;\\r\\n    display: block;\\r\\n    position: absolute;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions .button {\\r\\n    display: block;\\r\\n    font-size: 16px;\\r\\n    line-height: 28px;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n    width: 80%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 23px;\\r\\n    font-weight: 500;\\r\\n    margin: 0px auto 0px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title .hash{\\r\\n    font-size: 20px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    color: #4298c0;\\r\\n    font-size: 23px;\\r\\n    font-weight: 800;\\r\\n    margin: 5px auto 5px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle .label {\\r\\n    border-bottom: 2px solid #4298c0;\\r\\n    padding: 0px 6px 10px 0px;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/partials/side_menu.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .side-menu {\\r\\n    background: #ffffff;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    margin: auto auto auto auto;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar {\\r\\n    background-color: #4298c0;\\r\\n    float: left;\\r\\n    height: 100%;\\r\\n    width: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content {\\r\\n    height: 100%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    margin-left: 50px;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .tab {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 100%;\\r\\n    padding: 50px 0px 50px 0px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .side-title {\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .header {\\r\\n    height: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .side-subtitle .label {\\r\\n    border: none;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .preview-header {\\r\\n    color: #a7a9ac;\\r\\n    font-weight: 800;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session {\\r\\n    padding: 0% 0% 0% 8%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group {\\r\\n    margin-bottom: 10px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group-number {\\r\\n    font-weight: 800;\\r\\n    margin: 5px 0px 20px 0px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .group-number .info {\\r\\n    font-size: 15px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .info {\\r\\n    font-size: 13px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .homepage-tab .preview-session .info .value {\\r\\n    font-size: 13px;\\r\\n    font-weight: bold;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-content .header{\\r\\n    margin: 0px auto 20px auto;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .label {\\r\\n    color: #ffffff;\\r\\n    display: block;\\r\\n    font-size: 10px;\\r\\n    font-weight: 400;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    padding: 6px 0px 6px 0px;\\r\\n    text-align: center;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar link-homepage,\\r\\n.body .side-menu .side-bar .icon {\\r\\n    display: block;\\r\\n    margin: 0px auto 0px auto;\\r\\n    opacity: 0.6;\\r\\n    -o-opacity: 0.6;\\r\\n    -ms-opacity: 0.6;\\r\\n    -moz-opacity: 0.6;\\r\\n    -khtml-opacity: 0.6;\\r\\n    -webkit-opacity: 0.6;\\r\\n    width: 40%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-bar .link {\\r\\n    cursor: pointer;\\r\\n    display: block;\\r\\n    margin-top: 50px;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions {\\r\\n    bottom: 50px;\\r\\n    display: block;\\r\\n    position: absolute;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .side-menu .button-actions .button {\\r\\n    display: block;\\r\\n    font-size: 16px;\\r\\n    line-height: 28px;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n    width: 80%;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 23px;\\r\\n    font-weight: 500;\\r\\n    margin: 0px auto 0px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-title .hash{\\r\\n    font-size: 20px;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    color: #4298c0;\\r\\n    font-size: 23px;\\r\\n    font-weight: 800;\\r\\n    margin: 5px auto 5px auto;\\r\\n    padding: 0px 8% 0px 8%;\\r\\n    text-transform: uppercase;\\r\\n    word-break: break-word;\\r\\n    word-wrap: break-word;\\r\\n}\\r\\n\\r\\n.body .side-menu .side-subtitle .label {\\r\\n    border-bottom: 2px solid #4298c0;\\r\\n    padding: 0px 6px 10px 0px;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/partials/side_menu.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
@@ -3010,7 +3010,7 @@ eval("__webpack_require__(/*! ../../../css/pages/active_run.css */ \"./src/stati
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("const Charts = __webpack_require__(/*! chart.js */ \"./node_modules/chart.js/src/chart.js\");\r\nconst statsUrl = window.location.href;\r\n\r\nvar runStats = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _syncStats(matchedObject);\r\n    };\r\n\r\n    var _syncStats = function(element) {\r\n        jQuery.ajax({\r\n            url: statsUrl,\r\n            headers: {\r\n                'Content-Type':'application/json'\r\n            },\r\n            type: 'GET',\r\n            success: function(data, status) {\r\n                _chartsHandler(element, data.data);\r\n            },\r\n            error: function(data) {\r\n                var message = data && data.responseJSON && data.responseJSON.message || \"Get run stats operation error\";\r\n                element.triggerHandler(\"error\", message);\r\n            }\r\n        });\r\n    };\r\n\r\n    var _chartsHandler = function(element, stats) {\r\n        let chartsContainer = jQuery(\".charts-container\", element);\r\n        for(let i = 0, length = stats.length; i < length; i++) {\r\n            let canvasContainer = jQuery(\"<div class=\\\"canvas-container\\\"></div>\");\r\n            let canvas = jQuery(\"<canvas class=\\\"chart\\\"></canvas>\");\r\n            canvas.addClass(\"chart-\" + (i + 1).toString())\r\n            canvas.addClass(stats[i].type);\r\n            canvasContainer.append(canvas);\r\n            chartsContainer.append(canvasContainer);\r\n            let chart = new Charts(canvas, stats[i]);\r\n            // update chart options\r\n        };\r\n\r\n\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = runStats;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/run/runStats.js?");
+eval("const Charts = __webpack_require__(/*! chart.js */ \"./node_modules/chart.js/src/chart.js\");\r\nconst statsUrl = window.location.href;\r\n\r\nvar runStats = function(element) {\r\n    var matchedObject = jQuery(element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _syncStats(matchedObject);\r\n    };\r\n\r\n    var _syncStats = function(element) {\r\n        jQuery.ajax({\r\n            url: statsUrl,\r\n            headers: {\r\n                'Content-Type':'application/json'\r\n            },\r\n            type: 'GET',\r\n            success: function(data, status) {\r\n                _chartsHandler(element, data.data);\r\n            },\r\n            error: function(data) {\r\n                var message = data && data.responseJSON && data.responseJSON.message || \"Get run stats operation error\";\r\n                element.triggerHandler(\"error\", message);\r\n            }\r\n        });\r\n    };\r\n\r\n    var _chartsHandler = function(element, stats) {\r\n        let chartsContainer = jQuery(\".charts-container\", element);\r\n        for(let i = 0, length = stats.length; i < length; i++) {\r\n            let canvasContainer = jQuery(\"<div class=\\\"canvas-container\\\"></div>\");\r\n            let canvas = jQuery(\"<canvas class=\\\"chart\\\"></canvas>\");\r\n            canvas.addClass(\"chart-\" + (i + 1).toString())\r\n            canvas.addClass(stats[i].type);\r\n            canvasContainer.append(canvas);\r\n            chartsContainer.append(canvasContainer);\r\n            let chart = new Charts(canvas, stats[i]);\r\n            //TODO: update chart options\r\n        };\r\n\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = runStats;\r\n\n\n//# sourceURL=webpack:///./src/static/js/pages/run/runStats.js?");
 
 /***/ }),
 
@@ -3032,7 +3032,7 @@ eval("const Charts = __webpack_require__(/*! chart.js */ \"./node_modules/chart.
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("__webpack_require__(/*! ../../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n__webpack_require__(/*! ../../css/partials/side_menu.css */ \"./src/static/css/partials/side_menu.css\");\r\n__webpack_require__(/*! ../../css/pages/landing.css */ \"./src/static/css/pages/landing.css\");\r\n__webpack_require__(/*! ../../css/pages/session_details.css */ \"./src/static/css/pages/session_details.css\");\r\n\r\nconst moment = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\")\r\n\r\nvar fintzSensorsUI = function(element) {\r\n    var _body = jQuery(\"body\", document);\r\n    var matchedObject = jQuery(element);\r\n    var listSessions = jQuery(\".list-sessions\", element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _updateDateFormats(listSessions);\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        var sessions = jQuery(\".element-session\", listSessions);\r\n        var sideMenu = jQuery(\".side-menu\", matchedObject);\r\n        var homePageTab = jQuery(\".homepage-tab\", sideMenu);\r\n\r\n        sessions.each(function(){\r\n            var session = jQuery(this);\r\n            session.click(function(){\r\n                var element = jQuery(this);\r\n                sessions.removeClass(\"selected\");\r\n                element.addClass(\"selected\");\r\n                homePageTab.triggerHandler(\"session_selected\");\r\n            });\r\n        });\r\n\r\n        homePageTab.bind(\"session_selected\", function() {\r\n            var element = jQuery(this);\r\n            var sessionPreview = jQuery(\".preview-session\", element)\r\n            var listSessions = jQuery(\".list-sessions\", _body);\r\n            var sessions = jQuery(\".element-session\", listSessions);\r\n            var selected = sessions.filter(\".selected\");\r\n            var number = jQuery(\".number\", sessionPreview);\r\n            var status = jQuery(\".status\", sessionPreview);\r\n            var numStations = jQuery(\".num-stations\", sessionPreview);\r\n            var numRuns = jQuery(\".num-runs\", sessionPreview);\r\n            var target = jQuery(\".target\", sessionPreview);\r\n\r\n            sessionPreview.removeClass(\"hidden\");\r\n            number.html(selected.attr(\"data-number\"));\r\n            status.html(selected.attr(\"data-status\"));\r\n            numStations.html(selected.attr(\"data-stations\"));\r\n            numRuns.html(selected.attr(\"data-runs\"));\r\n            target.html(selected.attr(\"data-target\"));\r\n        });\r\n    };\r\n\r\n    var _updateDateFormats = function (element) {\r\n        var dates = jQuery(\".date\", element);\r\n        dates.each(function(){\r\n            var _element = jQuery(this);\r\n            var timestamp = _element.attr(\"data-timestamp\");\r\n            _element.text(moment.unix(timestamp).format(\"DD/MM/YYYY\"));\r\n        });\r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = fintzSensorsUI;\r\n\n\n//# sourceURL=webpack:///./src/static/js/ui/fintzSensorsUI.js?");
+eval("__webpack_require__(/*! ../../css/layout.css */ \"./src/static/css/layout.css\");\r\n__webpack_require__(/*! ../../css/partials/form.css */ \"./src/static/css/partials/form.css\");\r\n__webpack_require__(/*! ../../css/partials/side_menu.css */ \"./src/static/css/partials/side_menu.css\");\r\n__webpack_require__(/*! ../../css/pages/landing.css */ \"./src/static/css/pages/landing.css\");\r\n__webpack_require__(/*! ../../css/pages/session_details.css */ \"./src/static/css/pages/session_details.css\");\r\n\r\nconst moment = __webpack_require__(/*! moment */ \"./node_modules/moment/moment.js\")\r\n\r\nvar fintzSensorsUI = function(element) {\r\n    var _body = jQuery(\"body\", document);\r\n    var matchedObject = jQuery(element);\r\n    var listSessions = jQuery(\".list-sessions\", element);\r\n\r\n    var init = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        _updateDateFormats(listSessions);\r\n    };\r\n\r\n    var bind = function() {\r\n        if (!matchedObject || matchedObject.length === 0) {\r\n            return;\r\n        }\r\n\r\n        var sessions = jQuery(\".element-session\", listSessions);\r\n        var sideMenu = jQuery(\".side-menu\", matchedObject);\r\n        var homePageTab = jQuery(\".homepage-tab\", sideMenu);\r\n        _sessionsClickHandlers(sessions, homePageTab);\r\n\r\n        homePageTab.bind(\"session_selected\", function() {\r\n            var element = jQuery(this);\r\n            var sessionPreview = jQuery(\".preview-session\", element)\r\n            var listSessions = jQuery(\".list-sessions\", _body);\r\n            var sessions = jQuery(\".element-session\", listSessions);\r\n            var selected = sessions.filter(\".selected\");\r\n            var number = jQuery(\".number\", sessionPreview);\r\n            var status = jQuery(\".status\", sessionPreview);\r\n            var numStations = jQuery(\".num-stations\", sessionPreview);\r\n            var numRuns = jQuery(\".num-runs\", sessionPreview);\r\n            var target = jQuery(\".target\", sessionPreview);\r\n\r\n            sessionPreview.removeClass(\"hidden\");\r\n            number.html(selected.attr(\"data-number\"));\r\n            status.html(selected.attr(\"data-status\"));\r\n            numStations.html(selected.attr(\"data-stations\"));\r\n            numRuns.html(selected.attr(\"data-runs\"));\r\n            target.html(selected.attr(\"data-target\"));\r\n        });\r\n\r\n        sessions.length > 1 && sessions[0].click(); \r\n    };\r\n\r\n    var _updateDateFormats = function (element) {\r\n        var dates = jQuery(\".date\", element);\r\n        dates.each(function(){\r\n            var _element = jQuery(this);\r\n            var timestamp = _element.attr(\"data-timestamp\");\r\n            _element.text(moment.unix(timestamp).format(\"DD/MM/YYYY\"));\r\n        });\r\n    };\r\n\r\n    var _sessionsClickHandlers = function(sessions, homePageTab) {\r\n        sessions.each(function(){\r\n            var session = jQuery(this);\r\n            session.click(function(){\r\n                sessions.removeClass(\"selected\");\r\n                var element = jQuery(this);\r\n                element.addClass(\"selected\");\r\n                homePageTab.triggerHandler(\"session_selected\");\r\n            });\r\n        });\r\n    \r\n        sessions.length > 1 && sessions[0].click();    \r\n    };\r\n\r\n    init();\r\n    bind();\r\n\r\n    return matchedObject;\r\n};\r\n\r\nmodule.exports = fintzSensorsUI;\r\n\n\n//# sourceURL=webpack:///./src/static/js/ui/fintzSensorsUI.js?");
 
 /***/ }),
 

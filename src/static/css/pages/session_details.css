@@ -26,13 +26,27 @@
     -khtml-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     height: 80%;
-    padding: 0% 0% 0% 6%;
+    padding: 0% 6% 0% 6%;
 }
 
-.body .session-show .session-details-container .details .column{
+.body .session-show .session-details-container .details .group p {
+    margin: 0px 0px 10px 0px;
+}
+
+.body .session-show .session-details-container .details .group.left {
+    float: left;
+}
+
+.body .session-show .session-details-container .details .group {
+    height: 100%;
+    width: 50%;
     display: inline-block;
-    margin-right: 20%;
-    text-align: center;
+}
+
+.body .session-show .session-details-container .details .group .label {
+    font-weight: 700;
+    margin-right: 10px; 
+    text-transform: capitalize;
 }
 
 .body .session-show .list-runs-container {

@@ -27,16 +27,7 @@ var fintzSensorsUI = function(element) {
         var sessions = jQuery(".element-session", listSessions);
         var sideMenu = jQuery(".side-menu", matchedObject);
         var homePageTab = jQuery(".homepage-tab", sideMenu);
-
-        sessions.each(function(){
-            var session = jQuery(this);
-            session.click(function(){
-                var element = jQuery(this);
-                sessions.removeClass("selected");
-                element.addClass("selected");
-                homePageTab.triggerHandler("session_selected");
-            });
-        });
+        _sessionsClickHandlers(sessions, homePageTab);
 
         homePageTab.bind("session_selected", function() {
             var element = jQuery(this);
@@ -57,6 +48,8 @@ var fintzSensorsUI = function(element) {
             numRuns.html(selected.attr("data-runs"));
             target.html(selected.attr("data-target"));
         });
+
+        sessions.length > 1 && sessions[0].click(); 
     };
 
     var _updateDateFormats = function (element) {
@@ -66,6 +59,20 @@ var fintzSensorsUI = function(element) {
             var timestamp = _element.attr("data-timestamp");
             _element.text(moment.unix(timestamp).format("DD/MM/YYYY"));
         });
+    };
+
+    var _sessionsClickHandlers = function(sessions, homePageTab) {
+        sessions.each(function(){
+            var session = jQuery(this);
+            session.click(function(){
+                sessions.removeClass("selected");
+                var element = jQuery(this);
+                element.addClass("selected");
+                homePageTab.triggerHandler("session_selected");
+            });
+        });
+    
+        sessions.length > 1 && sessions[0].click();    
     };
 
     init();

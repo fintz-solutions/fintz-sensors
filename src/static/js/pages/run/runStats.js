@@ -45,9 +45,8 @@ var runStats = function(element) {
             canvasContainer.append(canvas);
             chartsContainer.append(canvasContainer);
             let chart = new Charts(canvas, stats[i]);
-            // update chart options
+            //TODO: update chart options
         };
-
 
     };
 
