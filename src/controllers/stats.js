@@ -5,14 +5,15 @@ const responseUtil = require(path.resolve(global.utilsFolder, "response"));
 
 module.exports = {
     getRunStats: function (req, res) {
-        let data = statsService.getRunStats(req.session._doc, req.run._doc, req.iterations);
+        let data = statsService.getRunStats(req.session._doc, req.run._doc, req.iterations, req.events);
 
         if (req.get("Content-Type") === "application/json") {
             responseUtil.sendSuccessResponse("Run stats retrieved successfully", 200, data, res);
         } else {
-            data = data.map(function(element){
+            /*data.charts = data.charts.map(function(element){
                 return JSON.stringify(element);
-            });
+            });*/
+            data = JSON.stringify(data);
             res.render("pages/run_stats.html.tpl", {
                 title: "Run Stats",
                 stats: data
