@@ -1,87 +1,87 @@
 /******/ (function(modules) { // webpackBootstrap
-/******/ 	// The module cache
-/******/ 	var installedModules = {};
+/******/     // The module cache
+/******/     var installedModules = {};
 /******/
-/******/ 	// The require function
-/******/ 	function __webpack_require__(moduleId) {
+/******/     // The require function
+/******/     function __webpack_require__(moduleId) {
 /******/
-/******/ 		// Check if module is in cache
-/******/ 		if(installedModules[moduleId]) {
-/******/ 			return installedModules[moduleId].exports;
-/******/ 		}
-/******/ 		// Create a new module (and put it into the cache)
-/******/ 		var module = installedModules[moduleId] = {
-/******/ 			i: moduleId,
-/******/ 			l: false,
-/******/ 			exports: {}
-/******/ 		};
+/******/         // Check if module is in cache
+/******/         if(installedModules[moduleId]) {
+/******/             return installedModules[moduleId].exports;
+/******/         }
+/******/         // Create a new module (and put it into the cache)
+/******/         var module = installedModules[moduleId] = {
+/******/             i: moduleId,
+/******/             l: false,
+/******/             exports: {}
+/******/         };
 /******/
-/******/ 		// Execute the module function
-/******/ 		modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
+/******/         // Execute the module function
+/******/         modules[moduleId].call(module.exports, module, module.exports, __webpack_require__);
 /******/
-/******/ 		// Flag the module as loaded
-/******/ 		module.l = true;
+/******/         // Flag the module as loaded
+/******/         module.l = true;
 /******/
-/******/ 		// Return the exports of the module
-/******/ 		return module.exports;
-/******/ 	}
-/******/
-/******/
-/******/ 	// expose the modules object (__webpack_modules__)
-/******/ 	__webpack_require__.m = modules;
-/******/
-/******/ 	// expose the module cache
-/******/ 	__webpack_require__.c = installedModules;
-/******/
-/******/ 	// define getter function for harmony exports
-/******/ 	__webpack_require__.d = function(exports, name, getter) {
-/******/ 		if(!__webpack_require__.o(exports, name)) {
-/******/ 			Object.defineProperty(exports, name, { enumerable: true, get: getter });
-/******/ 		}
-/******/ 	};
-/******/
-/******/ 	// define __esModule on exports
-/******/ 	__webpack_require__.r = function(exports) {
-/******/ 		if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
-/******/ 			Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
-/******/ 		}
-/******/ 		Object.defineProperty(exports, '__esModule', { value: true });
-/******/ 	};
-/******/
-/******/ 	// create a fake namespace object
-/******/ 	// mode & 1: value is a module id, require it
-/******/ 	// mode & 2: merge all properties of value into the ns
-/******/ 	// mode & 4: return value when already ns object
-/******/ 	// mode & 8|1: behave like require
-/******/ 	__webpack_require__.t = function(value, mode) {
-/******/ 		if(mode & 1) value = __webpack_require__(value);
-/******/ 		if(mode & 8) return value;
-/******/ 		if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
-/******/ 		var ns = Object.create(null);
-/******/ 		__webpack_require__.r(ns);
-/******/ 		Object.defineProperty(ns, 'default', { enumerable: true, value: value });
-/******/ 		if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
-/******/ 		return ns;
-/******/ 	};
-/******/
-/******/ 	// getDefaultExport function for compatibility with non-harmony modules
-/******/ 	__webpack_require__.n = function(module) {
-/******/ 		var getter = module && module.__esModule ?
-/******/ 			function getDefault() { return module['default']; } :
-/******/ 			function getModuleExports() { return module; };
-/******/ 		__webpack_require__.d(getter, 'a', getter);
-/******/ 		return getter;
-/******/ 	};
-/******/
-/******/ 	// Object.prototype.hasOwnProperty.call
-/******/ 	__webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
-/******/
-/******/ 	// __webpack_public_path__
-/******/ 	__webpack_require__.p = "";
+/******/         // Return the exports of the module
+/******/         return module.exports;
+/******/     }
 /******/
 /******/
-/******/ 	// Load entry module and return exports
-/******/ 	return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
+/******/     // expose the modules object (__webpack_modules__)
+/******/     __webpack_require__.m = modules;
+/******/
+/******/     // expose the module cache
+/******/     __webpack_require__.c = installedModules;
+/******/
+/******/     // define getter function for harmony exports
+/******/     __webpack_require__.d = function(exports, name, getter) {
+/******/         if(!__webpack_require__.o(exports, name)) {
+/******/             Object.defineProperty(exports, name, { enumerable: true, get: getter });
+/******/         }
+/******/     };
+/******/
+/******/     // define __esModule on exports
+/******/     __webpack_require__.r = function(exports) {
+/******/         if(typeof Symbol !== 'undefined' && Symbol.toStringTag) {
+/******/             Object.defineProperty(exports, Symbol.toStringTag, { value: 'Module' });
+/******/         }
+/******/         Object.defineProperty(exports, '__esModule', { value: true });
+/******/     };
+/******/
+/******/     // create a fake namespace object
+/******/     // mode & 1: value is a module id, require it
+/******/     // mode & 2: merge all properties of value into the ns
+/******/     // mode & 4: return value when already ns object
+/******/     // mode & 8|1: behave like require
+/******/     __webpack_require__.t = function(value, mode) {
+/******/         if(mode & 1) value = __webpack_require__(value);
+/******/         if(mode & 8) return value;
+/******/         if((mode & 4) && typeof value === 'object' && value && value.__esModule) return value;
+/******/         var ns = Object.create(null);
+/******/         __webpack_require__.r(ns);
+/******/         Object.defineProperty(ns, 'default', { enumerable: true, value: value });
+/******/         if(mode & 2 && typeof value != 'string') for(var key in value) __webpack_require__.d(ns, key, function(key) { return value[key]; }.bind(null, key));
+/******/         return ns;
+/******/     };
+/******/
+/******/     // getDefaultExport function for compatibility with non-harmony modules
+/******/     __webpack_require__.n = function(module) {
+/******/         var getter = module && module.__esModule ?
+/******/             function getDefault() { return module['default']; } :
+/******/             function getModuleExports() { return module; };
+/******/         __webpack_require__.d(getter, 'a', getter);
+/******/         return getter;
+/******/     };
+/******/
+/******/     // Object.prototype.hasOwnProperty.call
+/******/     __webpack_require__.o = function(object, property) { return Object.prototype.hasOwnProperty.call(object, property); };
+/******/
+/******/     // __webpack_public_path__
+/******/     __webpack_require__.p = "";
+/******/
+/******/
+/******/     // Load entry module and return exports
+/******/     return __webpack_require__(__webpack_require__.s = "./src/static/js/main.js");
 /******/ })
 /************************************************************************/
 /******/ ({
@@ -928,7 +928,7 @@ eval("exports = module.exports = __webpack_require__(/*! ../../../../node_module
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .main-content .session-show {\\r\\n    height: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .header {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 20%;\\r\\n    padding: 25px 25px 25px 25px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container {\\r\\n    height: 36%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 80%;\\r\\n    padding: 0% 6% 0% 6%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group p {\\r\\n    margin: 0px 0px 10px 0px;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group.left {\\r\\n    float: left;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group {\\r\\n    display: inline-block;\\r\\n    height: 100%;\\r\\n    width: 50%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group .label {\\r\\n    font-weight: 700;\\r\\n    margin-right: 10px;\\r\\n    text-transform: capitalize;\\r\\n}\\r\\n\\r\\n/* Session's runs */\\r\\n.body .session-show .list-runs-container {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 60%;\\r\\n    margin-top: 3%;\\r\\n}\\r\\n\\r\\n.body .session-show .header .title {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .session-show .header .subtitle {\\r\\n    color: #4298c0;\\r\\n    display: inline-block;\\r\\n    font-size: 15px;\\r\\n    margin-left: 3px;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content {\\r\\n    font-size: 16px;\\r\\n    font-weight: 500;\\r\\n    height: 80%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .columns {\\r\\n    color: #a7a9ac;\\r\\n    font-size: 14px;\\r\\n    margin: 0px auto 10px auto;\\r\\n    position: relative;\\r\\n    width: 96%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .columns .row {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    display: block;\\r\\n    padding: 0% 2% 0% 4%;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .column {\\r\\n    display: inline-block;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .list-runs {\\r\\n    height: 90%;\\r\\n    overflow: scroll;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run {\\r\\n    border-top: 1px solid #ededed ;\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 13px;\\r\\n    font-weight: 700;\\r\\n    height: 50px;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n    width: 96%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element.element-run.selected {\\r\\n    background: #4298c0;\\r\\n    border-radius: 25px 25px 25px 25px;\\r\\n    -o-border-radius: 25px 25px 25px 25px;\\r\\n    -ms-border-radius: 25px 25px 25px 25px;\\r\\n    -moz-border-radius: 25px 25px 25px 25px;\\r\\n    -khtml-border-radius: 25px 25px 25px 25px;\\r\\n    -webkit-border-radius: 25px 25px 25px 25px;\\r\\n    color: #ffffff;\\r\\n    outline: 0;\\r\\n    -o-outline: 0;\\r\\n    -ms-outline: 0;\\r\\n    -moz-outline: 0;\\r\\n    -khtml-outline: 0;\\r\\n    -webkit-outline: 0;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element .row {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 25px;\\r\\n    padding: 0% 2% 0% 4%;\\r\\n    position: absolute;\\r\\n    top: 15px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run:nth-child(even) {\\r\\n    background: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .info {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .number {\\r\\n    display: inline-block;\\r\\n    min-width: 75px;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .duration {\\r\\n    display: inline-block;\\r\\n    min-width: 75px;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .status {\\r\\n    display: inline-block;\\r\\n    margin: 0px 2px 0px 2px;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .button-actions {\\r\\n    display: inline-block;\\r\\n    min-width: 150px;\\r\\n    position: absolute;\\r\\n    right: 0px;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .button-actions .button-open,\\r\\n.body .list-runs-container .list-runs .element-run .button-actions .button-start {\\r\\n    display: inline-block;\\r\\n    font-size: 13px;\\r\\n    height: 22px;\\r\\n    line-height: 20px;\\r\\n    width: 65px;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run.selected .button-open,\\r\\n.body .list-runs-container .list-runs .element-run.selected .button-start {\\r\\n    background-color: #ffffff;\\r\\n    border: #fcfcfc;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run.selected .button.disabled {\\r\\n    background-color: #ededed;\\r\\n    border: #fcfcfc;\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/session_details.css?./node_modules/css-loader/dist/cjs.js");
+eval("exports = module.exports = __webpack_require__(/*! ../../../../node_modules/css-loader/dist/runtime/api.js */ \"./node_modules/css-loader/dist/runtime/api.js\")(false);\n// Module\nexports.push([module.i, \".body .main-content .session-show {\\r\\n    height: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .header {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 20%;\\r\\n    padding: 25px 25px 25px 25px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container {\\r\\n    height: 36%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 80%;\\r\\n    padding: 0% 6% 0% 6%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group p {\\r\\n    margin: 0px 0px 10px 0px;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group.left {\\r\\n    float: left;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group {\\r\\n    display: inline-block;\\r\\n    height: 100%;\\r\\n    width: 50%;\\r\\n}\\r\\n\\r\\n.body .session-show .session-details-container .details .group .label {\\r\\n    font-weight: 700;\\r\\n    margin-right: 10px;\\r\\n    text-transform: capitalize;\\r\\n}\\r\\n\\r\\n/* Session's runs */\\r\\n.body .session-show .list-runs-container {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 60%;\\r\\n    margin-top: 3%;\\r\\n}\\r\\n\\r\\n.body .session-show .header .title {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .session-show .header .subtitle {\\r\\n    color: #4298c0;\\r\\n    display: inline-block;\\r\\n    font-size: 15px;\\r\\n    margin-left: 3px;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content {\\r\\n    font-size: 16px;\\r\\n    font-weight: 500;\\r\\n    height: 80%;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .columns {\\r\\n    color: #a7a9ac;\\r\\n    font-size: 14px;\\r\\n    margin: 0px auto 10px auto;\\r\\n    position: relative;\\r\\n    width: 96%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .columns .row {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    display: block;\\r\\n    padding: 0% 2% 0% 4%;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .column {\\r\\n    display: inline-block;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .session-show .list-runs-container .runs-content .list-runs {\\r\\n    height: 90%;\\r\\n    overflow: scroll;\\r\\n    position: relative;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run {\\r\\n    border-top: 1px solid #ededed ;\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    font-size: 13px;\\r\\n    font-weight: 700;\\r\\n    height: 50px;\\r\\n    margin: 0px auto 0px auto;\\r\\n    position: relative;\\r\\n    width: 96%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element.element-run.selected {\\r\\n    background: #4298c0;\\r\\n    border-radius: 25px 25px 25px 25px;\\r\\n    -o-border-radius: 25px 25px 25px 25px;\\r\\n    -ms-border-radius: 25px 25px 25px 25px;\\r\\n    -moz-border-radius: 25px 25px 25px 25px;\\r\\n    -khtml-border-radius: 25px 25px 25px 25px;\\r\\n    -webkit-border-radius: 25px 25px 25px 25px;\\r\\n    color: #ffffff;\\r\\n    outline: 0;\\r\\n    -o-outline: 0;\\r\\n    -ms-outline: 0;\\r\\n    -moz-outline: 0;\\r\\n    -khtml-outline: 0;\\r\\n    -webkit-outline: 0;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element .row {\\r\\n    box-sizing: border-box;\\r\\n    -o-box-sizing: border-box;\\r\\n    -ms-box-sizing: border-box;\\r\\n    -moz-box-sizing: border-box;\\r\\n    -khtml-box-sizing: border-box;\\r\\n    -webkit-box-sizing: border-box;\\r\\n    height: 25px;\\r\\n    padding: 0% 2% 0% 4%;\\r\\n    position: absolute;\\r\\n    top: 15px;\\r\\n    width: 100%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run:nth-child(even) {\\r\\n    background: #fcfcfc;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .info {\\r\\n    display: inline-block;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .number {\\r\\n    display: inline-block;\\r\\n    min-width: 75px;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .iterations {\\r\\n    display: inline-block;\\r\\n    min-width: 75px;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .status {\\r\\n    display: inline-block;\\r\\n    margin: 0px 2px 0px 2px;\\r\\n    width: 15%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .button-actions {\\r\\n    display: inline-block;\\r\\n    min-width: 150px;\\r\\n    position: absolute;\\r\\n    right: 0px;\\r\\n    width: 20%;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run .button-actions .button-open,\\r\\n.body .list-runs-container .list-runs .element-run .button-actions .button-start {\\r\\n    display: inline-block;\\r\\n    font-size: 13px;\\r\\n    height: 22px;\\r\\n    line-height: 20px;\\r\\n    width: 65px;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run.selected .button-open,\\r\\n.body .list-runs-container .list-runs .element-run.selected .button-start {\\r\\n    background-color: #ffffff;\\r\\n    border: #fcfcfc;\\r\\n    color: #000000;\\r\\n}\\r\\n\\r\\n.body .list-runs-container .list-runs .element-run.selected .button.disabled {\\r\\n    background-color: #ededed;\\r\\n    border: #fcfcfc;\\r\\n    color: #a7a9ac;\\r\\n}\\r\\n\", \"\"]);\n\n\n\n//# sourceURL=webpack:///./src/static/css/pages/session_details.css?./node_modules/css-loader/dist/cjs.js");
 
 /***/ }),
 
