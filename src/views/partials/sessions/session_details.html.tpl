@@ -44,7 +44,7 @@
                         <div class="info status">{{ run.status }}</div>
                         <span class="buttons button-actions">
                             <a class="button button-blue button-run button-start {% if completed_run or created_run %}disabled{% endif %}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">start</a>
-                            <a class="button button-blue button-run button-open {% if not completed_run or created_run %}disabled{% endif %}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">open</a>
+                            <a class="button button-blue button-run button-open {% if not completed_run or created_run %}disabled{% endif %}" href="/sessions/{{ session.number }}/runs/{{ run.number }}/stats">open</a>
                         </span>
                     </span>
                 </li>
