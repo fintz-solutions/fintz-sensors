@@ -3,6 +3,7 @@
         <h1 class="side-title">Session <span class="hash">#</span>{{ session.number }}</h1>
     </div>
     <div class="buttons button-actions">
-        <a class="button button-blue button-session button-charts" href="/sessions/{{ session.number }}/stats">Stats</a>
+        {% set disabled = "disabled" if session.status in ("CREATED") %}
+        <a class="button button-blue button-session button-charts {{ disabled }}" href="/sessions/{{ session.number }}/stats">Stats</a>
     </div>
 </div>
