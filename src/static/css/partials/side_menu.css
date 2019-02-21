@@ -1,5 +1,11 @@
 .body .side-menu {
     background: #ffffff;
+    box-shadow: #a7a9ac 0px 0px 20px 0px;
+    -o-box-shadow: #a7a9ac 0px 0px 20px 0px;
+    -ms-box-shadow: #a7a9ac 0px 0px 20px 0px;
+    -moz-box-shadow: #a7a9ac 0px 0px 20px 0px;
+    -khtml-box-shadow: #a7a9ac 0px 0px 20px 0px;
+    -webkit-box-shadow: #a7a9ac 0px 0px 20px 0px;
     float: left;
     height: 100%;
     margin: auto auto auto auto;

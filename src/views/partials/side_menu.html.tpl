@@ -13,5 +13,9 @@
         {% include "./side_menu/session_details_tab.html.tpl" %}
     {% elif title in ("Run Details") %}
         {% include "./side_menu/run_details_tab.html.tpl" %}
+    {% elif title in ("Session Stats") %}
+        {% include "./side_menu/session_stats_tab.html.tpl" %}
+    {% elif title in ("Run Stats") %}
+        {% include "./side_menu/run_stats_tab.html.tpl" %}
     {% endif %}
 </div>

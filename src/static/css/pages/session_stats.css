@@ -1,0 +1,5 @@
+.body .content .session-stats-container {
+    height: 100%;
+    overflow-y: scroll;
+    position: relative;
+};
