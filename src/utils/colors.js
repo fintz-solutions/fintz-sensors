@@ -9,5 +9,3 @@ module.exports = {
         return color;
     }
 };
-
-// another option: https://randomcolor.lllllllllllllllll.com/
