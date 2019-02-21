@@ -26,7 +26,7 @@ var sessionStats = function(element) {
             },
             type: 'GET',
             success: function(data, status) {
-                _chartsHandler(element, data.data);
+                _chartsHandler(element, data.data.charts);
 
             },
             error: function(data) {

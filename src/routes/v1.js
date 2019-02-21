@@ -10,6 +10,7 @@ const sessionMiddleware = require(path.resolve(middlewareFolder, "session"));
 const runMiddleware = require(path.resolve(middlewareFolder, "run"));
 const iterationMiddleware = require(path.resolve(middlewareFolder, "iteration"));
 const measurementMiddleware = require(path.resolve(middlewareFolder, "measurement"));
+const eventMiddleware = require(path.resolve(middlewareFolder, "event"));
 const statsController = require(path.resolve(controllersFolder, "stats"));
 
 module.exports = function (app, io) {
@@ -88,6 +89,7 @@ module.exports = function (app, io) {
         runMiddleware.getRun,
         iterationMiddleware.getAllIterations,
         measurementMiddleware.getMeasurementsForIterations,
+        eventMiddleware.getRunEvents,
         statsController.getRunStats);
 
     //TODO NELSON request to GET in HTML or JSON depending on the request header

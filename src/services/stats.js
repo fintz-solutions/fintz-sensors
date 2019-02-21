@@ -1,31 +1,89 @@
 const path = require("path");
 const errorUtil = require(path.resolve(global.utilsFolder, "error"));
+const colorsUtil = require(path.resolve(global.utilsFolder, "colors"));
 
-const colors = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#000000"]; // TODO more colors, find another way
+//const colors = ["#3e95cd", "#8e5ea2", "#3cba9f", "#e8c3b9", "#000000"]; // TODO more colors, find another way
 
 module.exports.getSessionStats = function(session){
 
-    let stats = [];
+    let charts = [];
 
     let sessionChart = buildSessionChart(session);
-    stats.push(sessionChart);
+    charts.push(sessionChart);
 
-    return stats;
+    return {
+        charts: charts
+    };
 };
 
-module.exports.getRunStats = function(session, run, iterations) {
+module.exports.getRunStats = function(session, run, iterations, events) {
 
-    let stats = [];
+    let charts = [];
 
-    if(run.status != "FINISHED"){
+    if(run.status !== "FINISHED"){
         errorUtil.createAndThrowGenericError("Current Run is not finished.", 400);
     }
 
     let runChart = buildRunChart(session, iterations);
-    stats.push(runChart);
+    charts.push(runChart);
 
-    return stats;
+    let qualityEvents = events.filter(function(event){
+        return event.type === 'QUALITY';
+    });
+    let safetyEvents = events.filter(function(event){
+        return event.type === 'SAFETY';
+    });
+
+    let qualityChart = buildQualityChart(qualityEvents);
+    charts.push(qualityChart);
+
+    let safetyChart = buildSafetyChart(safetyEvents);
+    charts.push(safetyChart);
+
+    return {
+        charts: charts
+    };
 };
+
+function buildQualityChart(events){
+
+    let assemblyErrorEvents = events.filter(function(event){
+        return event.subtype === 'ASSEMBLY_ERROR';
+    });
+
+    let materialErrorEvents = events.filter(function(event){
+        return event.subtype === 'MATERIAL_ERROR';
+    });
+
+    let datasets = [
+        buildBarDataset([assemblyErrorEvents.length], 'Assembly Errors', colorsUtil.getRandomColor()),
+        buildBarDataset([materialErrorEvents.length], 'Material Errors', colorsUtil.getRandomColor())
+    ];
+
+    labels = [1,2];
+
+    return buildBarChart(labels, datasets, 'Quality events', ''/*'Iteration'*/, 'Occurrences');
+}
+
+function buildSafetyChart(events){
+
+    let generalSafetyEvents = events.filter(function(event){
+        return event.subtype === 'GENERAL_SAFETY';
+    });
+
+    let materialDropEvents = events.filter(function(event){
+        return event.subtype === 'MATERIAL_DROP';
+    });
+
+    let datasets = [
+        buildBarDataset([generalSafetyEvents.length], 'General Safety', colorsUtil.getRandomColor()),
+        buildBarDataset([materialDropEvents.length], 'Material Drop', colorsUtil.getRandomColor())
+    ];
+
+    labels = [1,2];
+
+    return buildBarChart(labels, datasets, 'Safety events', ''/*'Iteration'*/, 'Occurrences');
+}
 
 function buildRunChart(session, iterations){
     let completedIterations = iterations.filter(function (iteration) {
@@ -39,12 +97,11 @@ function buildRunChart(session, iterations){
 
     let datasets = [];
 
-    for(let stationIndex=0; stationIndex<session.numStations; stationIndex++) {
-        let stationNumber = stationIndex+1;
+    for(let stationNumber=1; stationNumber <= session.numStations; stationNumber++) {
 
         let stationTimes = [];
         let label = `Station ${stationNumber}`;
-        let color = colors[stationIndex];
+        let color = colorsUtil.getRandomColor();
         for (let iterationNumber = 1; iterationNumber <= completedIterations.length; iterationNumber++) {
             let currentIteration = completedIterations.find(function (iteration){
                return iteration.number === iterationNumber;
@@ -52,10 +109,14 @@ function buildRunChart(session, iterations){
             let measurement = currentIteration._doc.measurements.find(function (measurement) {
                 return measurement.stationNumber === stationNumber;
             });
-            let time = measurement.stopTime - measurement.startTime;
-            stationTimes.push(time);
+
+            if(measurement.startTime && measurement.stopTime) {
+                let time = measurement.stopTime - measurement.startTime;
+                stationTimes.push(time);
+            }
         }
-        let dataset = buildDataset(stationTimes, label, color);
+
+        let dataset = buildLineDataset(stationTimes, label, color);
         datasets.push(dataset);
     }
 
@@ -91,7 +152,7 @@ function buildSessionChart(session){
         });
 
         let label = `Run ${runNumber}`;
-        let color = colors[runIndex];
+        let color = colorsUtil.getRandomColor();
 
         let completedIterations = currentRun._doc.iterations.filter(function (iteration) {
             return iteration.stopTime !== null;
@@ -107,7 +168,7 @@ function buildSessionChart(session){
             let time = currentIteration.stopTime - currentIteration.startTime;
             iterationTimes.push(time);
         }
-        let dataset = buildDataset(iterationTimes, label, color);
+        let dataset = buildLineDataset(iterationTimes, label, color);
         datasets.push(dataset);
     }
 
@@ -136,6 +197,9 @@ function buildLineChart(labels, datasets, title, xLabel, yLabel){
                     scaleLabel: {
                         display: true,
                         labelString: xLabel
+                    },
+                    ticks: {
+                        beginAtZero:true
                     }
                 }],
                 yAxes: [{
@@ -143,6 +207,9 @@ function buildLineChart(labels, datasets, title, xLabel, yLabel){
                     scaleLabel: {
                         display: true,
                         labelString: yLabel
+                    },
+                    ticks: {
+                        beginAtZero:true
                     }
                 }]
             }
@@ -152,7 +219,47 @@ function buildLineChart(labels, datasets, title, xLabel, yLabel){
     return chart;
 }
 
-function buildDataset(data, label, color) {
+function buildBarChart(labels, datasets, title, xLabel, yLabel){
+
+    let chart = {
+        type: 'bar',
+        data: {
+            //labels: labels,
+            datasets: datasets
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: title
+            },
+            scales: {
+                xAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: xLabel
+                    }
+                }],
+                yAxes: [{
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: yLabel
+                    },
+                    ticks: {
+                        beginAtZero:true,
+                        stepSize: 1
+                    }
+                }]
+            }
+        }
+    };
+
+    return chart;
+}
+
+function buildLineDataset(data, label, color) {
     return {
         data: data,
         label: label,
@@ -163,5 +270,15 @@ function buildDataset(data, label, color) {
         pointRadius: 5,
         pointHoverRadius: 10,
         showLine: true
+    };
+}
+
+function buildBarDataset(data, label, color) {
+    return {
+        data: data,
+        label: label,
+        borderColor: color,
+        backgroundColor: color,
+        borderWidth: 1,
     };
 }
