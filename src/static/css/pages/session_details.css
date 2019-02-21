@@ -172,7 +172,7 @@
     width: 15%;
 }
 
-.body .list-runs-container .list-runs .element-run .duration {
+.body .list-runs-container .list-runs .element-run .iterations {
     display: inline-block;
     min-width: 75px;
     width: 15%;

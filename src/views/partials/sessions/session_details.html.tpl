@@ -28,7 +28,7 @@
         <div class="columns">
             <span class="row">
                 <div class="column">run number</div>
-                <div class="column">duration (mins)</div>
+                <div class="column">iterarions (karts)</div>
                 <div class="column">status</div>
             </span>
         </div>
@@ -40,7 +40,14 @@
                 <li class="element element-run {% if active_run %}active-run{% endif %}">
                     <span class="row">
                         <div class="info number">{{ run.number }}</div>
-                        <div class="info duration">{{ run.totalTime }}</div>
+                        {% set iterations = run.iterations or [] %}
+                        {% set last_iteration = iterations[iterations.length - 1] if iterations else {} %}
+                        {% if iterations and last_iteration %}
+                            {% set total_iterations = last_iteration.number if last_iteration.stopTime else last_iteration.number - 1 %}
+                            <div class="info iterations">{{ total_iterations }}</div>
+                        {% else %}
+                            <div class="info iterations">0</div>
+                        {% endif %}
                         <div class="info status">{{ run.status }}</div>
                         <span class="buttons button-actions">
                             <a class="button button-blue button-run button-start {% if completed_run or created_run %}disabled{% endif %}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">start</a>
