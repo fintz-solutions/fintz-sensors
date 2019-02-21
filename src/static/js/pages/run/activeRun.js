@@ -222,7 +222,8 @@ var activeRun = function(element) {
             var sideMenu = jQuery(".side-menu", _body);
             var buttons = jQuery(".button", sideMenu);
             buttons.addClass("disabled");
-            // TODO: change buttons to: "next run" / "run stats"
+            var groupTopButtons = buttons.filter(".group-top");
+            groupTopButtons.removeClass("disabled");
         });
     };
 

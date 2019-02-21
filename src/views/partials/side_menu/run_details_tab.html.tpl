@@ -5,11 +5,17 @@
         <h2 class="side-subtitle"><span class="label">Run</span><span class="value">{{ run.number }}</span></h2>
     </div>
     {% if not completed_run %}
-        <div class="buttons button-actions button-actions-run">
-            <a class="button button-blue button-start {% if completed_run %}disabled{% endif%}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Start</a>
-            <a class="button button-blue button-move disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Move</a>
-            <a class="button button-blue button-continue disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Continue</a>
-            <a class="button button-blue button-kill disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Kill</a>
+        <div class="buttons button-actions button-actions-active-run">
+            {% if run.number + 1 <= session.numRuns %}
+                <a class="button button-blue button-next group-top disabled" href="/sessions/{{ session.number }}/runs/{{ run.number + 1 }}">Next Run</a>
+            {% endif %}
+            <a class="button button-blue button-stats group-top disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}/stats">Stats</a>
+            <span class="separator"></span>
+            <a class="button button-blue button-start group-middle {% if completed_run %}disabled{% endif%}" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Start</a>
+            <a class="button button-blue button-move group-middle disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Move</a>
+            <a class="button button-blue button-continue group-middle disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Continue</a>
+            <span class="separator"></span>
+            <a class="button button-blue button-kill group-bottom disabled" href="/sessions/{{ session.number }}/runs/{{ run.number }}">Kill</a>
         </div>
     {% else %}
         <div class="buttons button-actions">

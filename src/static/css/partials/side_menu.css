@@ -126,6 +126,13 @@
     width: 100%;
 }
 
+.body .side-menu .button-actions .separator {
+    border-bottom: 4px solid #ededed;
+    display: block;
+    margin: 20% auto 20% auto;
+    width: 100%;
+}
+
 .body .side-menu .button-actions .button {
     display: block;
     font-size: 16px;

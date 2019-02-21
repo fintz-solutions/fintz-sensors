@@ -47,7 +47,6 @@ var sessionStats = function(element) {
             canvasContainer.append(canvas);
             chartsContainer.append(canvasContainer);
             let chart = new Charts(canvas, stats[i]);
-            // TODO: update chart options
         };
     };
 

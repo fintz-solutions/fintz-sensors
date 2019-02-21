@@ -10,7 +10,9 @@ module.exports = {
             let data = statsService.getRunStats(req.session._doc, req.run._doc, req.iterations, req.events);
             responseUtil.sendSuccessResponse("Run stats retrieved successfully", 200, data, res);
         } else {
-            res.render("pages/run_stats.html.tpl");
+            res.render("pages/runs_stats.html.tpl", {
+                title: "Runs Stats"
+            });
         }
     },
     getSessionStats: function (req, res) {
@@ -19,7 +21,9 @@ module.exports = {
             let data = statsService.getSessionStats(req.session._doc);
             responseUtil.sendSuccessResponse("Session Stats retrieved successfully", 200, data, res);
         } else {
-            res.render("pages/session_stats.html.tpl");
+            res.render("pages/session_stats.html.tpl", {
+                title: "Session Stats"
+            });
         }
     }
 };
