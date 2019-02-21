@@ -1,7 +1,7 @@
 {
     "name": "fintz-sensors",
     "version": "1.0.0",
-    "description": "",
+    "description": "fintz-sensors, powered by Fintz Solutions. More info: https://github.com/fintz-solutions",
     "main": "src/server.js",
     "scripts": {
         "build": "webpack --config webpack.config.js",
@@ -10,7 +10,7 @@
         "dev": "nodemon src/server.js"
     },
     "author": "Fintz Solutions",
-    "license": "ISC",
+    "license": "Apache License, Version 2.0",
     "dependencies": {
         "body-parser": "^1.18.3",
         "chart.js": "^2.7.3",

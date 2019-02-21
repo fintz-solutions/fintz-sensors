@@ -1,7 +1,7 @@
 const path = require("path");
 
 module.exports = {
-    mode: "development",
+    mode: "production",
     entry: './src/static/js/main.js',
     output: {
         path: path.resolve(__dirname, 'src/static'),
