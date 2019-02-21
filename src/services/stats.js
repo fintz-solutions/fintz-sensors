@@ -6,12 +6,14 @@ const colorsUtil = require(path.resolve(global.utilsFolder, "colors"));
 
 module.exports.getSessionStats = function(session){
 
-    let stats = [];
+    let charts = [];
 
     let sessionChart = buildSessionChart(session);
-    stats.push(sessionChart);
+    charts.push(sessionChart);
 
-    return stats;
+    return {
+        charts: charts
+    };
 };
 
 module.exports.getRunStats = function(session, run, iterations, events) {
