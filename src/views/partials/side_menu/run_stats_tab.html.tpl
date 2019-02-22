@@ -4,6 +4,6 @@
         <h2 class="side-subtitle"><span class="label">Run</span><span class="value">{{ run.number }}</span></h2>
     </div>
     <div class="buttons button-actions">
-        <a class="button button-blue button-export hidden" href="">Export</a>
+
     </div>
 </div>
