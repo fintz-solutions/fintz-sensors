@@ -7,15 +7,15 @@
     <div class="details">
         <div class="group left">
             <p><span class="label">Number:</span><span class="value">{{ session.number }}</span></p>
-            <p><span class="label">name:</span><span class="value">{{ session.number }}</span></p>
+            <p><span class="label">name:</span><span class="value">{{ session.name }}</span></p>
             <p><span class="label">Status:</span><span class="value">{{ session.status }}</span></p>
             <p><span class="label">Date:</span><span class="value date" data-timestamp="{{ session.createdAt }}"></span></p>
         </div>
         <div class="group right">
             <p><span class="label">Stations:</span><span class="value">{{ session.numStations }}</span></p>
-            <p><span class="label">Production target:</span><span class="value">{{ session.productionTarget }}</span></p>
+            <p><span class="label">Production target:</span><span class="value">{{ session.productionTarget }} karts</span></p>
             <p><span class="label">Total runs:</span><span class="value">{{ session.numRuns }}</span></p>
-            <p><span class="label">Time per run:</span></span><span class="value">{{ session.timePerRun }}</span></p>
+            <p><span class="label">Time per run:</span></span><span class="value">{{ session.timePerRun }} minutes</span></p>
         </div>
     </div>
 </div>
