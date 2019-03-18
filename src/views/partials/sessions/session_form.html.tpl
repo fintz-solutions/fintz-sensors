@@ -39,11 +39,11 @@
         </div>
         <div class="group right">
             <div class="field">
-                <label class="label" for="time_run">Run's time</label>
+                <label class="label" for="time_run">Run's time (min)</label>
                 <input type="text" class="time-run-field" name="time_run" pattern=".{1,3}" maxlength="3" placeholder="in minutes">
             </div>
             <div class="field">
-                <label class="label" for="production_target">Target</label>
+                <label class="label" for="production_target">Target (karts)</label>
                 <input type="text" class="production-target-field" name="production_target" pattern=".{1,3}" maxlength="3" placeholder="production per run">
             </div>
         </div>

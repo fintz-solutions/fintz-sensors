@@ -120,7 +120,7 @@ function buildRunChart(session, iterations){
         datasets.push(dataset);
     }
 
-    let runChart = buildLineChart(labels, datasets, 'Station Time per Iteration', 'Iteration', 'Time (in seconds)');
+    let runChart = buildLineChart(labels, datasets, 'Station Time per Iteration', 'Karts Produced', 'Time (in seconds)');
 
     return runChart;
 }
